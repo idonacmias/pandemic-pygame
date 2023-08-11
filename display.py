@@ -38,8 +38,9 @@ def set_bord(screen, font):
     card.dispaly_front_infaction_card(screen, DISCARD_INFACTION_CARDS_POSITION, cities['Lagos'], font)
     card.display_back_players_card(screen, PLAYERS_CARDS_POSITION)
     card.dispaly_front_player_card(screen, DISCARD_PLAYERS_CARDS_POSITION, cities['Lagos'], font)
-    tokens.draw_infaction_scale(screen, font)
+    tokens.draw_infaction_scale(screen, font, 1)
     tokens.draw_medicen_bar(screen)
+    tokens.draw_outbreak_bar(screen, font, 7)
 
     FIRST_CITY = 'Atlanta'
     corent_city = cities[FIRST_CITY]

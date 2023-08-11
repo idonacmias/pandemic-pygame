@@ -19,7 +19,6 @@ def draw_biohazerd(screen, point, back_color, radius=25, symbol_color='SICK_GREE
     b = (a[0], a[1] - radius)    
     c = (a[0] + math.sqrt((3 * radius)), a[1]  + 0.5 * radius)    
     d = (a[0] - math.sqrt((3 * radius)), a[1]  + 0.5 * radius)  
-    print(f'a: {a}\nb: {b}\nc: {c}\nd: {d}\n')
 
     pygame.draw.circle(surface=screen, color=colors_palet[symbol_color], center=b , radius=1.2 * radius)
     pygame.draw.circle(surface=screen, color=colors_palet[symbol_color], center=c , radius=1.2 * radius)
