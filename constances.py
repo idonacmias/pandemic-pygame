@@ -15,3 +15,4 @@ INFACTION_SCALE_CUNTER = [2, 2, 2, 3, 3, 4, 4]
 
 CURE_BAR_POINT = [(700, 1000), (800, 1000), (900, 1000), (1000, 1000)]
 OUTBREAK_BAR_POINTS = [(100, 600), (200, 650), (100, 700), (200, 750), (100, 800), (200, 850), (100, 900), (200, 950), (100, 1000)]
+EDGE_CITIES = ['San Francisco', 'Los Angeles', 'Sydney', 'Manila', 'Tokyo']

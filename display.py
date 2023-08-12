@@ -6,7 +6,7 @@ from cities import cities
 import card
 import tokens
 
-from constances import CITY_RADIUS, INFACTION_CARDS_POSITION, DISCARD_INFACTION_CARDS_POSITION, PLAYERS_CARDS_POSITION, DISCARD_PLAYERS_CARDS_POSITION, CARD_HALF_WHIDTH, CARD_HALF_HIGHT
+from constances import EDGE_CITIES, CITY_RADIUS, INFACTION_CARDS_POSITION, DISCARD_INFACTION_CARDS_POSITION, PLAYERS_CARDS_POSITION, DISCARD_PLAYERS_CARDS_POSITION, CARD_HALF_WHIDTH, CARD_HALF_HIGHT
 
 
 
@@ -26,20 +26,13 @@ def main(cities):
         clock.tick(60)
 
 def set_bord(screen, font):
-    for city in cities.values():
-        city.draw(screen, colors_palet[city.color.name], font)
-        
-        other_city = cities[city.routes[0]]
-        for other_city_name in city.routes:
-            other_city = cities[other_city_name]
-            pygame.draw.line(screen, colors_palet['PINK'], city.point, other_city.point, 2)
-
+    draw_cities(screen, font)    
     card.display_back_infaction_card(screen, INFACTION_CARDS_POSITION)
     card.dispaly_front_infaction_card(screen, DISCARD_INFACTION_CARDS_POSITION, cities['Lagos'], font)
     card.display_back_players_card(screen, PLAYERS_CARDS_POSITION)
     card.dispaly_front_player_card(screen, DISCARD_PLAYERS_CARDS_POSITION, cities['Lagos'], font)
-    tokens.draw_infaction_scale(screen, font, 1)
-    tokens.draw_outbreak_bar(screen, font, 7)
+    tokens.draw_infaction_scale(screen, font, 0)
+    tokens.draw_outbreak_bar(screen, font, 0)
 
     tokens.draw_medicen_bar(screen)
 
@@ -49,6 +42,13 @@ def set_bord(screen, font):
     corent_city.draw(screen, colors_palet['PINK'], font)
     return corent_city
 
+def draw_cities(screen, font):
+    for city in cities.values():
+        city.conect_routes(screen, cities, font)
+
+    for city in cities.values():
+        city.draw(screen, colors_palet[city.color.name], font)
+    
 def if_quit(event):
     if event.type == pygame.QUIT:
         pygame.quit()

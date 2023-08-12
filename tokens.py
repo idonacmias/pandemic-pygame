@@ -20,12 +20,13 @@ def draw_bar(screen, font, points, cunter=None, rate=0):
 def draw_bar_circle(screen, font, i, circle_color, font_color, point, cunter):
     pygame.draw.circle(surface=screen, color=colors_palet[circle_color], center=point , radius=20)
     if cunter:
-        text_render = font.render(str(cunter[i]), True, colors_palet[font_color])
-
+        text_number = str(cunter[i])
     else:
-        text_render = font.render(str(i), True, colors_palet[font_color])
+        text_number = str(i)
 
-    screen.blit(text_render, point)
+    text_render = font.render(text_number, True, colors_palet[font_color])
+    text_point = (point[0] - 5, point[1] - 7)    
+    screen.blit(text_render, text_point)
 
 def draw_medicen_bar(screen, cure=[0,2,1,2]):
     colors = list(Color.__members__)
