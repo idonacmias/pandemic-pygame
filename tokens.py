@@ -23,7 +23,7 @@ def draw_bar_circle(screen, font, i, circle_color, font_color, point, cunter):
         text_render = font.render(str(cunter[i]), True, colors_palet[font_color])
 
     else:
-        text_render = font.render(str(i + 1), True, colors_palet[font_color])
+        text_render = font.render(str(i), True, colors_palet[font_color])
 
     screen.blit(text_render, point)
 
