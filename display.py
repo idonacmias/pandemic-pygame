@@ -1,9 +1,9 @@
 import pygame
 import sys
 
-from display import colors_palet, cities, card, tokens, city, CITY_RADIUS
+from display import colors_palet, card, tokens, city, CITY_RADIUS
 
-
+from cities import cities
 
 def main(cities):
     pygame.init()
@@ -56,16 +56,16 @@ def clicked_on_city(event, cities, screen, corent_city, font):
         closest_city = None
 
         for city_name in corent_city.routes:
-            city = cities[city_name]
-            temp_min_radius = city.click_lenth_from_center(muose_point)
+            city_data = cities[city_name]
+            temp_min_radius = city.click_lenth_from_center(city_data, muose_point)
             if temp_min_radius <= min_radius:
                 min_radius = temp_min_radius
-                closest_city = city
+                closest_city = city_data
 
 
         if closest_city:
-            closest_city.draw(screen, colors_palet['PINK'], font)
-            corent_city.draw(screen, colors_palet[corent_city.color.name], font)
+            city.draw(closest_city, screen, colors_palet['PINK'], font)
+            city.draw(corent_city, screen, colors_palet[corent_city.color.name], font)
             return closest_city 
 
     return corent_city

@@ -17,7 +17,6 @@ def draw(city, screen, color, font):
     text_surface = font.render(city.name, True, colors_palet['WHITE']) 
     screen.blit(text_surface, font_point)
 
-
 def conect_routes(city, screen, cities, font):
     for other_city_name in city.routes:
         other_city_point = cities[other_city_name].point
