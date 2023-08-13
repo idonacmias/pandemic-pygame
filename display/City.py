@@ -1,12 +1,9 @@
 import pygame
-
-from color import colors_palet
-
-
 from dataclasses import dataclass, field
 
-from Color import Color
-from constances import CITY_RADIUS, EDGE_CITIES
+from .color import colors_palet
+from .Color import Color
+from .constances import CITY_RADIUS, EDGE_CITIES
 
 @dataclass
 class City:

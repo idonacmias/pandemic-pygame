@@ -1,12 +1,13 @@
 import pygame
 import sys
 
-from color import colors_palet
-from cities import cities   
-import card
-import tokens
+# import display
+from display import colors_palet
+from display import cities   
+from  display import card
+from  display import tokens
 
-from constances import EDGE_CITIES, CITY_RADIUS, INFACTION_CARDS_POSITION, DISCARD_INFACTION_CARDS_POSITION, PLAYERS_CARDS_POSITION, DISCARD_PLAYERS_CARDS_POSITION, CARD_HALF_WHIDTH, CARD_HALF_HIGHT
+from display import CITY_RADIUS, INFACTION_CARDS_POSITION, DISCARD_INFACTION_CARDS_POSITION, PLAYERS_CARDS_POSITION, DISCARD_PLAYERS_CARDS_POSITION
 
 
 

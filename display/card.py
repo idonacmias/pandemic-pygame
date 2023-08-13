@@ -1,7 +1,8 @@
 import pygame
-from constances import CARD_HALF_WHIDTH, CARD_HALF_HIGHT
-from color import colors_palet
 import math
+
+from .constances import CARD_HALF_WHIDTH, CARD_HALF_HIGHT
+from .color import colors_palet
 
 def display_card(screen, point, color):
     a,b,c,d = point[0] - CARD_HALF_WHIDTH, point[1] - CARD_HALF_HIGHT, point[1] + CARD_HALF_HIGHT, point[0] + CARD_HALF_WHIDTH

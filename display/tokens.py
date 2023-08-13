@@ -1,7 +1,7 @@
 import pygame
-from color import colors_palet
-from constances import INFACTION_SCALE_CUNTER, INFACTION_SCALE_POSITIONS, CURE_BAR_POINT, OUTBREAK_BAR_POINTS
-from Color import Color
+from .color import colors_palet
+from .constances import INFACTION_SCALE_CUNTER, INFACTION_SCALE_POSITIONS, CURE_BAR_POINT, OUTBREAK_BAR_POINTS
+from .Color import Color
 
 def draw_infaction_scale(screen, font, rate=0):
     draw_bar(screen, font, INFACTION_SCALE_POSITIONS, INFACTION_SCALE_CUNTER, rate=rate)
