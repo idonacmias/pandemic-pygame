@@ -28,7 +28,7 @@
 {"name" : "Baghdad", "point" : [1100, 470], "color" : "BLACK", "population" : 6204000, "routes" : ["Cairo", "Istanbul", "Tehran", "Karachi", "Riyadh"]},
 {"name" : "Tehran", "point" : [1180, 390], "color" : "BLACK", "population" : 7419000, "routes" : ["Moscow", "Baghdad", "Karachi", "Delhi"]},
 {"name" : "Cairo", "point" : [1000, 530], "color" : "BLACK", "population" : 14718000, "routes" : ["Algiers", "Istanbul", "Baghdad", "Riyadh", "Khartoum"]},
-{"name" : "Istanbul", "point" : [1000, 390], "color" : "BLACK", "population" : 13576000, "routes" : ["Milan", "Algiers", "Cairo", "Baghdad", "Moscow"]},
+{"name" : "Istanbul", "point" : [1000, 390], "color" : "BLACK", "population" : 13576000, "routes" : ["Milan", "Algiers", "Cairo", "Baghdad", "Moscow", "st. Petersburg"]},
 {"name" : "Karachi", "point" : [1200, 550], "color" : "BLACK", "population" : 20711000, "routes" : ["Delhi", "Tehran", "Baghdad", "Riyadh", "Mumbai"]},
 {"name" : "Delhi", "point" : [1320, 500], "color" : "BLACK", "population" : 22242000, "routes" : ["Tehran", "Karachi", "Mumbai", "Chennai", "Kolkata"]},
 {"name" : "Mumbai", "point" : [1200, 653], "color" : "BLACK", "population" : 16910000, "routes" : ["Karachi", "Delhi", "Chennai"]},

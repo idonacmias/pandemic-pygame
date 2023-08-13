@@ -1,13 +1,7 @@
 import pygame
 import sys
 
-# import display
-from display import colors_palet
-from display import cities   
-from  display import card
-from  display import tokens
-
-from display import CITY_RADIUS
+from display import colors_palet, cities, card, tokens, city, CITY_RADIUS
 
 
 
@@ -40,15 +34,15 @@ def set_bord(screen, font):
     FIRST_CITY = 'Atlanta'
     corent_city = cities[FIRST_CITY]
     corent_city.resarch_station = True
-    corent_city.draw(screen, colors_palet['PINK'], font)
+    city.draw(corent_city, screen, colors_palet['PINK'], font)
     return corent_city
 
 def draw_cities(screen, font):
-    for city in cities.values():
-        city.conect_routes(screen, cities, font)
+    for city_data in cities.values():
+        city.conect_routes(city_data, screen, cities, font)
 
-    for city in cities.values():
-        city.draw(screen, colors_palet[city.color.name], font)
+    for city_data in cities.values():
+        city.draw(city_data, screen, colors_palet[city_data.color.name], font)
     
 def if_quit(event):
     if event.type == pygame.QUIT:
