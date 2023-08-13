@@ -7,7 +7,7 @@ from display import cities
 from  display import card
 from  display import tokens
 
-from display import CITY_RADIUS, INFACTION_CARDS_POSITION, DISCARD_INFACTION_CARDS_POSITION, PLAYERS_CARDS_POSITION, DISCARD_PLAYERS_CARDS_POSITION
+from display import CITY_RADIUS
 
 
 
@@ -28,10 +28,10 @@ def main(cities):
 
 def set_bord(screen, font):
     draw_cities(screen, font)    
-    card.display_back_infaction_card(screen, INFACTION_CARDS_POSITION)
-    card.dispaly_front_infaction_card(screen, DISCARD_INFACTION_CARDS_POSITION, cities['Lagos'], font)
-    card.display_back_players_card(screen, PLAYERS_CARDS_POSITION)
-    card.dispaly_front_player_card(screen, DISCARD_PLAYERS_CARDS_POSITION, cities['Lagos'], font)
+    card.display_back_infaction_card(screen)
+    card.dispaly_front_infaction_card(screen, cities['Lagos'], font)
+    card.display_back_players_card(screen)
+    card.dispaly_front_player_card(screen, cities['Lagos'], font)
     tokens.draw_infaction_scale(screen, font, 0)
     tokens.draw_outbreak_bar(screen, font, 0)
 

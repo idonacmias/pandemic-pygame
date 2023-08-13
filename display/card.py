@@ -1,7 +1,7 @@
 import pygame
 import math
 
-from .constances import CARD_HALF_WHIDTH, CARD_HALF_HIGHT
+from .constances import CARD_HALF_WHIDTH, CARD_HALF_HIGHT, INFACTION_CARDS_POSITION, DISCARD_INFACTION_CARDS_POSITION, DISCARD_PLAYERS_CARDS_POSITION, PLAYERS_CARDS_POSITION
 from .color import colors_palet
 
 def display_card(screen, point, color):
@@ -10,7 +10,7 @@ def display_card(screen, point, color):
     squer_point = [(a, b), (a, c), (d, c), (d, b)]
     pygame.draw.polygon(surface=screen, color=colors_palet[color], points=squer_point)
 
-def display_back_infaction_card(screen, point):
+def display_back_infaction_card(screen, point=INFACTION_CARDS_POSITION):
     display_card(screen, point, 'DARK_GREEN')
     draw_biohazerd(screen, point, 'DARK_GREEN')    
 
@@ -36,7 +36,7 @@ def draw_biohazerd(screen, point, back_color, radius=25, symbol_color='SICK_GREE
 
 
 
-def display_back_players_card(screen, point):
+def display_back_players_card(screen, point=PLAYERS_CARDS_POSITION):
     display_card(screen, point, 'DARK_BLUE')
     draw_plas(screen, point)
 
@@ -52,22 +52,17 @@ def draw_plas(screen, point):
     rectangle_point = [(a, b), (a, c), (d, c), (d, b)]
     pygame.draw.polygon(surface=screen, color=colors_palet['LIGHT_BLUE'], points=rectangle_point)
 
-def dispaly_front_player_card(screen, point, city, font):
-    display_card(screen, point, city.color.name)
+def dispaly_front_player_card(screen, city, font, point=DISCARD_PLAYERS_CARDS_POSITION):
+    dispaly_front_card(screen, point, city, font, city.color.name, 'GREEN')
+
+def dispaly_front_infaction_card(screen, city, font, point=DISCARD_INFACTION_CARDS_POSITION):
+    dispaly_front_card(screen, point, city, font, 'DARK_GREEN', city.color.name)
+
+def dispaly_front_card(screen, point, city, font, background_color, text_color):
+    display_card(screen, point, background_color)
     card_texts = ['city_name:', city.name, 'city_population:', city.population]
     point = (point[0] - 100, point[1] - 130)
     for text in card_texts:
-        text_render = font.render(str(text), True, colors_palet['GREEN'])
+        text_render = font.render(str(text), True, colors_palet[text_color])
         point = (point[0], point[1] + 30)
         screen.blit(text_render, point)
-
-def dispaly_front_infaction_card(screen, point, city, font):
-    display_card(screen, point, 'DARK_GREEN')
-    card_texts = ['city_name:', city.name, 'city_population:', city.population]
-    point = (point[0] - 100, point[1] - 130)
-    for text in card_texts:
-        text_render = font.render(str(text), True, colors_palet[city.color.name])
-        point = (point[0], point[1] + 30)
-        screen.blit(text_render, point)
-
-
