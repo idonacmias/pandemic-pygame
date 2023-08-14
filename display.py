@@ -1,8 +1,8 @@
 import pygame
 import sys
 
-from display import colors_palet, card, tokens, city, CITY_RADIUS
-
+from display import colors_palet, card, tokens, city, CITY_RADIUS, player
+from constances import FIRST_CITY
 from cities import cities
 
 def main(cities):
@@ -28,13 +28,11 @@ def set_bord(screen, font):
     card.dispaly_front_player_card(screen, cities['Lagos'], font)
     tokens.draw_infaction_scale(screen, font, 0)
     tokens.draw_outbreak_bar(screen, font, 0)
-
     tokens.draw_medicen_bar(screen)
-
-    FIRST_CITY = 'Atlanta'
     corent_city = cities[FIRST_CITY]
     corent_city.resarch_station = True
     city.draw(corent_city, screen, colors_palet['PINK'], font)
+    player.draw(corent_city, screen, 'RED')
     return corent_city
 
 def draw_cities(screen, font):
