@@ -21,6 +21,7 @@ def draw_bar_circle(screen, font, i, circle_color, font_color, point, cunter):
     pygame.draw.circle(surface=screen, color=colors_palet[circle_color], center=point , radius=20)
     if cunter:
         text_number = str(cunter[i])
+
     else:
         text_number = str(i)
 

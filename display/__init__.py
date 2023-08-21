@@ -1,4 +1,4 @@
 from display.color import colors_palet
-from display import card, tokens, city, player 
-from display.constances import CITY_RADIUS, PLAYERS_CARDS_POSITION
+from display import card, tokens, city, player, bottons 
+from display.constances import CITY_RADIUS
 from display.Color import Color

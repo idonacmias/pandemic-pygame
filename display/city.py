@@ -5,8 +5,6 @@ from .constances import CITY_RADIUS, EDGE_CITIES
 
 
 
-def click_lenth_from_center(city, muose_point):
-    return abs(city.point[0] - muose_point[0]) + abs(city.point[1] - muose_point[1])
 
 def draw(city, screen, color, font):
     pygame.draw.circle(surface=screen, color=color, center=city.point , radius=CITY_RADIUS)
@@ -44,3 +42,6 @@ def clculate_shadow_point(point, other_point):
         shadow_point = (2000, point[1])
 
     return shadow_point
+
+def click_lenth_from_center(city, mouse_point):
+    return abs(city.point[0] - mouse_point[0]) + abs(city.point[1] - mouse_point[1])
