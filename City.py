@@ -11,7 +11,7 @@ class City:
     population : int 
     routes : list
     point : tuple 
-    disease_cubes : list = field(default_factory=lambda: [0]*4)
+    disease_cubes : list = field(default_factory=lambda: [3]*4)
     resarch_station = False
     outbreack_bool = False
 

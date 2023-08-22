@@ -1,7 +1,7 @@
 import pygame
 from display import CITY_RADIUS
 from display import colors_palet, card, tokens, city, CITY_RADIUS, player, bottons
-
+import sys
 
 def if_quit(event):
     if event.type == pygame.QUIT:

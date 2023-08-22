@@ -13,11 +13,12 @@ def draw_desis_cube(screen, city):
 def positions(point, desis_type, cube_cunter):
     LENTH_BETWEEN_CUBES = 15
     LENTH_MOD_FROM_CENTER = 1.7
-    positions = [(point[0] - LENTH_BETWEEN_CUBES + cube_cunter * LENTH_BETWEEN_CUBES, point[1] + CITY_RADIUS * LENTH_MOD_FROM_CENTER),
-                 (point[0] + CITY_RADIUS * LENTH_MOD_FROM_CENTER, point[1] - LENTH_BETWEEN_CUBES + cube_cunter * LENTH_BETWEEN_CUBES), 
-                 (point[0] - LENTH_BETWEEN_CUBES + cube_cunter * LENTH_BETWEEN_CUBES, point[1] - CITY_RADIUS * LENTH_MOD_FROM_CENTER), 
-                 (point[0] - CITY_RADIUS * LENTH_MOD_FROM_CENTER, point[1] - LENTH_BETWEEN_CUBES + cube_cunter * LENTH_BETWEEN_CUBES)]
-    
+    move_aside = CITY_RADIUS * LENTH_MOD_FROM_CENTER
+    move_from_center = (cube_cunter - 1) * LENTH_BETWEEN_CUBES
+    positions = [(point[0] - move_from_center, point[1] + move_aside),
+                 (point[0] + move_aside, point[1] - move_from_center), 
+                 (point[0] - move_from_center, point[1] - move_aside), 
+                 (point[0] - move_aside, point[1] - move_from_center)]
     return positions[desis_type]
 
 def draw_squer(screen, point, color):

@@ -1,5 +1,4 @@
 import pygame
-import sys
 
 from constances import FIRST_CITY
 from display import colors_palet, city, card, tokens, player, bottons
