@@ -1,1 +1,2 @@
 FIRST_CITY = 'Atlanta'
+ACTION_PER_TURN = 4
