@@ -1,11 +1,7 @@
 import pygame
-
-from constances import FIRST_CITY
-from display import colors_palet, city, card, tokens, player, bottons
-from cities import cities
-from Player import Player
+from data import Player, cities, FIRST_CITY
 from events import if_quit, clicked_on_city, click_on_botton
-
+from display import colors_palet, city, card, tokens, player, bottons
 
 
 def main(cities):
@@ -36,7 +32,7 @@ def set_bord(screen, font, num_players=2):
     tokens.draw_outbreak_bar(screen, font, 0)
     tokens.draw_medicen_bar(screen)
     PLAYER_COLORS = ['GREEN', 'PURPLE', 'GRAY', 'PINK']
-    players = [Player(PLAYER_COLORS[i],FIRST_CITY) for i in range(num_players)]
+    players = [Player(PLAYER_COLORS[i]) for i in range(num_players)]
     player.draw(cities, screen, players)
     bottons.draw(screen, font)
     return players
