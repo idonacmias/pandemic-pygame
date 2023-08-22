@@ -6,7 +6,8 @@ from .constances import CITY_RADIUS, EDGE_CITIES
 
 
 
-def draw(city, screen, color, font):
+def draw(city, screen, font):
+    color = colors_palet[city.color.name]
     pygame.draw.circle(surface=screen, color=color, center=city.point , radius=CITY_RADIUS)
     if city.resarch_station:
         pygame.draw.circle(surface=screen, color=colors_palet['WHITE'], center=city.point , radius=10)

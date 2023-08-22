@@ -14,27 +14,31 @@ def display_back_infaction_card(screen, point=INFACTION_CARDS_POSITION):
     display_card(screen, point, 'DARK_GREEN')
     draw_biohazerd(screen, point, 'DARK_GREEN')    
 
-def draw_biohazerd(screen, point, back_color, radius=25, symbol_color='SICK_GREEN'):
+def draw_biohazerd(screen, center_point, back_color, radius=25, symbol_color='SICK_GREEN'):
     #not supporting radius change
-    a = point
-    b = (a[0], a[1] - radius)    
-    c = (a[0] + math.sqrt((3 * radius)), a[1]  + 0.5 * radius)    
-    d = (a[0] - math.sqrt((3 * radius)), a[1]  + 0.5 * radius)  
+    radius_mod = [0.8]
 
-    pygame.draw.circle(surface=screen, color=colors_palet[symbol_color], center=b , radius=1.2 * radius)
-    pygame.draw.circle(surface=screen, color=colors_palet[symbol_color], center=c , radius=1.2 * radius)
-    pygame.draw.circle(surface=screen, color=colors_palet[symbol_color], center=d , radius=1.2 * radius)
-    pygame.draw.circle(surface=screen, color=colors_palet[back_color], center=a , radius=(0.5 *radius))
+    b = (center_point[0], center_point[1] - radius)    
+    c = (center_point[0] + math.sqrt((3 * radius)), center_point[1]  + 0.5 * radius)    
+    d = (center_point[0] - math.sqrt((3 * radius)), center_point[1]  + 0.5 * radius)  
+    horn_circles_points = [b , c, d]
+    radius_mod += [1.2] * 3
 
     e = (b[0], b[1] - 10)
     f = (c[0] + 15, c[1] + 15)
     g = (d[0] - 15, d[1] + 15)
+    negative_horn_circles_points = [e , f, g]
+    radius_mod += [0.8] * 3
 
-    pygame.draw.circle(surface=screen, color=colors_palet[back_color], center=e , radius=0.8 * radius)
-    pygame.draw.circle(surface=screen, color=colors_palet[back_color], center=f , radius=0.8 * radius)
-    pygame.draw.circle(surface=screen, color=colors_palet[back_color], center=g , radius=0.8 * radius)
+    for horn_point in horn_circles_points:
+        pygame.draw.circle(surface=screen, color=colors_palet[symbol_color], center=horn_point , radius=1.2 * radius)
 
 
+
+    for horn_point in negative_horn_circles_points:
+        pygame.draw.circle(surface=screen, color=colors_palet[back_color], center=horn_point , radius=0.8 * radius)
+
+    pygame.draw.circle(surface=screen, color=colors_palet[back_color], center=center_point , radius=(0.5 *radius))
 
 def display_back_players_card(screen, point=PLAYERS_DECK_CARDS_POSITION):
     display_card(screen, point, 'DARK_BLUE')
@@ -81,22 +85,3 @@ def dispaly_player_cards(screen, font, cities, players):
         print(i)
         card_point = (INFACTION_CARDS_POSITION[0], card_row * card_row_mod[i])
         dispaly_front_infaction_card(screen, cities['Lagos'], font, card_point)
-
-    # player_1 = (INFACTION_CARDS_POSITION[0],card_row)
-
-    # card_row = card_space * 3
-
-    # player_2=(INFACTION_CARDS_POSITION[0],card_row)
-
-    # card_row = card_space * 5
-
-    # player_3=(INFACTION_CARDS_POSITION[0],card_row)
-    
-    # card_row = card_space * 7
-
-    # player_4=(INFACTION_CARDS_POSITION[0],card_row)
-
-    # dispaly_front_infaction_card(screen, cities['Lagos'], font, player_1)
-    # dispaly_front_infaction_card(screen, cities['Lagos'], font, player_2)
-    # dispaly_front_infaction_card(screen, cities['Lagos'], font, player_3)
-    # dispaly_front_infaction_card(screen, cities['Lagos'], font, player_4)
