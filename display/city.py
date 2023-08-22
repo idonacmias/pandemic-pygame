@@ -2,7 +2,7 @@ import pygame
 
 from .color import colors_palet
 from .constances import CITY_RADIUS, EDGE_CITIES
-
+from .desis_cube import draw_desis_cube
 
 
 
@@ -12,6 +12,7 @@ def draw(city, screen, font):
     if city.resarch_station:
         pygame.draw.circle(surface=screen, color=colors_palet['WHITE'], center=city.point , radius=10)
 
+    draw_desis_cube(screen, city)
     font_point = (city.point[0] - 5 * len(city.name), city.point[1] + 20)        
     text_surface = font.render(city.name, True, colors_palet['WHITE']) 
     screen.blit(text_surface, font_point)
