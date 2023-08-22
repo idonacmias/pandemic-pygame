@@ -11,6 +11,7 @@ def main():
     font = pygame.font.Font(None, 28) 
     clock = pygame.time.Clock()
     players = set_bord(screen, font, 4)
+    bord.draw_bord(screen, font, cities, players)
     corent_player = 0
     while True:
         for event in pygame.event.get():
@@ -25,7 +26,6 @@ def set_bord(screen, font, num_players=2):
     cities[FIRST_CITY].resarch_station = True
     PLAYER_COLORS = ['GREEN', 'PURPLE', 'GRAY', 'PINK']
     players = [Player(PLAYER_COLORS[i]) for i in range(num_players)]
-    bord.draw_bord(screen, font, cities, players)
     return players
 
 
