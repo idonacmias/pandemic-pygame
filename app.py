@@ -1,25 +1,26 @@
 import pygame
-from data import Player, cities, FIRST_CITY
-from events import clicked_on_city, click_on_botton
-from display import colors_palet, bord
 import sys
-
+from data import Player, cities, FIRST_CITY
+from events import handel_event
+from display import colors_palet, bord
 
 def main():
+
     pygame.init()
     screen = pygame.display.set_mode()
-    screen.fill(colors_palet['PURPLE'])
     font = pygame.font.Font(None, 28) 
     clock = pygame.time.Clock()
+    corent_page = 'map'
     players = set_bord(4)
-    bord.draw_bord(screen, font, cities, players)
     corent_player = 0
     while True:
         for event in pygame.event.get():
             if_quit(event)
-            clicked_on_city(event, screen, font, cities, players, corent_player)
-            click_on_botton(event, screen,font, cities, players, corent_player)
+            temp_page = handel_event(event, corent_page, cities, players, corent_player)
+            if temp_page:
+                corent_page = temp_page
 
+        bord.draw_bord(screen, font, corent_page, cities, players)
         pygame.display.update()
         clock.tick(60)
 

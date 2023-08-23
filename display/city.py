@@ -44,6 +44,3 @@ def clculate_shadow_point(point, other_point):
         shadow_point = (2000, point[1])
 
     return shadow_point
-
-def click_lenth_from_center(city, mouse_point):
-    return abs(city.point[0] - mouse_point[0]) + abs(city.point[1] - mouse_point[1])

@@ -1,2 +1,3 @@
-from events.event import clicked_on_city, click_on_botton
+from events.event import handel_event
+# from events.map
 
