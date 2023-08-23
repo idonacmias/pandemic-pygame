@@ -7,3 +7,4 @@ class Player():
         self.color = color
         self.corent_city_name = FIRST_CITY
         self.actions = ACTION_PER_TURN
+        self.hand = ['Atlanta', 'Chicago', 'Atlanta', 'Chicago', 'Atlanta', 'Chicago', 'Atlanta', 'Chicago', 'Atlanta']

@@ -67,21 +67,25 @@ def dispaly_front_card(screen, point, city, font, background_color, text_color):
     card_texts = ['city_name:', city.name, 'city_population:', city.population]
     point = (point[0] - 100, point[1] - CARD_HALF_HIGHT)
     for text in card_texts:
-        text_render = font.render(str(text), True, colors_palet[text_color])
-        point = (point[0], point[1] + 30)
-        screen.blit(text_render, point)
+        point = print_text(screen, font, text, text_color, point)
 
-
-
-
-
-def dispaly_player_cards(screen, font, cities, players):
-    screen.fill(colors_palet['PURPLE'])
-
-    card_space = INFACTION_CARDS_POSITION[1]
-    card_row = CARD_HALF_HIGHT * 2 + 10
-    card_row_mod = [1, 3, 5, 7]
+def dispaly_player_cards(screen, font, cities, players, card_space_mod=0):
+    SPACE_BETWEEN_CARDS = 50
+    SPACE_FROM_TOP = 150
+    card_space_mod = - 1000
+    SPACE_FROM_SIDE = 200 +  card_space_mod
+    card_row = CARD_HALF_HIGHT * 2 + SPACE_BETWEEN_CARDS
     for i, player in enumerate(players):
-        print(i)
-        card_point = (INFACTION_CARDS_POSITION[0], card_row * card_row_mod[i])
-        dispaly_front_infaction_card(screen, cities['Lagos'], font, card_point)
+        text_point = (100, card_row * i )
+        text = f'{player.color} in {player.corent_city_name}'
+        print_text(screen, font, text, 'WHITE', text_point)
+        card_colom = CARD_HALF_WHIDTH * 2 + SPACE_BETWEEN_CARDS 
+        for j, card in enumerate(player.hand):
+            card_point = (SPACE_FROM_SIDE + j * card_colom, card_row * i + SPACE_FROM_TOP)
+            dispaly_front_player_card(screen, cities[card], font, card_point)
+
+def print_text(screen, font, text, text_color, point):
+    text_render = font.render(str(text), True, colors_palet[text_color])
+    point = (point[0], point[1] + 30)
+    screen.blit(text_render, point)
+    return point

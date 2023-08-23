@@ -1,10 +1,10 @@
 import pygame
-from .map import clicked_on_city, click_on_botton
+from .bord_map import clicked_on_city, click_on_botton
 
 def handel_event(event, corent_page, cities, players, corent_player):
     if corent_page == 'map':
         corent_page = handel_map_events(event, cities, players, corent_player)
-   
+
     return corent_page
 
 def handel_map_events(event, cities, players, corent_player):
