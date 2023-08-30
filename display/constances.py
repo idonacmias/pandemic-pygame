@@ -19,6 +19,10 @@ EDGE_CITIES = ['San Francisco', 'Los Angeles', 'Sydney', 'Manila', 'Tokyo']
 
 MAP_BUTTONS_POINTS = [(250, 920), (250, 970), (250, 1020)]
 MAP_BUTTONS_TEXTS = ['display player cards', 'builed reserch station', 'discover cure']
+
+CARDS_BUTTONS_POINTS = [(250, 970)]
+CARDS_BUTTONS_TEXTS = ['back to map']
+
 BUTTON_HIGHT = 25
 BUTTON_WHIDTH = 225
 

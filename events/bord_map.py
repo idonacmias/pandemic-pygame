@@ -23,8 +23,8 @@ def click_lenth_from_center(city, mouse_point):
 
 
 def click_on_botton(cities, players, corent_player, mouse_point):
-    BUTTONS_DATA = zip(MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS)
-    botton_clicked = witch_click_on(mouse_point, BUTTONS_DATA)
+    button_data = zip(MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS)
+    botton_clicked = witch_click_on(mouse_point, button_data)
     if botton_clicked == 'display player cards':
         corent_page = 'cards'
         return corent_page  

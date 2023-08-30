@@ -1,17 +1,20 @@
-from display import BUTTON_WHIDTH, BUTTON_HIGHT
+from display import BUTTON_WHIDTH, BUTTON_HIGHT, CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS
 
 
 
 def click_on_botton(cities, players, corent_player, mouse_point):
-    button_point = (500, 500)
-    text = witch_click_on(mouse_point, button_point)
-    
+    buttons_data = zip(CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS)
+    botton_clicked = witch_click_on(mouse_point, buttons_data)
+    if botton_clicked == 'back to map':
+        corent_page = 'map'
+        return corent_page 
 
 
-def witch_click_on(mouse_point, button_point):
-    square_points = [button_point, (button_point[0] + BUTTON_WHIDTH, button_point[1] + BUTTON_HIGHT)]
-    if is_in_squer(square_points, mouse_point):
-        return text                 
+def witch_click_on(mouse_point, buttons_data):
+    for button_point, text in buttons_data:   
+        square_points = [button_point, (button_point[0] + BUTTON_WHIDTH, button_point[1] + BUTTON_HIGHT)]
+        if is_in_squer(square_points, mouse_point):
+            return text                 
 
 
 
