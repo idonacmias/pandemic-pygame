@@ -1,5 +1,5 @@
 from display import colors_palet, city, card, tokens, player, bottons, bord
-from .constances import BUTTONS_POINTS, BUTTONS_TEXTS
+from .constances import MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS
 
 
 def draw_bord(screen, font, corent_page, cities, players, player_discard):
@@ -21,7 +21,7 @@ def draw_map(screen, font, cities, players, player_discard):
    tokens.draw_outbreak_bar(screen, font, 0)
    tokens.draw_medicen_bar(screen)
    player.draw(cities, screen, players)
-   buttons_data = zip(BUTTONS_POINTS, BUTTONS_TEXTS)
+   buttons_data = zip(MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS)
    bottons.draw(screen, font, buttons_data)
 
 

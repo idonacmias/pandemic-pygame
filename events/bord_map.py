@@ -1,5 +1,5 @@
 from display import card, CITY_RADIUS, bottons
-from display import BUTTONS_POINTS,BUTTONS_TEXTS, BUTTON_WHIDTH, BUTTON_HIGHT
+from display import MAP_BUTTONS_POINTS,MAP_BUTTONS_TEXTS, BUTTON_WHIDTH, BUTTON_HIGHT
 
 
 
@@ -14,7 +14,6 @@ def clicked_on_city(cities, players, corent_player, mouse_point):
             min_radius = temp_min_radius
             closest_city_name = city_data.name
 
-
     if closest_city_name:
         players[corent_player].corent_city_name = closest_city_name
 
@@ -24,7 +23,7 @@ def click_lenth_from_center(city, mouse_point):
 
 
 def click_on_botton(cities, players, corent_player, mouse_point):
-    BUTTONS_DATA = zip(BUTTONS_POINTS, BUTTONS_TEXTS)
+    BUTTONS_DATA = zip(MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS)
     botton_clicked = witch_click_on(mouse_point, BUTTONS_DATA)
     if botton_clicked == 'display player cards':
         corent_page = 'cards'
