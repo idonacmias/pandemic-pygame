@@ -21,3 +21,6 @@ BUTTONS_POINTS = [(250, 920), (250, 970), (250, 1020)]
 BUTTONS_TEXTS = ['display player cards', 'builed reserch station', 'discover cure']
 BUTTON_HIGHT = 25
 BUTTON_WHIDTH = 225
+
+SPACE_BETWEEN_CARDS = 50
+SPACE_FROM_TOP = 150

@@ -1,11 +1,12 @@
 import pygame
 import sys
-from data import Player, cities, FIRST_CITY
+from data import Player, cities, FIRST_CITY, EventCard
 from events import handel_event
 from display import colors_palet, bord
 
-def main():
 
+
+def main():
     pygame.init()
     screen = pygame.display.set_mode()
     font = pygame.font.Font(None, 28) 
@@ -13,14 +14,17 @@ def main():
     corent_page = 'map'
     players = set_bord(4)
     corent_player = 0
+    one_quiet_night = EventCard('one quiet night', 'skip next infaction phase')
+    player_discard = one_quiet_night
     while True:
         for event in pygame.event.get():
             if_quit(event)
             temp_page = handel_event(event, corent_page, cities, players, corent_player)
+
             if temp_page:
                 corent_page = temp_page
 
-        bord.draw_bord(screen, font, corent_page, cities, players)
+        bord.draw_bord(screen, font, corent_page, cities, players, player_discard)
         pygame.display.update()
         clock.tick(60)
 

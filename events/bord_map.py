@@ -1,6 +1,8 @@
 from display import card, CITY_RADIUS, bottons
 from display import BUTTONS_POINTS,BUTTONS_TEXTS, BUTTON_WHIDTH, BUTTON_HIGHT
 
+
+
 def clicked_on_city(cities, players, corent_player, mouse_point):
     min_radius = CITY_RADIUS
     closest_city_name = None
@@ -15,13 +17,15 @@ def clicked_on_city(cities, players, corent_player, mouse_point):
 
     if closest_city_name:
         players[corent_player].corent_city_name = closest_city_name
+
         
 def click_lenth_from_center(city, mouse_point):
     return abs(city.point[0] - mouse_point[0]) + abs(city.point[1] - mouse_point[1])
 
 
 def click_on_botton(cities, players, corent_player, mouse_point):
-    botton_clicked = witch_click_on(mouse_point)
+    BUTTONS_DATA = zip(BUTTONS_POINTS, BUTTONS_TEXTS)
+    botton_clicked = witch_click_on(mouse_point, BUTTONS_DATA)
     if botton_clicked == 'display player cards':
         corent_page = 'cards'
         return corent_page  
@@ -33,12 +37,13 @@ def click_on_botton(cities, players, corent_player, mouse_point):
         corent_city = cities[players[corent_player].corent_city_name]
         corent_city.resarch_station = True
 
-def witch_click_on(mouse_point):
-    BUTTONS_DATA = zip(BUTTONS_POINTS, BUTTONS_TEXTS)
-    for button_point, text in BUTTONS_DATA:
+
+def witch_click_on(mouse_point, buttons_data):
+    for button_point, text in buttons_data:   
         square_points = [button_point, (button_point[0] + BUTTON_WHIDTH, button_point[1] + BUTTON_HIGHT)]
         if is_in_squer(square_points, mouse_point):
             return text                 
+
 
 def is_in_squer(square_points, point):
     x = 0

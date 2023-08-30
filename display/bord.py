@@ -1,19 +1,19 @@
 from display import colors_palet, city, card, tokens, player, bottons, bord
 
-def draw_bord(screen, font, corent_page, cities, players):
+def draw_bord(screen, font, corent_page, cities, players, player_discard):
    if corent_page == 'map':
-      draw_map(screen, font, cities, players)
+      draw_map(screen, font, cities, players, player_discard)
 
    if corent_page == 'cards':
       draw_cards(screen, font, cities, players)
 
-def draw_map(screen, font, cities, players):
+def draw_map(screen, font, cities, players, player_discard):
    screen.fill(colors_palet['PURPLE'])
    draw_cities(screen, font, cities)    
    card.display_back_infaction_card(screen)
    card.dispaly_front_infaction_card(screen, cities['Lagos'], font)
    card.display_back_players_card(screen)
-   card.dispaly_front_player_card(screen, cities['Lagos'], font)
+   card.dispaly_front_player_card(screen, player_discard, font)
    tokens.draw_infaction_scale(screen, font, 0)
    tokens.draw_outbreak_bar(screen, font, 0)
    tokens.draw_medicen_bar(screen)
@@ -29,4 +29,4 @@ def draw_cities(screen, font, cities):
 
 def draw_cards(screen, font, cities, players):
    screen.fill(colors_palet['PURPLE'])
-   card.dispaly_player_cards(screen, font, cities, players)
+   card.dispaly_players_cards(screen, font, cities, players)
