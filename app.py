@@ -8,15 +8,22 @@ from display import colors_palet, bord
 
 def main():
     pygame.init()
+    # screen_info = pygame.display.Info()
+    # print(screen_info)
     screen = pygame.display.set_mode()
     font = pygame.font.Font(None, 28) 
     clock = pygame.time.Clock()
     corent_page = 'map'
     players = set_bord(4)
     corent_player = 0
+ 
     one_quiet_night = EventCard('one quiet night', 'skip next infaction phase')
     player_discard = one_quiet_night
+ 
     while True:
+        # screen_info = pygame.display.Info()
+        # print(screen_info)
+
         for event in pygame.event.get():
             if_quit(event)
             temp_page = handel_event(event, corent_page, cities, players, corent_player)
