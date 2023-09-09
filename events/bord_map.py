@@ -22,9 +22,7 @@ def click_lenth_from_center(city, mouse_point):
     return abs(city.point[0] - mouse_point[0]) + abs(city.point[1] - mouse_point[1])
 
 
-def click_on_botton(cities, players, corent_player, mouse_point):
-    button_data = zip(MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS)
-    botton_clicked = witch_click_on(mouse_point, button_data)
+def click_on_botton(cities, players, corent_player, botton_clicked):
     if botton_clicked == 'display player cards':
         corent_page = 'cards'
         return corent_page  
@@ -35,16 +33,3 @@ def click_on_botton(cities, players, corent_player, mouse_point):
     elif botton_clicked == 'builed reserch station':
         corent_city = cities[players[corent_player].corent_city_name]
         corent_city.resarch_station = True
-
-
-def witch_click_on(mouse_point, buttons_data):
-    for button_point, text in buttons_data:   
-        square_points = [button_point, (button_point[0] + BUTTON_WHIDTH, button_point[1] + BUTTON_HIGHT)]
-        if is_in_squer(square_points, mouse_point):
-            return text                 
-
-
-def is_in_squer(square_points, point):
-    x = 0
-    y = 1
-    return square_points[0][x] < point[x] and square_points[0][y] < point[y] and  square_points[1][x] > point[x] and square_points[1][y] > point[y]
