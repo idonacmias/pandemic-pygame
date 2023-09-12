@@ -10,7 +10,6 @@ def handel_event(event, corent_page, cities, players, corent_player):
    
     elif corent_page == 'cards':
         corent_page = handel_cards_events(event, cities, players, corent_player)
-        pass
 
     return corent_page
 
@@ -19,8 +18,7 @@ def handel_map_events(event, cities, players, corent_player):
     if event.type == pygame.MOUSEBUTTONUP:
         mouse_point = pygame.mouse.get_pos()
         bord_map.clicked_on_city(cities, players, corent_player, mouse_point)
-        button_data = zip(MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS)
-        botton_clicked = witch_click_on(mouse_point, button_data)
+        botton_clicked = witch_button_click_on(mouse_point, MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS)
         corent_page = bord_map.click_on_botton(cities, players, corent_player, botton_clicked)
         return corent_page
 
@@ -29,14 +27,15 @@ def handel_map_events(event, cities, players, corent_player):
 def handel_cards_events(event, cities, players, corent_player):
     if event.type == pygame.MOUSEBUTTONUP:
         mouse_point = pygame.mouse.get_pos()
-        buttons_data = zip(CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS)
-        botton_clicked = witch_click_on(mouse_point, buttons_data)
+        card = bord_cards.witch_card_click_on(mouse_point, players)
+        botton_clicked = witch_button_click_on(mouse_point, CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS)
         corent_page = bord_cards.click_on_botton(cities, players, corent_player, botton_clicked)
         return corent_page
 
 
 
-def witch_click_on(mouse_point, buttons_data):
+def witch_button_click_on(mouse_point, buttons_point, buttons_text):
+    buttons_data = zip(buttons_point, buttons_text)
     for button_point, text in buttons_data:   
         square_points = [button_point, (button_point[0] + BUTTON_WHIDTH, button_point[1] + BUTTON_HIGHT)]
         if is_in_squer(square_points, mouse_point):
