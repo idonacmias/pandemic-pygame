@@ -4,9 +4,9 @@ from display import MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS, BUTTON_WHIDTH, BUTTON
 
 
 
-def handel_event(event, corent_page, cities, players, corent_player):
+def handel_event(event, corent_page, cities, players, corent_player, bord_state):
     if corent_page == 'map':
-        corent_page = handel_map_events(event, cities, players, corent_player)
+        corent_page = handel_map_events(event, cities, players, corent_player, bord_state)
    
     elif corent_page == 'cards':
         corent_page = handel_cards_events(event, cities, players, corent_player)
@@ -14,12 +14,12 @@ def handel_event(event, corent_page, cities, players, corent_player):
     return corent_page
 
 
-def handel_map_events(event, cities, players, corent_player):
+def handel_map_events(event, cities, players, corent_player, bord_state):
     if event.type == pygame.MOUSEBUTTONUP:
         mouse_point = pygame.mouse.get_pos()
         bord_map.clicked_on_city(cities, players, corent_player, mouse_point)
         botton_clicked = witch_button_click_on(mouse_point, MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS)
-        corent_page = bord_map.click_on_botton(cities, players, corent_player, botton_clicked)
+        corent_page = bord_map.click_on_botton(cities, players, corent_player, botton_clicked, bord_state)
         return corent_page
 
 

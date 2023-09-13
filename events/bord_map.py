@@ -16,13 +16,14 @@ def clicked_on_city(cities, players, corent_player, mouse_point):
 
     if closest_city_name:
         players[corent_player].corent_city_name = closest_city_name
+        players[corent_player].actions -= 1
 
         
 def click_lenth_from_center(city, mouse_point):
     return abs(city.point[0] - mouse_point[0]) + abs(city.point[1] - mouse_point[1])
 
 
-def click_on_botton(cities, players, corent_player, botton_clicked):
+def click_on_botton(cities, players, corent_player, botton_clicked, bord_state):
     if botton_clicked == 'display player cards':
         corent_page = 'cards'
         return corent_page  
@@ -30,6 +31,9 @@ def click_on_botton(cities, players, corent_player, botton_clicked):
     elif botton_clicked == 'discover cure':
         print('cure discoverd')
 
-    elif botton_clicked == 'builed reserch station':
+    elif botton_clicked == 'builed research station' and bord_state.research_station > 0:
         corent_city = cities[players[corent_player].corent_city_name]
-        corent_city.resarch_station = True
+        corent_city.research_station = True
+        bord_state.research_station -= 1
+        players[corent_player].actions -= 1
+

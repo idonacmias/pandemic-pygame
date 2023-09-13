@@ -11,8 +11,8 @@ class City:
     population : int 
     routes : list
     point : tuple 
-    disease_cubes : list = field(default_factory=lambda: [3]*4)
-    resarch_station = False
+    disease_cubes : list = field(default_factory=lambda: [0]*4)
+    research_station = False
     outbreack_bool = False
 
     def __post_init__(self):

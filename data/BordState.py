@@ -8,5 +8,6 @@ from dataclasses import dataclass, field
 class BordState:
     outbreack  = 0
     cure  = [0] * 4
-    cure_cube = [24] * 4
-    
+    disease_cube = [24] * 4
+    infaction_rate = 0
+    research_station = 6

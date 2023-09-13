@@ -1,35 +1,42 @@
 import pygame
 from .color import colors_palet
-from .constances import INFACTION_SCALE_CUNTER, INFACTION_SCALE_POSITIONS, CURE_BAR_POINT, OUTBREAK_BAR_POINTS
+from .constances import INFACTION_SCALE_CUNTER, INFACTION_SCALE_POSITIONS, CURE_BAR_POINT, OUTBREAK_BAR_POINTS, BAR_CIRCLE_RADIUS
 from .Color import Color
 
-def draw_infaction_scale(screen, font, rate=0):
-    draw_bar(screen, font, INFACTION_SCALE_POSITIONS, INFACTION_SCALE_CUNTER, rate=rate)
+def draw_infaction_rate(screen, font, rate):
+    draw_bar(screen, font, INFACTION_SCALE_POSITIONS, rate, INFACTION_SCALE_CUNTER)
 
-def draw_outbreak_bar(screen, font, rate=0):
-    draw_bar(screen, font, OUTBREAK_BAR_POINTS, rate=rate)
+def draw_outbreak_bar(screen, font, rate):
+    draw_bar(screen, font, OUTBREAK_BAR_POINTS, rate)
 
-def draw_bar(screen, font, points, cunter=None, rate=0):
+def draw_bar(screen, font, points, rate, cunter=None):
     for i, point in enumerate(points):
         if i == rate:
-            draw_bar_circle(screen, font, i, 'SICK_GREEN', 'YELLOW', point, cunter)
+            circle_color = 'SICK_GREEN'
+            font_color = 'YELLOW'
 
         else:
-            draw_bar_circle(screen, font, i, 'GREEN', 'BLACK', point, cunter)
+            circle_color = 'GREEN'
+            font_color = 'BLACK'
+        
+        if cunter:
+            text_number = str(cunter[i])
 
-def draw_bar_circle(screen, font, i, circle_color, font_color, point, cunter):
-    pygame.draw.circle(surface=screen, color=colors_palet[circle_color], center=point , radius=20)
-    if cunter:
-        text_number = str(cunter[i])
+        else:
+            text_number = str(i)
 
-    else:
-        text_number = str(i)
 
+
+        draw_bar_circle(screen, font, text_number, circle_color, font_color, point)
+
+
+def draw_bar_circle(screen, font, text_number, circle_color, font_color, point):
+    pygame.draw.circle(surface=screen, color=colors_palet[circle_color], center=point , radius=BAR_CIRCLE_RADIUS)
     text_render = font.render(text_number, True, colors_palet[font_color])
     text_point = (point[0] - 5, point[1] - 7)    
     screen.blit(text_render, text_point)
 
-def draw_medicen_bar(screen, cure=[0,2,1,2]):
+def draw_medicen_bar(screen, cure):
     colors = list(Color.__members__)
     for color, point in enumerate(CURE_BAR_POINT):
         a,b,c,d = point[0], point[1], point[1] + 70, point[0] + 70

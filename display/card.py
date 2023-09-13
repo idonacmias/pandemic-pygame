@@ -71,7 +71,7 @@ def dispaly_front_infaction_card(screen, city, font, point=DISCARD_INFACTION_CAR
     dispaly_front_card(screen, point, city, font, 'DARK_GREEN', city.color.name, card_texts)
 
 
-def dispaly_front_player_card(screen, player_card, font, point=DISCARD_PLAYERS_DECK_CARDS_POSITION):
+def dispaly_front_player_card(screen,font, player_card, point=DISCARD_PLAYERS_DECK_CARDS_POSITION):
     #match case   
     if is_card_of_type(player_card, City.City):
         card_texts = city_card_text(player_card)
@@ -93,7 +93,6 @@ def dispaly_front_player_card(screen, player_card, font, point=DISCARD_PLAYERS_D
 
 def is_card_of_type(player_card, card_type):
     return type(player_card) == card_type
-    #is_instance
 
 def city_card_text(city):
     return ['city_name:', city.name, 'city_population:', city.population]
@@ -144,5 +143,5 @@ def culculate_cards_point(player, card_row, player_num, space_from_side):
 
 def display_player_hand(screen, font, cities, player_cards_points):
     for card_point, card_name in player_cards_points:
-        dispaly_front_player_card(screen, cities[card_name], font, card_point)
+        dispaly_front_player_card(screen, font, cities[card_name], card_point)
 
