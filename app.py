@@ -1,7 +1,7 @@
 import pygame
 import sys
 from data import Player, cities, FIRST_CITY, EventCard, BordState
-from events import handel_event, END_TURN
+from events import handel_event
 from display import colors_palet, bord_display
 from itertools import cycle
 
@@ -27,15 +27,17 @@ def main():
     while True:
         # screen_info = pygame.display.Info()
         # print(screen_info)
-        if corent_player.actions == 0:
-            pygame.event.post(pygame.event.Event(END_TURN))
-            corent_player = next(cycle_player)
-            
-
+        
 
         for event in pygame.event.get():
             if_quit(event)
-            temp_page = handel_event(event, corent_page, cities, players, corent_player, cycle_player, bord_state)
+            if corent_player.actions == 0: 
+                print('END_TURN')
+                corent_player = next(cycle_player)
+                corent_player.actions = 4
+
+
+            temp_page = handel_event(event, corent_page, cities, players, corent_player, bord_state)
 
             if temp_page:
                 corent_page = temp_page
@@ -52,10 +54,11 @@ def if_quit(event):
 
 
 def set_bord(num_players=2):
+    bord_state = BordState([FIRST_CITY])
     cities[FIRST_CITY].research_station = True
     PLAYER_COLORS = ['GREEN', 'PURPLE', 'GRAY', 'PINK']
     players = [Player(PLAYER_COLORS[i]) for i in range(num_players)]
-    bord_state = BordState()
+
     return players, bord_state
 
 

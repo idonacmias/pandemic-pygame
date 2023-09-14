@@ -2,16 +2,8 @@ import pygame
 from events import bord_map, bord_cards
 from display import MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS, BUTTON_WHIDTH, BUTTON_HIGHT, CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS
 
-END_TURN = pygame.USEREVENT + 1
 
-
-
-def handel_event(event, corent_page, cities, players, corent_player, cycle_player, bord_state):
-    
-    if event.type == END_TURN:
-        print('END_TURN')
-        corent_player.actions = 4
-        
+def handel_event(event, corent_page, cities, players, corent_player, bord_state):
     if corent_page == 'map':
         corent_page = handel_map_events(event, cities, players, corent_player, bord_state)
    
@@ -24,7 +16,7 @@ def handel_event(event, corent_page, cities, players, corent_player, cycle_playe
 def handel_map_events(event, cities, players, corent_player, bord_state):
     if event.type == pygame.MOUSEBUTTONUP:
         mouse_point = pygame.mouse.get_pos()
-        bord_map.clicked_on_city(cities, corent_player, mouse_point)
+        bord_map.clicked_on_city(cities, corent_player, mouse_point, bord_state)
         botton_clicked = witch_button_click_on(mouse_point, MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS)
         corent_page = bord_map.click_on_botton(cities, corent_player, botton_clicked, bord_state)
         return corent_page
