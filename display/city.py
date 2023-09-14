@@ -1,7 +1,7 @@
 import pygame
 
 from .color import colors_palet
-from .constances import CITY_RADIUS, EDGE_CITIES
+from .constances import CITY_RADIUS, EDGE_CITIES, RESEARCH_STATION_RADIUS
 from .desis_cube import draw_desis_cube
 
 
@@ -10,7 +10,7 @@ def draw(city, screen, font):
     color = colors_palet[city.color.name]
     pygame.draw.circle(surface=screen, color=color, center=city.point , radius=CITY_RADIUS)
     if city.research_station:
-        pygame.draw.circle(surface=screen, color=colors_palet['WHITE'], center=city.point , radius=10)
+        pygame.draw.circle(surface=screen, color=colors_palet['WHITE'], center=city.point , radius=RESEARCH_STATION_RADIUS)
 
     draw_desis_cube(screen, city)
     font_point = (city.point[0] - 5 * len(city.name), city.point[1] + 20)        

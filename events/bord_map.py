@@ -3,10 +3,10 @@ from display import MAP_BUTTONS_POINTS,MAP_BUTTONS_TEXTS, BUTTON_WHIDTH, BUTTON_
 
 
 
-def clicked_on_city(cities, players, corent_player, mouse_point):
+def clicked_on_city(cities, corent_player, mouse_point):
     min_radius = CITY_RADIUS
     closest_city_name = None
-    corent_city = cities[players[corent_player].corent_city_name]
+    corent_city = cities[corent_player.corent_city_name]
     for city_name in corent_city.routes:
         city_data = cities[city_name]
         temp_min_radius = click_lenth_from_center(city_data, mouse_point)
@@ -15,15 +15,15 @@ def clicked_on_city(cities, players, corent_player, mouse_point):
             closest_city_name = city_data.name
 
     if closest_city_name:
-        players[corent_player].corent_city_name = closest_city_name
-        players[corent_player].actions -= 1
+        corent_player.corent_city_name = closest_city_name
+        corent_player.actions -= 1
 
         
 def click_lenth_from_center(city, mouse_point):
     return abs(city.point[0] - mouse_point[0]) + abs(city.point[1] - mouse_point[1])
 
 
-def click_on_botton(cities, players, corent_player, botton_clicked, bord_state):
+def click_on_botton(cities, corent_player, botton_clicked, bord_state):
     if botton_clicked == 'display player cards':
         corent_page = 'cards'
         return corent_page  
@@ -31,9 +31,10 @@ def click_on_botton(cities, players, corent_player, botton_clicked, bord_state):
     elif botton_clicked == 'discover cure':
         print('cure discoverd')
 
-    elif botton_clicked == 'builed research station' and bord_state.research_station > 0:
-        corent_city = cities[players[corent_player].corent_city_name]
-        corent_city.research_station = True
-        bord_state.research_station -= 1
-        players[corent_player].actions -= 1
+    elif botton_clicked == 'builed research station':
+        corent_city = cities[corent_player.corent_city_name]
+        if not corent_city.research_station and bord_state.research_station > 0:
+            corent_city.research_station = True
+            bord_state.research_station -= 1
+            corent_player.actions -= 1
 

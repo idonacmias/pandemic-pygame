@@ -2,7 +2,7 @@ from display import CARD_HALF_HIGHT, SPACE_BETWEEN_CARDS, culculate_cards_point,
 
 
 
-def click_on_botton(cities, players, corent_player, botton_clicked):
+def click_on_botton(cities, corent_player, botton_clicked):
     if botton_clicked == 'back to map':
         corent_page = 'map'
         return corent_page 
@@ -24,6 +24,15 @@ def share_knowledge(corent_player):
         player_loose_action()
 
 
+def witch_card_click_on(mouse_point, players):
+    cards_data = cards_points(players)
+    for card_point, card in cards_data: 
+        square_points = culculate_card_square(card_point)
+        square_points = [square_points[0], square_points[2]]
+        if is_in_squer(square_points, mouse_point):
+            return card                 
+
+
 def cards_points(players, card_space_mod=0):
     space_from_side = 200 +  card_space_mod
     card_row = CARD_HALF_HIGHT * 2 + SPACE_BETWEEN_CARDS
@@ -32,15 +41,6 @@ def cards_points(players, card_space_mod=0):
         player_cards_points += culculate_cards_point(player, card_row, player_num, space_from_side)
 
     return player_cards_points
-
-
-def witch_card_click_on(mouse_point, players):
-    cards_data = cards_points(players)
-    for card_point, card in cards_data: 
-        square_points = culculate_card_square(card_point)
-        square_points = [square_points[0], square_points[2]]
-        if is_in_squer(square_points, mouse_point):
-            return card                 
 
 
 def is_in_squer(square_points, point):
