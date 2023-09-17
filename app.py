@@ -1,6 +1,6 @@
 import pygame
 import sys
-from data import Player, cities, FIRST_CITY, EventCard, BordState
+from data import Player, cities, FIRST_CITY, EventCard, BordState, ACTION_PER_TURN
 from events import handel_event
 from display import colors_palet, bord_display
 from itertools import cycle
@@ -34,7 +34,7 @@ def main():
             if corent_player.actions == 0: 
                 print('END_TURN')
                 corent_player = next(cycle_player)
-                corent_player.actions = 4
+                corent_player.actions = ACTION_PER_TURN
 
 
             temp_page = handel_event(event, corent_page, cities, players, corent_player, bord_state)
@@ -54,13 +54,26 @@ def if_quit(event):
 
 
 def set_bord(num_players=2):
-    bord_state = BordState([FIRST_CITY])
+    bord_state = BordState()
     cities[FIRST_CITY].research_station = True
     PLAYER_COLORS = ['GREEN', 'PURPLE', 'GRAY', 'PINK']
     players = [Player(PLAYER_COLORS[i]) for i in range(num_players)]
-
+    first_infaction(bord_state)
     return players, bord_state
 
+
+def first_infaction(bord_state):
+    for num_disease_cubes in range(1, 4):
+        infected_cards = bord_state.infaction_cards[:3]
+        bord_state.infaction_cards = bord_state.infaction_cards[3:]
+        bord_state.infaction_discard_cards += infected_cards
+        for city in infected_cards:
+            infect_city(city, num_disease_cubes)
+
+    print(bord_state)
+
+def infect_city(city, num_disease_cubes=1):
+    city.disease_cubes[city.color - 1] = num_disease_cubes
 
 if __name__ == '__main__':
     main()
