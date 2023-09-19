@@ -1,0 +1,1 @@
+from .infaction import first_infaction, infected_phase

@@ -1,10 +1,10 @@
 import pygame
 from .color import colors_palet
-from .constances import INFACTION_SCALE_CUNTER, INFACTION_SCALE_POSITIONS, CURE_BAR_POINT, OUTBREAK_BAR_POINTS, BAR_CIRCLE_RADIUS
+from .constances import INFACTION_SCALE_POSITIONS, CURE_BAR_POINT, OUTBREAK_BAR_POINTS, BAR_CIRCLE_RADIUS
 from .Color import Color
 
-def draw_infaction_rate(screen, font, rate):
-    draw_bar(screen, font, INFACTION_SCALE_POSITIONS, rate, INFACTION_SCALE_CUNTER)
+def draw_infaction_rate(screen, font, bord_state):
+    draw_bar(screen, font, INFACTION_SCALE_POSITIONS, bord_state.infaction_rate, bord_state.infaction_scale_cunter)
 
 def draw_outbreak_bar(screen, font, rate):
     draw_bar(screen, font, OUTBREAK_BAR_POINTS, rate)

@@ -1,7 +1,5 @@
 import pygame
 from dataclasses import dataclass, field
-
-from display import colors_palet
 from display import Color
 
 @dataclass
@@ -11,9 +9,8 @@ class City:
     population : int 
     routes : list
     point : tuple 
-    disease_cubes : list = field(default_factory=lambda: [0]*4)
+    disease_cubes : dict = field(default_factory=lambda: {disease_color : 0 for disease_color in Color})
     research_station = False
-    outbreack_bool = False
 
     def __post_init__(self):
         self.color = Color[self.color]

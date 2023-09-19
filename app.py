@@ -4,7 +4,7 @@ from data import Player, cities, FIRST_CITY, EventCard, BordState, ACTION_PER_TU
 from events import handel_event
 from display import colors_palet, bord_display
 from itertools import cycle
-
+from lib import first_infaction, infected_phase
 
 def main():
     pygame.init()
@@ -35,7 +35,7 @@ def main():
                 print('END_TURN')
                 corent_player = next(cycle_player)
                 corent_player.actions = ACTION_PER_TURN
-
+                infected_phase(bord_state)
 
             temp_page = handel_event(event, corent_page, cities, players, corent_player, bord_state)
 
@@ -62,18 +62,6 @@ def set_bord(num_players=2):
     return players, bord_state
 
 
-def first_infaction(bord_state):
-    for num_disease_cubes in range(1, 4):
-        infected_cards = bord_state.infaction_cards[:3]
-        bord_state.infaction_cards = bord_state.infaction_cards[3:]
-        bord_state.infaction_discard_cards += infected_cards
-        for city in infected_cards:
-            infect_city(city, num_disease_cubes)
-
-    print(bord_state)
-
-def infect_city(city, num_disease_cubes=1):
-    city.disease_cubes[city.color - 1] = num_disease_cubes
 
 if __name__ == '__main__':
     main()

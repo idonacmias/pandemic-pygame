@@ -1,0 +1,41 @@
+from data import cities
+
+
+
+def first_infaction(bord_state):
+    for num_disease_cubes in range(1, 4):
+        infected_cards_drawn = draw_infected_cards(bord_state, 3)
+        for city in infected_cards_drawn:
+            diseas_color = city.color
+            add_diseas_to_city(city, diseas_color, num_disease_cubes=num_disease_cubes)
+
+
+def infected_phase(bord_state):
+    infected_cards_drawn = draw_infected_cards(bord_state)
+    for city in infected_cards_drawn:
+        diseas_color = city.color
+        add_diseas_to_city(city, diseas_color, outbreack_cities=[])
+
+
+def draw_infected_cards(bord_state, num_card_to_draw=None):
+
+    if not num_card_to_draw: num_card_to_draw = bord_state.infaction_scale_cunter[bord_state.infaction_rate]
+    infected_cards_drawn = bord_state.infaction_cards[:num_card_to_draw]
+    bord_state.infaction_cards = bord_state.infaction_cards[num_card_to_draw:]
+    bord_state.infaction_discard_cards += infected_cards_drawn
+    return infected_cards_drawn
+
+
+def add_diseas_to_city(city, diseas_color, outbreack_cities=None, num_disease_cubes=1):
+    if city.disease_cubes[diseas_color] < 3:
+        city.disease_cubes[diseas_color] += num_disease_cubes
+
+    elif city not in outbreack_cities:
+        outbreack(city, outbreack_cities, diseas_color)
+
+
+def outbreack(city, outbreack_cities, diseas_color):
+    outbreack_cities.append(city)
+    for city_name in city.routes:
+        add_diseas_to_city(cities[city_name], diseas_color, outbreack_cities=outbreack_cities)
+

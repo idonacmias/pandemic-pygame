@@ -17,7 +17,7 @@ def draw_map(screen, font, cities, players, player_discard, bord_state):
    card.dispaly_front_infaction_card(screen, cities['Lagos'], font)
    card.display_back_players_card(screen)
    card.dispaly_front_player_card(screen, font, player_discard)
-   tokens.draw_infaction_rate(screen, font, bord_state.infaction_rate)
+   tokens.draw_infaction_rate(screen, font, bord_state)
    tokens.draw_outbreak_bar(screen, font, bord_state.outbreack)
    tokens.draw_medicen_bar(screen, bord_state.cure)
    player.draw(cities, screen, players)
