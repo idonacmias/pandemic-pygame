@@ -3,12 +3,14 @@ from dataclasses import dataclass, field
 from .cities import cities
 from .constances import FIRST_CITY, MAX_RESEARCH_STATION, MAX_DISEASE_CUBE, INFACTION_SCALE_CUNTER
 from random import shuffle
+from display import Color
 
 
 @dataclass
 class BordState:
     outbreack  = 0
-    cure  = [0] * 4
+    cure = {disease_color.name : 0 for disease_color in Color}
+
     disease_cube = [MAX_DISEASE_CUBE] * 4
     infaction_rate = 0
     infaction_scale_cunter = INFACTION_SCALE_CUNTER

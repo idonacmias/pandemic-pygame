@@ -42,10 +42,10 @@ def draw_medicen_bar(screen, cure):
         a,b,c,d = point[0], point[1], point[1] + 70, point[0] + 70
         squer_point = [(a, b), (a, c), (d, c), (d, b)]
         pygame.draw.polygon(surface=screen, color=colors_palet[colors[color]], points=squer_point)
-        if cure[color] == 1:
+        if cure[colors[color]] == 1:
             draw_medicen_symbol(screen, point)
 
-        if cure[color] == 2:
+        if cure[colors[color]] == 2:
             point = (point[0] + 35, point[1] + 35)
             draw_extinct_symbol(screen, point, colors[color])
 

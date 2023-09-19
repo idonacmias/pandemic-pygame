@@ -14,7 +14,8 @@ def infected_phase(bord_state):
     infected_cards_drawn = draw_infected_cards(bord_state)
     for city in infected_cards_drawn:
         diseas_color = city.color
-        add_diseas_to_city(city, diseas_color, outbreack_cities=[], bord_state=bord_state)
+        if bord_state.cure[diseas_color.name] < 2:
+            add_diseas_to_city(city, diseas_color, outbreack_cities=[], bord_state=bord_state)
 
 
 def draw_infected_cards(bord_state, num_card_to_draw=None):
