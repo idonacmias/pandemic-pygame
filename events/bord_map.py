@@ -36,6 +36,9 @@ def click_on_botton(cities, corent_player, botton_clicked, bord_state):
     elif botton_clicked == 'builed research station':
         click_builed_research_station(bord_state, corent_player, cities)
 
+    elif botton_clicked == 'cure diseasse':
+        click_cure_diseasse()        
+
 
 def click_builed_research_station(bord_state, corent_player, cities):
     corent_city = cities[corent_player.corent_city_name]
@@ -54,3 +57,6 @@ def remove_city_research_station(bord_state, cities, research_station_cuonter=0)
     cities[research_station_name].research_station = False
     bord_state.num_research_station += 1
 
+
+def click_cure_diseasse():
+    print(cure disease)
