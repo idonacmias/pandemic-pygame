@@ -19,11 +19,6 @@ def main():
     corent_page = 'map'
     cycle_player = cycle(players)
     corent_player = next(cycle_player)
-    
-    one_quiet_night = EventCard('one quiet night', 'skip next infaction phase')
-    player_discard = one_quiet_night
-
-
     while True:
         # screen_info = pygame.display.Info()
         # print(screen_info)
@@ -42,7 +37,7 @@ def main():
             if temp_page:
                 corent_page = temp_page
 
-        bord_display.draw_bord(screen, font, corent_page, cities, players, player_discard, bord_state)
+        bord_display.draw_bord(screen, font, corent_page, cities, players, bord_state)
         pygame.display.update()
         clock.tick(60)
 

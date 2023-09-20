@@ -1,7 +1,7 @@
 import pygame
 import math
 
-from .constances import CARD_HALF_WHIDTH, CARD_HALF_HIGHT, INFACTION_CARDS_POSITION, DISCARD_INFACTION_CARDS_POSITION, DISCARD_PLAYERS_DECK_CARDS_POSITION, PLAYERS_DECK_CARDS_POSITION, SPACE_FROM_TOP, SPACE_BETWEEN_CARDS
+from .constances import CARD_HALF_WHIDTH, CARD_HALF_HIGHT, INFACTION_CARDS_POSITION, DISCARD_INFACTION_CARDS_POSITION, PLAYERS_DECK_POSITION, SPACE_FROM_TOP, SPACE_BETWEEN_CARDS
 from .color import colors_palet
 
 from data import EventCard, City
@@ -47,7 +47,7 @@ def draw_biohazerd(screen, center_point, back_color, radius=25, symbol_color='SI
     pygame.draw.circle(surface=screen, color=colors_palet[back_color], center=center_point , radius=(0.5 *radius))
 
 
-def display_back_players_card(screen, point=PLAYERS_DECK_CARDS_POSITION):
+def display_back_players_card(screen, point=PLAYERS_DECK_POSITION):
     display_card_silhouette(screen, point, 'DARK_BLUE')
     draw_plas(screen, point)
 
@@ -71,7 +71,7 @@ def dispaly_front_infaction_card(screen, city, font, point=DISCARD_INFACTION_CAR
     dispaly_front_card(screen, point, city, font, 'DARK_GREEN', city.color.name, card_texts)
 
 
-def dispaly_front_player_card(screen,font, player_card, point=DISCARD_PLAYERS_DECK_CARDS_POSITION):
+def dispaly_front_player_card(screen,font, player_card, point):
     #match case   
     if is_card_of_type(player_card, City.City):
         card_texts = city_card_text(player_card)
@@ -83,10 +83,10 @@ def dispaly_front_player_card(screen,font, player_card, point=DISCARD_PLAYERS_DE
         font_color = 'GREEN'
         background_color = 'YELLOW'
 
-    elif is_epidemic_card(player_card):
-        card_texts = epidemic_card_text()
-        font_color = 'BLACK'
-        background_color = 'DARK_GREEN'
+    # elif is_epidemic_card(player_card):
+    #     card_texts = epidemic_card_text()
+    #     font_color = 'BLACK'
+    #     background_color = 'DARK_GREEN'
 
     dispaly_front_card(screen, point, player_card, font, font_color, background_color, card_texts)
 

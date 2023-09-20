@@ -6,21 +6,29 @@ from random import shuffle
 from display import Color
 
 
-@dataclass
+@dataclass(init=True)
 class BordState:
-    outbreack  = 0
-    cure = {disease_color.name : 0 for disease_color in Color}
 
-    disease_cube = [MAX_DISEASE_CUBE] * 4
-    infaction_rate = 0
-    infaction_scale_cunter = INFACTION_SCALE_CUNTER
+    def __init__(self):
+        self.outbreack  = 0
+        self.cure = {disease_color.name : 0 for disease_color in Color}
 
-    num_research_station = MAX_RESEARCH_STATION - 1
-    research_stations = [FIRST_CITY]
-    player_discard_cards = []
-    infaction_discard_cards  = []
-    player_cards = [city for city in cities.values()]
-    infaction_cards = [city for city in cities.values()]
-    
-    shuffle(player_cards)
-    shuffle(infaction_cards)
+        self.disease_cube = [MAX_DISEASE_CUBE] * 4
+        self.infaction_rate = 0
+        self.infaction_scale_cunter = INFACTION_SCALE_CUNTER
+
+        self.num_research_station = MAX_RESEARCH_STATION - 1
+        self.research_stations = [FIRST_CITY]
+        self.player_discard_cards = []
+        self.infaction_discard_cards  = []
+        self.player_cards = BordState.create_player_cards()
+        self.infaction_cards = [city for city in cities.values()]
+        
+        shuffle(self.player_cards)
+        shuffle(self.infaction_cards)
+
+    @staticmethod
+    def create_player_cards():
+        city_cards = [city for city in cities.values()]
+        events_cards = []
+        return city_cards + events_cards
