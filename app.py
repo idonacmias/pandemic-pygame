@@ -28,10 +28,11 @@ def main():
             if_quit(event)
             if corent_player.actions == 0: 
                 print('END_TURN')
+                draw_cards(bord_state, corent_player)
+                infected_phase(bord_state)
                 corent_player = next(cycle_player)
                 corent_player.actions = ACTION_PER_TURN
-                infected_phase(bord_state)
-
+                
             temp_page = handel_event(event, corent_page, cities, players, corent_player, bord_state)
 
             if temp_page:

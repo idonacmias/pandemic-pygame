@@ -1,8 +1,8 @@
 import pygame
 from dataclasses import dataclass, field
 from .cities import cities
-from .constances import FIRST_CITY, MAX_RESEARCH_STATION, MAX_DISEASE_CUBE, INFACTION_SCALE_CUNTER
-from random import shuffle
+from .constances import FIRST_CITY, MAX_RESEARCH_STATION, MAX_DISEASE_CUBE, INFACTION_SCALE_CUNTER, TOTAL_NUMBER_OF_EPIDEMIC_CARDS
+from random import shuffle, randrange
 from display import Color
 
 
@@ -24,11 +24,19 @@ class BordState:
         self.player_cards = BordState.create_player_cards()
         self.infaction_cards = [city for city in cities.values()]
         
-        shuffle(self.player_cards)
         shuffle(self.infaction_cards)
 
     @staticmethod
     def create_player_cards():
         city_cards = [city for city in cities.values()]
         events_cards = []
-        return city_cards + events_cards
+        player_cards = city_cards + events_cards
+        shuffle(player_cards)
+        player_cards_len = len(player_cards)
+        stack_len = player_cards_len // TOTAL_NUMBER_OF_EPIDEMIC_CARDS
+        for i in range(TOTAL_NUMBER_OF_EPIDEMIC_CARDS):
+            i += 1
+            epidemic_location = randrange(player_cards_len - stack_len * i,player_cards_len)
+            print(f'epidemic_location: {epidemic_location}')
+            player_cards.insert(epidemic_location, "epidemic")
+        return player_cards
