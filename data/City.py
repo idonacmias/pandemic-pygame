@@ -9,7 +9,7 @@ class City:
     population : int 
     routes : list
     point : tuple 
-    disease_cubes : dict = field(default_factory=lambda: {disease_color : 0 for disease_color in Color})
+    diseasse_cubes : dict = field(default_factory=lambda: {disease_color : 0 for disease_color in Color})
     research_station = False
 
     def __post_init__(self):

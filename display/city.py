@@ -2,7 +2,7 @@ import pygame
 
 from .color import colors_palet
 from .constances import CITY_RADIUS, EDGE_CITIES, RESEARCH_STATION_RADIUS
-from .desis_cube import draw_desis_cube
+from .Color import Color
 
 
 
@@ -12,10 +12,38 @@ def draw(city, screen, font):
     if city.research_station:
         pygame.draw.circle(surface=screen, color=colors_palet['WHITE'], center=city.point , radius=RESEARCH_STATION_RADIUS)
 
-    draw_desis_cube(screen, city)
+    draw_diseasse_cubes(screen, city)
     font_point = (city.point[0] - 5 * len(city.name), city.point[1] + 20)        
     text_surface = font.render(city.name, True, colors_palet['WHITE']) 
     screen.blit(text_surface, font_point)
+
+
+def draw_diseasse_cubes(screen, city):
+    for color in list(Color):
+        for cube_cunter in range(city.diseasse_cubes[color]):
+            desis_point = positions(city.point, color, cube_cunter)     
+            draw_squer(screen, desis_point, color.name)
+
+
+def positions(point, color, cube_cunter):
+    LENTH_BETWEEN_CUBES = 15
+    LENTH_MOD_FROM_CENTER = 1.7
+    move_aside = CITY_RADIUS * LENTH_MOD_FROM_CENTER
+    move_from_center = (cube_cunter - 1) * LENTH_BETWEEN_CUBES
+    positions = {'BLUE' : (point[0] - move_from_center, point[1] + move_aside),
+                 'BLACK' : (point[0] + move_aside, point[1] - move_from_center), 
+                 'YELLOW' : (point[0] - move_from_center, point[1] - move_aside), 
+                 'RED' : (point[0] - move_aside, point[1] - move_from_center)}
+    return positions[color.name]
+
+
+def draw_squer(screen, point, color):
+    HALF_HIGHT = 0.15 * CITY_RADIUS
+    a,b,c,d = point[0] + HALF_HIGHT, point[1] + HALF_HIGHT, point[1] - HALF_HIGHT, point[0] - HALF_HIGHT
+    rectangle_point = [(a, b), (a, c), (d, c), (d, b)]
+    pygame.draw.polygon(surface=screen, color=colors_palet[color], points=rectangle_point)
+
+
 
 def conect_routes(city, screen, cities, font):
     for other_city_name in city.routes:
@@ -33,8 +61,10 @@ def conect_routes(city, screen, cities, font):
             other_city = cities[other_city_name]
             pygame.draw.line(screen, colors_palet['PINK'], city.point, other_city.point, 2)
 
+
 def is_edge_conection(city, other_city_point):
     return city.name in EDGE_CITIES and abs(other_city_point[0] - city.point[0]) > 500
+
 
 def clculate_shadow_point(point, other_point):
     if point[0] < 500:
