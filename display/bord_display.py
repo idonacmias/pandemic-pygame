@@ -27,7 +27,7 @@ def draw_map(screen, font, cities, players, bord_state):
    draw_cities(screen, font, cities)    
    card.display_back_infaction_card(screen)
    card.display_back_players_card(screen)
-   card.dispaly_front_infaction_card(screen, cities['Lagos'], font)   
+   card.display_infaction_discard_card(screen, font, bord_state)
    if bord_state.player_discard_cards: 
       last_discard_card = bord_state.player_discard_cards[-1]
       card.dispaly_front_player_card(screen, font, last_discard_card, DISCARD_PLAYERS_DECK_POSITION)

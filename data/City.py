@@ -16,4 +16,4 @@ class City:
         self.color = Color[self.color]
 
     def __str__(self):
-        return f'{self.name} , {self.color} \n {self.disease_cubes}'
+        return f'{self.name} , {self.color} \n {self.diseasse_cubes}'

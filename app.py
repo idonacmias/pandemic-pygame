@@ -4,7 +4,7 @@ from data import Player, cities, FIRST_CITY, EventCard, BordState, ACTION_PER_TU
 from events import handel_event
 from display import colors_palet, bord_display
 from itertools import cycle
-from lib import first_infaction, infected_phase
+from lib import first_infaction, infected_phase, draw_from_deack
 
 def main():
     pygame.init()
@@ -28,7 +28,7 @@ def main():
             if_quit(event)
             if corent_player.actions == 0: 
                 print('END_TURN')
-                draw_cards(bord_state, corent_player)
+                draw_from_deack(bord_state, corent_player)
                 infected_phase(bord_state)
                 corent_player = next(cycle_player)
                 corent_player.actions = ACTION_PER_TURN

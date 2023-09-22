@@ -65,13 +65,18 @@ def draw_plas(screen, point):
     pygame.draw.polygon(surface=screen, color=colors_palet['LIGHT_BLUE'], points=rectangle_point)
 
 
+def display_infaction_discard_card(screen, font, bord_state):
+    city = bord_state.infaction_discard_cards[-1]
+    dispaly_front_infaction_card(screen, font, city)   
 
-def dispaly_front_infaction_card(screen, city, font, point=DISCARD_INFACTION_CARDS_POSITION):
+
+
+def dispaly_front_infaction_card(screen, font, city, point=DISCARD_INFACTION_CARDS_POSITION):
     card_texts = city_card_text(city)
     dispaly_front_card(screen, point, city, font, 'DARK_GREEN', city.color.name, card_texts)
 
 
-def dispaly_front_player_card(screen,font, player_card, point):
+def dispaly_front_player_card(screen, font, player_card, point):
     #match case   
     if is_card_of_type(player_card, City.City):
         card_texts = city_card_text(player_card)
@@ -83,10 +88,10 @@ def dispaly_front_player_card(screen,font, player_card, point):
         font_color = 'GREEN'
         background_color = 'YELLOW'
 
-    # elif is_epidemic_card(player_card):
-    #     card_texts = epidemic_card_text()
-    #     font_color = 'BLACK'
-    #     background_color = 'DARK_GREEN'
+    elif is_card_of_type(player_card, str):
+        card_texts = epidemic_card_text()
+        font_color = 'DARK_GREEN'
+        background_color = 'BLACK'
 
     dispaly_front_card(screen, point, player_card, font, font_color, background_color, card_texts)
 
@@ -100,6 +105,10 @@ def city_card_text(city):
 
 def event_card_text(event_card):
     return ['event_name:', event_card.name, event_card.description]
+
+
+def epidemic_card_text():
+    return ['epidemic', 'incrise infaction', 'infect city', 'intensify']
 
 
 def dispaly_front_card(screen, point, city, font, background_color, text_color, card_texts):

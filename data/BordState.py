@@ -32,11 +32,9 @@ class BordState:
         events_cards = []
         player_cards = city_cards + events_cards
         shuffle(player_cards)
-        player_cards_len = len(player_cards)
-        stack_len = player_cards_len // TOTAL_NUMBER_OF_EPIDEMIC_CARDS
+        split_deack = len(player_cards) // TOTAL_NUMBER_OF_EPIDEMIC_CARDS
         for i in range(TOTAL_NUMBER_OF_EPIDEMIC_CARDS):
-            i += 1
-            epidemic_location = randrange(player_cards_len - stack_len * i,player_cards_len)
-            print(f'epidemic_location: {epidemic_location}')
-            player_cards.insert(epidemic_location, "epidemic")
+            position = randrange(split_deack) + (i * split_deack)
+            player_cards.insert(position, "epidemic")
+
         return player_cards
