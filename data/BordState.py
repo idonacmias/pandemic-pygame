@@ -21,7 +21,7 @@ class BordState:
         self.research_stations = [FIRST_CITY]
         self.player_discard_cards = []
         self.infaction_discard_cards  = []
-        self.player_cards = BordState.create_player_cards()
+        self.players_deck = BordState.create_player_cards()
         self.infaction_cards = [city for city in cities.values()]
         
         shuffle(self.infaction_cards)
@@ -30,11 +30,15 @@ class BordState:
     def create_player_cards():
         city_cards = [city for city in cities.values()]
         events_cards = []
-        player_cards = city_cards + events_cards
-        shuffle(player_cards)
-        split_deack = len(player_cards) // TOTAL_NUMBER_OF_EPIDEMIC_CARDS
+        players_deck = city_cards + events_cards
+        shuffle(players_deck)
+        
+        return players_deck
+
+
+    def insert_epidemic(self):
+        split_deack = len(self.players_deck) // TOTAL_NUMBER_OF_EPIDEMIC_CARDS
         for i in range(TOTAL_NUMBER_OF_EPIDEMIC_CARDS):
             position = randrange(split_deack) + (i * split_deack)
-            player_cards.insert(position, "epidemic")
+            self.players_deck.insert(position, "epidemic")
 
-        return player_cards

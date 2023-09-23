@@ -151,6 +151,6 @@ def culculate_cards_point(player, card_row, player_num, space_from_side):
 
 
 def display_player_hand(screen, font, cities, player_cards_points):
-    for card_point, card_name in player_cards_points:
-        dispaly_front_player_card(screen, font, cities[card_name], card_point)
+    for card_point, card in player_cards_points:
+        dispaly_front_player_card(screen, font, card, card_point)
 

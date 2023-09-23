@@ -1,6 +1,6 @@
 import pygame
 import sys
-from data import Player, cities, FIRST_CITY, EventCard, BordState, ACTION_PER_TURN
+from data import Player, cities, FIRST_CITY, EventCard, BordState, ACTION_PER_TURN, NUM_PLAYERS_CARDS
 from events import handel_event
 from display import colors_palet, bord_display
 from itertools import cycle
@@ -53,11 +53,22 @@ def set_bord(num_players=2):
     bord_state = BordState()
     cities[FIRST_CITY].research_station = True
     PLAYER_COLORS = ['GREEN', 'PURPLE', 'GRAY', 'PINK']
-    players = [Player(PLAYER_COLORS[i]) for i in range(num_players)]
+    players_cards = first_draw_player_cards(bord_state, num_players)
+    players = [Player(PLAYER_COLORS[i], players_cards[i]) for i in range(num_players)]
     first_infaction(bord_state)
+    bord_state.insert_epidemic()
     return players, bord_state
 
 
+def first_draw_player_cards(bord_state, num_players):
+    num_players_cards = NUM_PLAYERS_CARDS[num_players - 2]
+    player_cards = []
+    for _ in range(num_players):
+        player_cards.append(bord_state.players_deck[:num_players_cards])
+        bord_state.players_deck = bord_state.players_deck[num_players_cards:]
 
+    return player_cards
+    
+        
 if __name__ == '__main__':
     main()
