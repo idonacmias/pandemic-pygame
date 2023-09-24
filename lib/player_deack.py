@@ -11,7 +11,7 @@ def draw_from_deack(bord_state, corent_player):
             epidemic_effect(bord_state)
 
         else:
-            corent_player.hand.append(card.name)
+            corent_player.hand.append(card)
 
         bord_state.players_deck.pop(0)
 
