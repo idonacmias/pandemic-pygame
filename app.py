@@ -23,16 +23,16 @@ def main():
         # screen_info = pygame.display.Info()
         # print(screen_info)
         
+        if corent_player.actions == 0: 
+            print('END_TURN')
+            draw_from_deack(bord_state, corent_player)
+            infected_phase(bord_state)
+            corent_player = next(cycle_player)
+            corent_player.actions = ACTION_PER_TURN
 
         for event in pygame.event.get():
             if_quit(event)
-            if corent_player.actions == 0: 
-                print('END_TURN')
-                draw_from_deack(bord_state, corent_player)
-                infected_phase(bord_state)
-                corent_player = next(cycle_player)
-                corent_player.actions = ACTION_PER_TURN
-                
+           
             temp_page = handel_event(event, corent_page, cities, players, corent_player, bord_state)
 
             if temp_page:
@@ -69,6 +69,6 @@ def first_draw_player_cards(bord_state, num_players):
 
     return player_cards
     
-        
+
 if __name__ == '__main__':
     main()

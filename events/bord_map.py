@@ -5,10 +5,7 @@ from display import MAP_BUTTONS_POINTS,MAP_BUTTONS_TEXTS, BUTTON_WHIDTH, BUTTON_
 def clicked_on_city(cities, corent_player, mouse_point, bord_state):
     min_radius = CITY_RADIUS
     closest_city_name = None
-    corent_city = cities[corent_player.corent_city_name]
-    routes = corent_city.routes.copy()
-    if corent_city.research_station: routes += bord_state.research_stations
-
+    routes = get_routes(cities, corent_player, bord_state)
     for city_name in routes:
         city_data = cities[city_name]
         temp_min_radius = click_lenth_from_center(city_data, mouse_point)
@@ -18,7 +15,23 @@ def clicked_on_city(cities, corent_player, mouse_point, bord_state):
 
     if closest_city_name: move_player_to_city(corent_player, closest_city_name)
 
-        
+
+def get_routes(cities, corent_player, bord_state):
+    corent_city = cities[corent_player.corent_city_name]
+    routes = corent_city.routes.copy()
+    if corent_city.research_station:
+        routes += reserch_station_cities(bord_state, corent_city) 
+
+    return routes
+
+def reserch_station_cities(bord_state, corent_city):
+    research_stations_cities = bord_state.research_stations.copy()
+    for i, city_name in enumerate(research_stations_cities):
+        if corent_city.name == city_name:
+            research_stations_cities.pop(i)
+
+    return research_stations_cities 
+    
 def click_lenth_from_center(city, mouse_point):
     return abs(city.point[0] - mouse_point[0]) + abs(city.point[1] - mouse_point[1])
 

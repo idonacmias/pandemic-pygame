@@ -1,4 +1,4 @@
-from .infaction import add_diseas_to_city
+from .infaction import add_diseasse_to_city
 from random import shuffle
 
 
@@ -32,7 +32,7 @@ def infect_city(bord_state):
     bord_state.infaction_discard_cards.append(city)
     outbreack_cities = []
     diseasse_color = city.color
-    add_diseas_to_city(city, diseasse_color, 3, outbreack_cities, bord_state)
+    add_diseasse_to_city(city, diseasse_color, bord_state, 3, outbreack_cities)
     
 
 def intensify(bord_state):
