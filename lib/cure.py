@@ -8,7 +8,7 @@ def discover_cure(bord_state, picked_cards, corent_player):
 
 def is_valid_cure(bord_state, picked_cards, corent_player):
     first_card = picked_cards[0]
-    if bord_state.cure[first_card.color.name] == 0:
+    if bord_state.cure[first_card.color] == 0:
         for card in picked_cards[1:]:
             if card.color != first_card.color or card not in corent_player.hand:
                 break
