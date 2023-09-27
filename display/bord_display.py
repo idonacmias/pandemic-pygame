@@ -1,5 +1,5 @@
 from display import colors_palet, city, card, tokens, player, bottons
-from .constances import MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS, CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS, DISCARD_PLAYERS_DECK_POSITION
+from .constances import MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS, CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS
 
 
 def draw_bord(screen, font, corent_page, cities, players, bord_state):
@@ -28,13 +28,7 @@ def draw_map(screen, font, cities, players, bord_state):
    card.display_back_infaction_card(screen)
    card.display_back_players_card(screen)
    card.display_infaction_discard_card(screen, font, bord_state)
-   if bord_state.player_discard_cards: 
-      last_discard_card = bord_state.player_discard_cards[-1]
-      card.dispaly_front_player_card(screen, font, last_discard_card, DISCARD_PLAYERS_DECK_POSITION)
-
-   else:
-      card.display_card_silhouette(screen, DISCARD_PLAYERS_DECK_POSITION, 'WHITE')
-
+   card.display_player_discard_card(screen, font, bord_state)
    tokens.draw_infaction_rate(screen, font, bord_state)
    tokens.draw_outbreak_bar(screen, font, bord_state.outbreack)
    tokens.draw_medicen_bar(screen, bord_state.cure)

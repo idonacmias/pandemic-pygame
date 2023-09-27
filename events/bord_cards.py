@@ -1,8 +1,8 @@
 from display import CARD_HALF_HIGHT, SPACE_BETWEEN_CARDS, culculate_cards_point, culculate_card_square, CARD_HALF_WHIDTH, CARD_HALF_HIGHT
+from lib import discover_cure
 
 
-
-def click_on_botton(cities, corent_player, botton_clicked):
+def click_on_botton(bord_state, cities, corent_player, botton_clicked, piked_cards):
     if botton_clicked == 'back to map':
         corent_page = 'map'
         return corent_page 
@@ -12,7 +12,7 @@ def click_on_botton(cities, corent_player, botton_clicked):
         share_knowledge(corent_player)
 
     elif botton_clicked == 'discover cure':
-        pass
+        discover_cure(bord_state, piked_cards, corent_player)
 
 
 def share_knowledge(corent_player):
@@ -24,14 +24,17 @@ def share_knowledge(corent_player):
         player_loose_action()
 
 
-def witch_card_click_on(mouse_point, players):
+def witch_card_click_on(mouse_point, players, piked_cards):
     cards_data = cards_points(players)
     for card_point, card in cards_data: 
         square_points = culculate_card_square(card_point)
         square_points = [square_points[0], square_points[2]]
-        if is_in_squer(square_points, mouse_point):
-            return card                 
+        if is_in_squer(square_points, mouse_point) and card not in piked_cards:
+            print(card)
+            piked_cards.append(card)
+            return piked_cards                 
 
+    return piked_cards
 
 def cards_points(players, card_space_mod=0):
     space_from_side = 200 +  card_space_mod
@@ -47,3 +50,11 @@ def is_in_squer(square_points, point):
     x = 0
     y = 1
     return square_points[0][x] < point[x] and square_points[0][y] < point[y] and  square_points[1][x] > point[x] and square_points[1][y] > point[y]
+
+
+# def clicked_on_player(mouse_point):
+#     player_points = [(0,0),(2000, 2000)]
+#     if is_in_squer(player_points, mouse_point):
+#         print(player)
+
+#     return player    

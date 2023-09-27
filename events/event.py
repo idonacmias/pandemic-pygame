@@ -3,14 +3,14 @@ from events import bord_map, bord_cards
 from display import MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS, BUTTON_WHIDTH, BUTTON_HIGHT, CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS
 
 
-def handel_event(event, corent_page, cities, players, corent_player, bord_state):
+def handel_event(event, corent_page, cities, players, corent_player, bord_state, piked_cards):
     if corent_page == 'map':
         corent_page = handel_map_events(event, cities, players, corent_player, bord_state)
    
     elif corent_page == 'cards':
-        corent_page = handel_cards_events(event, cities, players, corent_player)
+        corent_page, piked_cards = handel_cards_events(event, cities, players, corent_player, piked_cards, bord_state)
 
-    return corent_page
+    return corent_page, piked_cards
 
 
 def handel_map_events(event, cities, players, corent_player, bord_state):
@@ -23,13 +23,16 @@ def handel_map_events(event, cities, players, corent_player, bord_state):
 
 
 
-def handel_cards_events(event, cities, players, corent_player):
+def handel_cards_events(event, cities, players, corent_player, piked_cards, bord_state):
+    corent_page = None
     if event.type == pygame.MOUSEBUTTONUP:
         mouse_point = pygame.mouse.get_pos()
-        card = bord_cards.witch_card_click_on(mouse_point, players)
+        # piked_cards = bord_cards.clicked_on_player(mouse_point)
+        piked_cards = bord_cards.witch_card_click_on(mouse_point, players, piked_cards)
         botton_clicked = witch_button_click_on(mouse_point, CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS)
-        corent_page = bord_cards.click_on_botton(cities, corent_player, botton_clicked)
-        return corent_page
+        corent_page = bord_cards.click_on_botton(bord_state, cities, corent_player, botton_clicked, piked_cards)
+    
+    return corent_page, piked_cards
 
 
 

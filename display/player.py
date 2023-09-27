@@ -7,10 +7,10 @@ def convert_player_to_cities_dict(players):
     player_positin = {}
     for player in players:
         try:
-            player_positin[player.corent_city_name].append(player.color)
+            player_positin[player.corent_city.name].append(player.color)
 
         except KeyError:
-            player_positin.update({player.corent_city_name : [player.color]})
+            player_positin.update({player.corent_city.name : [player.color]})
 
     return player_positin
 

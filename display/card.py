@@ -1,7 +1,7 @@
 import pygame
 import math
 
-from .constances import CARD_HALF_WHIDTH, CARD_HALF_HIGHT, INFACTION_CARDS_POSITION, DISCARD_INFACTION_CARDS_POSITION, PLAYERS_DECK_POSITION, SPACE_FROM_TOP, SPACE_BETWEEN_CARDS
+from .constances import CARD_HALF_WHIDTH, CARD_HALF_HIGHT, INFACTION_CARDS_POSITION, DISCARD_INFACTION_CARDS_POSITION, PLAYERS_DECK_POSITION, DISCARD_PLAYERS_DECK_POSITION, SPACE_FROM_TOP, SPACE_BETWEEN_CARDS
 from .color import colors_palet
 
 from data import EventCard, City
@@ -76,6 +76,15 @@ def dispaly_front_infaction_card(screen, font, city, point=DISCARD_INFACTION_CAR
     dispaly_front_card(screen, point, city, font, 'DARK_GREEN', city.color.name, card_texts)
 
 
+def display_player_discard_card(screen, font, bord_state):
+   if bord_state.player_discard_cards: 
+      last_discard_card = bord_state.player_discard_cards[-1]
+      dispaly_front_player_card(screen, font, last_discard_card, DISCARD_PLAYERS_DECK_POSITION)
+
+   else:
+      display_card_silhouette(screen, DISCARD_PLAYERS_DECK_POSITION, 'WHITE')
+
+
 def dispaly_front_player_card(screen, font, player_card, point):
     #match case   
     if is_card_of_type(player_card, City.City):
@@ -121,21 +130,35 @@ def dispaly_front_card(screen, point, city, font, background_color, text_color, 
 
 def dispaly_players_cards(screen, font, cities, players, card_space_mod=0):
     space_from_side = 200 +  card_space_mod
-    card_row = CARD_HALF_HIGHT * 2 + SPACE_BETWEEN_CARDS
+    card_row = culculate_card_row()
     for player_num, player in enumerate(players):
         display_title(screen, font, card_row, player, player_num)
-        player_cards_points = culculate_cards_point(player, card_row, player_num, space_from_side)        
-        display_player_hand(screen, font, cities, player_cards_points)
+        display_player_hand(screen, font, cities, player, card_row, player_num, space_from_side)
+
+
+def culculate_card_row():
+    return CARD_HALF_HIGHT * 2 + SPACE_BETWEEN_CARDS
+
 
 def display_title(screen, font, card_row, player, player_num):
-    text_point = (100, card_row * player_num + 30)
-    player_text = f'{player.color} in {player.corent_city_name}'
+    text_point = culculate_player_point(card_row, player_num)
+    player_text = f'{player.color} in {player.corent_city.name}'
     display_text(screen, font, player_text, 'WHITE', text_point)
+
+
+def culculate_player_point(card_row, player_num):
+    return (100, card_row * player_num + 30)
 
 
 def display_text(screen, font, text, text_color, point):
     text_render = font.render(str(text), True, colors_palet[text_color])
     screen.blit(text_render, point)
+
+
+def display_player_hand(screen, font, cities, player, card_row, player_num, space_from_side):
+    player_cards_points = culculate_cards_point(player, card_row, player_num, space_from_side)        
+    for card_point, card in player_cards_points:
+        dispaly_front_player_card(screen, font, card, card_point)
 
 
 def culculate_cards_point(player, card_row, player_num, space_from_side):
@@ -149,8 +172,4 @@ def culculate_cards_point(player, card_row, player_num, space_from_side):
 
     return zip(cards_points, cards_names)
 
-
-def display_player_hand(screen, font, cities, player_cards_points):
-    for card_point, card in player_cards_points:
-        dispaly_front_player_card(screen, font, card, card_point)
 

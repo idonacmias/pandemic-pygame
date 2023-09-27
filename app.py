@@ -15,10 +15,14 @@ def main():
     clock = pygame.time.Clock()
     
     players, bord_state = set_bord(4)
-    
-    corent_page = 'map'
+
     cycle_player = cycle(players)
     corent_player = next(cycle_player)
+    
+    corent_page = 'map'
+    piked_cards = []
+
+
     while True:
         # screen_info = pygame.display.Info()
         # print(screen_info)
@@ -33,7 +37,7 @@ def main():
         for event in pygame.event.get():
             if_quit(event)
            
-            temp_page = handel_event(event, corent_page, cities, players, corent_player, bord_state)
+            temp_page, piked_cards = handel_event(event, corent_page, cities, players, corent_player, bord_state, piked_cards)
 
             if temp_page:
                 corent_page = temp_page
@@ -51,10 +55,11 @@ def if_quit(event):
 
 def set_bord(num_players=2):
     bord_state = BordState()
-    cities[FIRST_CITY].research_station = True
+    first_city = cities[FIRST_CITY]
+    first_city.research_station = True
     PLAYER_COLORS = ['GREEN', 'PURPLE', 'GRAY', 'PINK']
     players_cards = first_draw_player_cards(bord_state, num_players)
-    players = [Player(PLAYER_COLORS[i], players_cards[i]) for i in range(num_players)]
+    players = [Player(PLAYER_COLORS[i], players_cards[i], first_city) for i in range(num_players)]
     first_infaction(bord_state)
     bord_state.insert_epidemic()
     return players, bord_state
