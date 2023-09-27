@@ -2,18 +2,21 @@ from display import CARD_HALF_HIGHT, SPACE_BETWEEN_CARDS, culculate_cards_point,
 from lib import discover_cure
 
 
-def click_on_botton(bord_state, cities, corent_player, botton_clicked, piked_cards):
+def click_on_botton(bord_state, cities, corent_player, botton_clicked, picked_cards):
+    corent_page = None
     if botton_clicked == 'back to map':
-        corent_page = 'map'
-        return corent_page 
+        corent_page = 'map' 
 
     elif botton_clicked == 'share knowledge':
         print('share knowledge')
         share_knowledge(corent_player)
 
     elif botton_clicked == 'discover cure':
-        discover_cure(bord_state, piked_cards, corent_player)
+        print(picked_cards)
+        picked_cards = discover_cure(bord_state, picked_cards, corent_player)
+        print(picked_cards)
 
+    return corent_page, picked_cards
 
 def share_knowledge(corent_player):
     NUM_CARDS_FOR_CURE = 5
@@ -24,17 +27,24 @@ def share_knowledge(corent_player):
         player_loose_action()
 
 
-def witch_card_click_on(mouse_point, players, piked_cards):
+def witch_card_click_on(mouse_point, players, picked_cards):
     cards_data = cards_points(players)
     for card_point, card in cards_data: 
         square_points = culculate_card_square(card_point)
         square_points = [square_points[0], square_points[2]]
-        if is_in_squer(square_points, mouse_point) and card not in piked_cards:
-            print(card)
-            piked_cards.append(card)
-            return piked_cards                 
+        if is_in_squer(square_points, mouse_point):
+            for i, prev_picked_card in enumerate(picked_cards):
+                if prev_picked_card == card:
+                    picked_cards.pop(i)
+                    break
 
-    return piked_cards
+            else:
+                picked_cards.append(card)
+            
+            print(picked_cards)
+            return picked_cards                 
+
+    return picked_cards
 
 def cards_points(players, card_space_mod=0):
     space_from_side = 200 +  card_space_mod

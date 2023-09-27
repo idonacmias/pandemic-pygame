@@ -30,7 +30,7 @@ def handel_cards_events(event, cities, players, corent_player, piked_cards, bord
         # piked_cards = bord_cards.clicked_on_player(mouse_point)
         piked_cards = bord_cards.witch_card_click_on(mouse_point, players, piked_cards)
         botton_clicked = witch_button_click_on(mouse_point, CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS)
-        corent_page = bord_cards.click_on_botton(bord_state, cities, corent_player, botton_clicked, piked_cards)
+        corent_page, piked_cards = bord_cards.click_on_botton(bord_state, cities, corent_player, botton_clicked, piked_cards)
     
     return corent_page, piked_cards
 
