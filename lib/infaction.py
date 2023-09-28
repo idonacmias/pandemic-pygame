@@ -12,7 +12,6 @@ def infected_phase(bord_state):
     infected_cards_drawn = draw_infected_cards(bord_state)
     for city in infected_cards_drawn:
         diseasse_color = city.color
-        print(f'infected_city_draw: {city}')
         add_diseasse_to_city(city, diseasse_color, bord_state=bord_state, outbreack_cities=[])
 
 
