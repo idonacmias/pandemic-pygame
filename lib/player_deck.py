@@ -3,7 +3,7 @@ from random import shuffle
 
 
 
-def draw_from_deack(bord_state, corent_player):
+def draw_from_deck(bord_state, corent_player):
     for _ in range(2):
         card = bord_state.players_deck[0]
         if card == 'epidemic':
