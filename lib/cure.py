@@ -4,10 +4,10 @@ def discover_cure(bord_state, picked_cards, corent_player):
     if is_valid_cure(bord_state, picked_cards, corent_player):
         bord_state.cure[picked_cards[0].color.name] = 1
         corent_player.actions -= 1
-        corent_player = remove_cure_cards_from_palyer_haned(picked_cards, corent_player)
+        remove_cure_cards_from_palyer_haned(picked_cards, corent_player)
         picked_cards = []
 
-    return picked_cards#, corent_player
+    return picked_cards
 
 
 def is_valid_cure(bord_state, picked_cards, corent_player):
@@ -60,5 +60,4 @@ def remove_cure_cards_from_palyer_haned(picked_cards, corent_player):
         if card in picked_cards:
             corent_player.hand.pop(i)
 
-    return corent_player
 
