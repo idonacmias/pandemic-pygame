@@ -1,6 +1,6 @@
 from display import card, CITY_RADIUS, bottons
 from display import MAP_BUTTONS_POINTS,MAP_BUTTONS_TEXTS, BUTTON_WHIDTH, BUTTON_HIGHT
-
+from lib import treat_diseasse, builed_research_station
 
 def clicked_on_city(cities, corent_player, mouse_point, bord_state):
     min_radius = CITY_RADIUS
@@ -42,37 +42,14 @@ def move_player_to_city(corent_player, closest_city):
 
 
 def click_on_botton(cities, corent_player, botton_clicked, bord_state):
+    print(botton_clicked)
     if botton_clicked == 'display player cards': return 'cards'
 
     elif botton_clicked == 'discover cure': print('cure discoverd')
 
     elif botton_clicked == 'builed research station':
-        click_builed_research_station(bord_state, corent_player, cities)
+        builed_research_station(bord_state, corent_player, cities)
 
-    elif botton_clicked == 'cure diseasse': 
-        click_cure_diseasse(bord_state, cities, corent_player)        
-
-
-def click_builed_research_station(bord_state, corent_player, cities):
-    corent_city = corent_player.corent_city
-    if not corent_city.research_station: 
-        corent_player.actions -= 1
-        add_city_research_station(bord_state, corent_city, cities)
-
-def add_city_research_station(bord_state, city, cities):
-    if bord_state.num_research_station <= 0: remove_city_research_station(bord_state, cities) 
-    city.research_station = True
-    bord_state.research_stations.append(city.name)
-    bord_state.num_research_station -= 1
-        
-def remove_city_research_station(bord_state, cities, research_station_cuonter=0):
-    research_station_name = bord_state.research_stations.pop(research_station_cuonter)
-    cities[research_station_name].research_station = False
-    bord_state.num_research_station += 1
-
-
-def click_cure_diseasse(bord_state, cities, corent_player):
-    print('cure diseasse')
-    corent_city = corent_player.corent_city
-    if corent_city.diseasse_cubes :
-        print('cure me!')
+    elif botton_clicked in ['blue', 'yellow', 'black', 'red']:
+        color_name = botton_clicked.upper()
+        treat_diseasse(bord_state, corent_player, color_name)
