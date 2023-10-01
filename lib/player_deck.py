@@ -22,7 +22,6 @@ def epidemic_effect(bord_state):
     intensify(bord_state)
         
 
-
 def incrise_infaction(bord_state):
     bord_state.infaction_rate += 1
 
