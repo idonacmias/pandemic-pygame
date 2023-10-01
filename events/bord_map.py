@@ -45,8 +45,6 @@ def click_on_botton(cities, corent_player, botton_clicked, bord_state):
     print(botton_clicked)
     if botton_clicked == 'display player cards': return 'cards'
 
-    elif botton_clicked == 'discover cure': print('cure discoverd')
-
     elif botton_clicked == 'builed research station':
         builed_research_station(bord_state, corent_player, cities)
 
