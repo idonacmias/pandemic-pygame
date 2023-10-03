@@ -1,30 +1,22 @@
-from display import CARD_HALF_HIGHT, SPACE_BETWEEN_CARDS, culculate_cards_point, culculate_card_square, CARD_HALF_WHIDTH, CARD_HALF_HIGHT
-from lib import discover_cure
+from display import CARD_HALF_HIGHT, SPACE_BETWEEN_CARDS, culculate_cards_point, culculate_card_square, CARD_HALF_WHIDTH, CARD_HALF_HIGHT, culculate_card_row, culculate_player_point
+from lib import discover_cure, share_knowledge
 
 
-def click_on_botton(bord_state, cities, corent_player, botton_clicked, picked_cards):
+def click_on_botton(bord_state, corent_player, botton_clicked, picked_cards, picked_player):
     corent_page = None
     if botton_clicked == 'back to map':
         corent_page = 'map' 
 
     elif botton_clicked == 'share knowledge':
-        print('share knowledge')
-        share_knowledge(corent_player)
+        share_knowledge(corent_player, picked_player, picked_cards)
+        picked_cards = []
+        picked_player = None
 
     elif botton_clicked == 'discover cure':
-        print(picked_cards)
-        picked_cards = discover_cure(bord_state, picked_cards, corent_player)
-        print(picked_cards)
-
-    return corent_page, picked_cards
-
-def share_knowledge(corent_player):
-    NUM_CARDS_FOR_CURE = 5
-    cards = chose_cards(NUM_CARDS_FOR_CURE)
-    if is_cure_verifie(cards):
-        player_discard_cards(cards)
-        cure_update()
-        player_loose_action()
+        discover_cure(bord_state, picked_cards, corent_player)
+        picked_cards = []
+    
+    return corent_page, picked_cards, picked_player
 
 
 def witch_card_click_on(mouse_point, players, picked_cards):
@@ -41,10 +33,8 @@ def witch_card_click_on(mouse_point, players, picked_cards):
             else:
                 picked_cards.append(card)
             
-            print(picked_cards)
-            return picked_cards                 
-
     return picked_cards
+
 
 def cards_points(players, card_space_mod=0):
     space_from_side = 200 +  card_space_mod
@@ -62,9 +52,16 @@ def is_in_squer(square_points, point):
     return square_points[0][x] < point[x] and square_points[0][y] < point[y] and  square_points[1][x] > point[x] and square_points[1][y] > point[y]
 
 
-# def clicked_on_player(mouse_point):
-#     player_points = [(0,0),(2000, 2000)]
-#     if is_in_squer(player_points, mouse_point):
-#         print(player)
+def clicked_on_player(mouse_point, piked_player, players):
+    players_points = []
+    card_row = culculate_card_row()
+    for i in range(len(players)):
+        player_point = culculate_player_point(card_row, i)
+        player_squer_points = [player_point, [player_point[0] + 5000, player_point[1] + 100]]
+        players_points.append(player_squer_points)
 
-#     return player    
+    for i, player_points in enumerate(players_points):
+        if is_in_squer(player_points, mouse_point):
+            piked_player = players[i]
+
+    return piked_player

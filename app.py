@@ -21,7 +21,7 @@ def main():
     
     corent_page = 'map'
     piked_cards = []
-
+    piked_player = None
 
     while True:
         # screen_info = pygame.display.Info()
@@ -37,7 +37,7 @@ def main():
         for event in pygame.event.get():
             if_quit(event)
            
-            temp_page, piked_cards = handel_event(event, corent_page, cities, players, corent_player, bord_state, piked_cards)
+            temp_page, piked_cards, piked_player = handel_event(event, corent_page, cities, piked_player, corent_player, bord_state, piked_cards, players)
 
             if temp_page:
                 corent_page = temp_page

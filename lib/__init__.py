@@ -3,4 +3,4 @@ from .player_deck import draw_from_deck
 from .cure import discover_cure
 from .diseasse import treat_diseasse
 from .research_station import builed_research_station
-
+from .cards import share_knowledge
