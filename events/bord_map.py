@@ -7,11 +7,11 @@ def clicked_on_city(cities, corent_player, mouse_point, bord_state):
     closest_city = None
     routes = get_routes(cities, corent_player, bord_state)
     for city_name in routes:
-        city_data = cities[city_name]
-        temp_min_radius = click_lenth_from_center(city_data, mouse_point)
+        city = cities[city_name]
+        temp_min_radius = click_lenth_from_center(city, mouse_point)
         if temp_min_radius <= min_radius:
             min_radius = temp_min_radius
-            closest_city = city_data
+            closest_city = city
 
     if closest_city: move_player_to_city(corent_player, closest_city)
 
