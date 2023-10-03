@@ -23,8 +23,8 @@ OUTBREAK_BAR_POINTS = [(100, 600), (200, 650), (100, 700), (200, 750), (100, 800
 MAP_BUTTONS_POINTS = [(250, 920), (250, 970), (600, 1020), (700, 1020), (800, 1020), (900, 1020)]
 MAP_BUTTONS_TEXTS = ['builed research station', 'display player cards', 'blue', 'yellow', 'black', 'red']
 
-CARDS_BUTTONS_POINTS = [(250, 970), (1250, 970), (1250, 1020)]
-CARDS_BUTTONS_TEXTS = ['back to map', 'discover cure', 'share knowledge']
+CARDS_BUTTONS_POINTS = [(250, 970), (250, 1020), (1250, 970), (1250, 1020)]
+CARDS_BUTTONS_TEXTS = ['back to map', 'direct flight', 'discover cure', 'share knowledge']
 
 BUTTON_HIGHT = 25
 BUTTON_WHIDTH = 225

@@ -36,8 +36,8 @@ def click_lenth_from_center(city, mouse_point):
     return abs(city.point[0] - mouse_point[0]) + abs(city.point[1] - mouse_point[1])
 
 
-def move_player_to_city(corent_player, closest_city):
-    corent_player.corent_city = closest_city
+def move_player_to_city(corent_player, city):
+    corent_player.corent_city = city
     corent_player.actions -= 1
 
 

@@ -1,5 +1,5 @@
 from display import CARD_HALF_HIGHT, SPACE_BETWEEN_CARDS, culculate_cards_point, culculate_card_square, CARD_HALF_WHIDTH, CARD_HALF_HIGHT, culculate_card_row, culculate_player_point
-from lib import discover_cure, share_knowledge
+from lib import discover_cure, share_knowledge, direct_flight
 
 
 def click_on_botton(bord_state, corent_player, botton_clicked, picked_cards, picked_player):
@@ -15,7 +15,12 @@ def click_on_botton(bord_state, corent_player, botton_clicked, picked_cards, pic
     elif botton_clicked == 'discover cure':
         discover_cure(bord_state, picked_cards, corent_player)
         picked_cards = []
-    
+
+    elif botton_clicked == 'direct flight':
+        direct_flight(corent_player, picked_cards)
+        picked_cards = []
+
+
     return corent_page, picked_cards, picked_player
 
 

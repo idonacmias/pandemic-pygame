@@ -21,15 +21,15 @@ def is_valid_cure(bord_state, picked_cards, corent_player):
         return True
     
 
-def is_cure_not_discoverd(picked_cards, bord_state):
-    first_card = picked_cards[0]
-    if bord_state.cure[first_card.color.name] == 0:
-        return True
-
-
 def is_number_of_card_for_cure_valid(picked_cards):
     number_cards_needed_to_cure = NUMBER_CARDS_NEEDED_TO_CURE
     if len(picked_cards) == number_cards_needed_to_cure:
+        return True
+
+
+def is_cure_not_discoverd(picked_cards, bord_state):
+    first_card = picked_cards[0]
+    if bord_state.cure[first_card.color.name] == 0:
         return True
 
 
