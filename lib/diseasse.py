@@ -2,6 +2,7 @@ from display import Color
 
 
 def treat_diseasse(bord_state, corent_player, color_name, action=True):
+    print('treat_diseasse')
     corent_city = corent_player.corent_city
     color = Color.__members__[color_name]
     if is_diseasse_in_city(corent_city, color):
@@ -13,6 +14,7 @@ def treat_diseasse(bord_state, corent_player, color_name, action=True):
         else:
             new_cube_in_city = corent_city.diseasse_cubes[color] - 1
 
+        bord_state.disease_cube[color] += corent_city.diseasse_cubes[color] - new_cube_in_city
         corent_city.diseasse_cubes[color] = new_cube_in_city
 
 

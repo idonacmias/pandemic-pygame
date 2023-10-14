@@ -1,28 +1,15 @@
-from display import colors_palet, city, card, tokens, player, bottons
-from .constances import MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS, CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS
+from display import colors_palet, city, card, tokens, player
+from .constances import MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS, CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS, MAP_SMALL_BUTTONS_POINTS, MAP_SMALL_BUTTONS_TEXTS, BUTTON_HIGHT, BUTTON_WHIDTH, SMALL_BUTTON_WHIDTH, SMALL_BUTTON_HIGHT
 
-
-def draw_bord(screen, font, corent_page, cities, players, bord_state):
+def draw_bord(screen, font, corent_page, cities, players, bord_state, my_buttons):
+   corent_button = my_buttons[corent_page]
    if corent_page == 'map':
-      draw_map(screen, font, cities, players, bord_state)
+      draw_map(screen, font, cities, players, bord_state, corent_button)
 
    if corent_page == 'cards':
-      buttons_data = zip(MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS)
-      draw_cards(screen, font, cities, players, bord_state)
+      draw_cards(screen, font, cities, players, bord_state, corent_button)
 
-   # if corent_page == 'cure diseasse':
-   #    buttons_data = zip(MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS)
-   #    draw_cure_diseasse(screen, font, cities, players, bord_state)
-
-
-# def draw_cure_diseasse(screen, font, cities, players, bord_state):
-#    draw_map(screen, font, cities, players, bord_state)
-#    buttons_data = zip(MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS)
-#    bottons.draw(screen, font, buttons_data)
-
-
-
-def draw_map(screen, font, cities, players, bord_state):
+def draw_map(screen, font, cities, players, bord_state, my_botton):
    screen.fill(colors_palet['PURPLE'])
    draw_cities(screen, font, cities)    
    card.display_back_infaction_card(screen)
@@ -33,9 +20,10 @@ def draw_map(screen, font, cities, players, bord_state):
    tokens.draw_outbreak_bar(screen, font, bord_state.outbreack)
    tokens.draw_medicen_bar(screen, bord_state.cure)
    player.draw(cities, screen, players)
-   buttons_data = zip(MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS)
-   bottons.draw(screen, font, buttons_data)
-
+   for botton in my_botton:
+      botton.draw(screen, font)
+      
+   # bottons.draw(screen, font, small_buttons_data, small=True)
 
 def draw_cities(screen, font, cities):
     for city_data in cities.values():
@@ -45,9 +33,10 @@ def draw_cities(screen, font, cities):
         city.draw(city_data, screen, font)
 
 
-def draw_cards(screen, font, cities, players, bord_state):
+def draw_cards(screen, font, cities, players, bord_state, my_botton):
    screen.fill(colors_palet['PURPLE'])
    card.dispaly_players_cards(screen, font, cities, players)
-   buttons_data = zip(CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS)
-   bottons.draw(screen, font, buttons_data)
+   for botton in my_botton:
+      botton.draw(screen, font)
+   
    tokens.draw_medicen_bar(screen, bord_state.cure)

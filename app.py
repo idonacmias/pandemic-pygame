@@ -2,7 +2,7 @@ import pygame
 import sys
 from data import Player, cities, FIRST_CITY, EventCard, BordState, ACTION_PER_TURN, NUM_PLAYERS_CARDS
 from events import handel_event
-from display import colors_palet, bord_display
+from display import colors_palet, bord_display, all_buttons
 from itertools import cycle
 from lib import first_infaction, infected_phase, draw_from_deck
 
@@ -20,31 +20,35 @@ def main():
     corent_player = next(cycle_player)
     
     corent_page = 'map'
+
     piked_cards = []
     piked_player = None
 
     while True:
         # screen_info = pygame.display.Info()
         # print(screen_info)
-        
+
+        bord_display.draw_bord(screen, font, corent_page, cities, players, bord_state, all_buttons)
+        pygame.display.update()
+        clock.tick(60)
         if corent_player.actions == 0: 
             print('END_TURN')
             draw_from_deck(bord_state, corent_player)
-            infected_phase(bord_state)
+            infected_phase(bord_state, cities)
             corent_player = next(cycle_player)
             corent_player.actions = ACTION_PER_TURN
 
+        if is_lose(bord_state):
+            print('lose')
+
+        elif is_won(bord_state):
+            print('win')
+
         for event in pygame.event.get():
             if_quit(event)
-           
-            temp_page, piked_cards, piked_player = handel_event(event, corent_page, cities, piked_player, corent_player, bord_state, piked_cards, players)
-
+            temp_page, piked_cards, piked_player = handel_event(event, corent_page, cities, piked_player, corent_player, bord_state, piked_cards, players, all_buttons)
             if temp_page:
                 corent_page = temp_page
-
-        bord_display.draw_bord(screen, font, corent_page, cities, players, bord_state)
-        pygame.display.update()
-        clock.tick(60)
 
 
 def if_quit(event):
@@ -62,7 +66,7 @@ def set_bord(num_players=2):
     players = [Player(PLAYER_COLORS[i], players_cards[i], first_city) for i in range(num_players)]
     first_infaction(bord_state)
     bord_state.insert_epidemic()
-    return players, bord_state
+    return players, bord_state  
 
 
 def first_draw_player_cards(bord_state, num_players):
@@ -73,7 +77,30 @@ def first_draw_player_cards(bord_state, num_players):
         bord_state.players_deck = bord_state.players_deck[num_players_cards:]
 
     return player_cards
+
     
+
+def is_lose(bord_state):
+    return (bord_state.outbreack >= 8 or
+            not bord_state.players_deck or
+            is_disease_cube_empty(bord_state.disease_cube))
+
+def is_disease_cube_empty(disease_cube):
+    for disease in disease_cube:
+        if disease < 0:
+            return True
+
+
+def is_won(bord_state):
+    cures = 0
+    for cure in bord_state.cure.values():
+        if cure > 0:
+            cures += 1
+
+    return cures == 4
+
+
+
 
 if __name__ == '__main__':
     main()

@@ -1,4 +1,4 @@
-from display import card, CITY_RADIUS, bottons
+from display import card, CITY_RADIUS
 from display import MAP_BUTTONS_POINTS,MAP_BUTTONS_TEXTS, BUTTON_WHIDTH, BUTTON_HIGHT
 from lib import treat_diseasse, builed_research_station
 
