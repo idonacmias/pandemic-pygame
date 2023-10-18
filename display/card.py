@@ -1,25 +1,45 @@
 import pygame
 import math
 
-from .constances import CARD_HALF_WHIDTH, CARD_HALF_HIGHT, INFACTION_CARDS_POSITION, DISCARD_INFACTION_CARDS_POSITION, PLAYERS_DECK_POSITION, DISCARD_PLAYERS_DECK_POSITION, SPACE_FROM_TOP, SPACE_BETWEEN_CARDS
 from .color import colors_palet
-
-from data import EventCard, City
-
-def display_card_silhouette(screen, point, color):
-    squer_point = culculate_card_square(point)
-    pygame.draw.polygon(surface=screen, color=colors_palet[color], points=squer_point)
+from .constances import INFACTION_CARDS_POSITION, DISCARD_INFACTION_CARDS_POSITION, PLAYERS_DECK_POSITION, DISCARD_PLAYERS_DECK_POSITION
 
 
-def culculate_card_square(point):
-    a,b,c,d = point[0] - CARD_HALF_WHIDTH, point[1] - CARD_HALF_HIGHT, point[1] + CARD_HALF_HIGHT, point[0] + CARD_HALF_WHIDTH
-    squer_point = [(a, b), (a, c), (d, c), (d, b)]
-    return squer_point
+
+def dispaly_players_cards(screen, font, players):
+    for i, player in enumerate(players):
+        y = i * 250 + 100
+        for j, card in enumerate(player.hand):
+            x = (j + 1) * 250
+            card.center = (x, y)
+            card.draw(screen, font)
 
 
-def display_back_infaction_card(screen, point=INFACTION_CARDS_POSITION):
-    display_card_silhouette(screen, point, 'DARK_GREEN')
-    draw_biohazerd(screen, point, 'DARK_GREEN')    
+def display_infaction_discard_card(screen, font, bord_state):
+    infaction_card = bord_state.infaction_discard_cards[-1]
+    infaction_card.center = DISCARD_INFACTION_CARDS_POSITION
+    infaction_card.draw(screen, font)
+
+
+def display_player_discard_card(screen, font, bord_state):
+    if bord_state.player_discard_cards: 
+      card = bord_state.player_discard_cards[-1]
+      card.center = DISCARD_PLAYERS_DECK_POSITION
+      card.draw(screen, font)
+
+    else:
+        card = pygame.Rect(0, 0, 180, 200)
+        card.center = DISCARD_PLAYERS_DECK_POSITION
+        pygame.draw.rect(screen, colors_palet['WHITE'], card)
+
+
+def display_back_infaction_card(screen):
+    back_color = 'GREEN'
+    back_infaction_card = pygame.Rect(0, 0, 180, 200)
+    back_infaction_card.center = INFACTION_CARDS_POSITION
+    pygame.draw.rect(screen, colors_palet[back_color], back_infaction_card)
+    center_point = back_infaction_card.center
+    draw_biohazerd(screen, center_point, back_color)
 
 
 def draw_biohazerd(screen, center_point, back_color, radius=25, symbol_color='SICK_GREEN'):
@@ -47,129 +67,24 @@ def draw_biohazerd(screen, center_point, back_color, radius=25, symbol_color='SI
     pygame.draw.circle(surface=screen, color=colors_palet[back_color], center=center_point , radius=(0.5 *radius))
 
 
-def display_back_players_card(screen, point=PLAYERS_DECK_POSITION):
-    display_card_silhouette(screen, point, 'DARK_BLUE')
-    draw_plas(screen, point)
+def display_back_players_card(screen):
+    back_color = 'DARK_BLUE'
+    back_infaction_card = pygame.Rect(0, 0, 180, 200)
+    back_infaction_card.center = PLAYERS_DECK_POSITION
+    pygame.draw.rect(screen, colors_palet[back_color], back_infaction_card)
+    center_point = back_infaction_card.center
+    draw_plas(screen, center_point)
 
 
 def draw_plas(screen, point):
-    HALF_HIGHT = CARD_HALF_HIGHT // 5
-    HALF_WHIDTH = CARD_HALF_HIGHT // 1.5
+    HIGHT = 180 // 5
+    WHIDTH = 200 // 1.5
+    horizontal_line = pygame.Rect(0, 0,WHIDTH,  HIGHT)
+    Vertical_line = pygame.Rect(0, 0,  HIGHT, WHIDTH)
+    
+    horizontal_line.center = point
+    Vertical_line.center = point
 
-    a,b,c,d = point[0] - HALF_WHIDTH, point[1] - HALF_HIGHT, point[1] + HALF_HIGHT, point[0] + HALF_WHIDTH
-    rectangle_point = [(a, b), (a, c), (d, c), (d, b)]
-    pygame.draw.polygon(surface=screen, color=colors_palet['LIGHT_BLUE'], points=rectangle_point)
-
-    a,b,c,d = point[0] - HALF_HIGHT, point[1] - HALF_WHIDTH, point[1] + HALF_WHIDTH, point[0] + HALF_HIGHT
-    rectangle_point = [(a, b), (a, c), (d, c), (d, b)]
-    pygame.draw.polygon(surface=screen, color=colors_palet['LIGHT_BLUE'], points=rectangle_point)
-
-
-def display_infaction_discard_card(screen, font, bord_state):
-    city = bord_state.infaction_discard_cards[-1]
-    dispaly_front_infaction_card(screen, font, city)   
-
-
-
-def dispaly_front_infaction_card(screen, font, city, point=DISCARD_INFACTION_CARDS_POSITION):
-    card_texts = city_card_text(city)
-    dispaly_front_card(screen, point, city, font, 'DARK_GREEN', city.color.name, card_texts)
-
-
-def display_player_discard_card(screen, font, bord_state):
-   if bord_state.player_discard_cards: 
-      last_discard_card = bord_state.player_discard_cards[-1]
-      dispaly_front_player_card(screen, font, last_discard_card, DISCARD_PLAYERS_DECK_POSITION)
-
-   else:
-      display_card_silhouette(screen, DISCARD_PLAYERS_DECK_POSITION, 'WHITE')
-
-
-def dispaly_front_player_card(screen, font, player_card, point):
-    #match case   
-    if is_card_of_type(player_card, City.City):
-        card_texts = city_card_text(player_card)
-        font_color = player_card.color.name
-        background_color = 'GRAY'
-
-    elif is_card_of_type(player_card, EventCard.EventCard):
-        card_texts = event_card_text(player_card)
-        font_color = 'GREEN'
-        background_color = 'YELLOW'
-
-    elif is_card_of_type(player_card, str):
-        card_texts = epidemic_card_text()
-        font_color = 'DARK_GREEN'
-        background_color = 'BLACK'
-
-    dispaly_front_card(screen, point, player_card, font, font_color, background_color, card_texts)
-
-
-def is_card_of_type(player_card, card_type):
-    return type(player_card) == card_type
-
-def city_card_text(city):
-    return ['city_name:', city.name, 'city_population:', city.population]
-
-
-def event_card_text(event_card):
-    return ['event_name:', event_card.name, event_card.description]
-
-
-def epidemic_card_text():
-    return ['epidemic', 'incrise infaction', 'infect city', 'intensify']
-
-
-def dispaly_front_card(screen, point, city, font, background_color, text_color, card_texts):
-    text_point = (point[0] - 100, point[1] - CARD_HALF_HIGHT)
-    display_card_silhouette(screen, point, background_color)
-    for text in card_texts:
-        text_point = (text_point[0], text_point[1] + 30)
-        display_text(screen, font, text, text_color, text_point)
-
-
-def dispaly_players_cards(screen, font, cities, players, card_space_mod=0):
-    space_from_side = 200 +  card_space_mod
-    card_row = culculate_card_row()
-    for player_num, player in enumerate(players):
-        display_title(screen, font, card_row, player, player_num)
-        display_player_hand(screen, font, cities, player, card_row, player_num, space_from_side)
-
-
-def culculate_card_row():
-    return CARD_HALF_HIGHT * 2 + SPACE_BETWEEN_CARDS
-
-
-def display_title(screen, font, card_row, player, player_num):
-    text_point = culculate_player_point(card_row, player_num)
-    player_text = f'{player.color} in {player.corent_city.name}'
-    display_text(screen, font, player_text, 'WHITE', text_point)
-
-
-def culculate_player_point(card_row, player_num):
-    return (100, card_row * player_num + 30)
-
-
-def display_text(screen, font, text, text_color, point):
-    text_render = font.render(str(text), True, colors_palet[text_color])
-    screen.blit(text_render, point)
-
-
-def display_player_hand(screen, font, cities, player, card_row, player_num, space_from_side):
-    player_cards_points = culculate_cards_point(player, card_row, player_num, space_from_side)        
-    for card_point, card in player_cards_points:
-        dispaly_front_player_card(screen, font, card, card_point)
-
-
-def culculate_cards_point(player, card_row, player_num, space_from_side):
-    cards_points = []
-    cards_names = []
-    card_colom = CARD_HALF_WHIDTH * 2 + SPACE_BETWEEN_CARDS 
-    for j, card in enumerate(player.hand):
-        card_point = (space_from_side + j * card_colom, card_row * player_num + SPACE_FROM_TOP)
-        cards_points.append(card_point)
-        cards_names.append(card)
-
-    return zip(cards_points, cards_names)
-
+    pygame.draw.rect(screen, colors_palet['LIGHT_BLUE'], horizontal_line)
+    pygame.draw.rect(screen, colors_palet['LIGHT_BLUE'], Vertical_line)
 

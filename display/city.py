@@ -8,24 +8,24 @@ from .Color import Color
 
 def draw(city, screen, font):
     color = colors_palet[city.color.name]
-    pygame.draw.circle(surface=screen, color=color, center=city.point , radius=CITY_RADIUS)
+    rect = pygame.draw.circle(surface=screen, color=color, center=city.point , radius=CITY_RADIUS)
     if city.research_station:
-        pygame.draw.circle(surface=screen, color=colors_palet['WHITE'], center=city.point , radius=RESEARCH_STATION_RADIUS)
+        pygame.draw.circle(surface=screen, color=colors_palet['WHITE'], center=rect.center , radius=RESEARCH_STATION_RADIUS)
 
-    draw_diseasse_cubes(screen, city)
     font_point = (city.point[0] - 5 * len(city.name), city.point[1] + 20)        
     text_surface = font.render(city.name, True, colors_palet['WHITE']) 
     screen.blit(text_surface, font_point)
+    draw_diseasse_cubes(screen, city)
 
 
 def draw_diseasse_cubes(screen, city):
     for color in list(Color):
-        for cube_cunter in range(city.diseasse_cubes[color]):
-            desis_point = positions(city.point, color, cube_cunter)     
+        for cube_cunter in range(city.diseasse_cubes[color.name]):
+            desis_point = desis_positions(city.point, color, cube_cunter)     
             draw_squer(screen, desis_point, color.name)
 
 
-def positions(point, color, cube_cunter):
+def desis_positions(point, color, cube_cunter):
     LENTH_BETWEEN_CUBES = 15
     LENTH_MOD_FROM_CENTER = 1.7
     move_aside = CITY_RADIUS * LENTH_MOD_FROM_CENTER
@@ -44,26 +44,27 @@ def draw_squer(screen, point, color):
     pygame.draw.polygon(surface=screen, color=colors_palet[color], points=rectangle_point)
 
 
-
 def conect_routes(city, screen, cities, font):
     for other_city_name in city.routes:
-        other_city_point = cities[other_city_name].point
-        if is_edge_conection(city, other_city_point):
-            shadow_point = clculate_shadow_point(city.point, other_city_point)
-            pygame.draw.line(screen, colors_palet['PINK'], city.point, shadow_point, 2)
-
-            text_render = font.render(other_city_name, True, colors_palet['WHITE'])
-            text_point_x = shadow_point[0] if shadow_point[0] < 500 else shadow_point[0] - 220    
-            text_point = (text_point_x, shadow_point[1] - 50)
-            screen.blit(text_render, text_point)
+        other_city = cities[other_city_name]
+        if is_edge_conection(city, other_city):
+            conect_to_shadow_point(screen, font, city, other_city)
 
         else:
-            other_city = cities[other_city_name]
             pygame.draw.line(screen, colors_palet['PINK'], city.point, other_city.point, 2)
 
 
-def is_edge_conection(city, other_city_point):
-    return city.name in EDGE_CITIES and abs(other_city_point[0] - city.point[0]) > 500
+def is_edge_conection(city, other_city):
+    return city.name in EDGE_CITIES and abs(other_city.point[0] - city.point[0]) > 500
+
+
+def conect_to_shadow_point(screen, font, city, other_city):
+    shadow_point = clculate_shadow_point(city.point, other_city.point)
+    pygame.draw.line(screen, colors_palet['PINK'], city.point, shadow_point, 2)
+    text_render = font.render(other_city.name, True, colors_palet['WHITE'])
+    text_point_x = shadow_point[0] if shadow_point[0] < 500 else shadow_point[0] - 220    
+    text_point = (text_point_x, shadow_point[1] - 50)
+    screen.blit(text_render, text_point)
 
 
 def clculate_shadow_point(point, other_point):

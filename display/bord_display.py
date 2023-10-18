@@ -1,13 +1,14 @@
-from display import colors_palet, city, card, tokens, player
+from display import city, card, tokens, player
+from .color import colors_palet
 from .constances import MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS, CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS, MAP_SMALL_BUTTONS_POINTS, MAP_SMALL_BUTTONS_TEXTS, BUTTON_HIGHT, BUTTON_WHIDTH, SMALL_BUTTON_WHIDTH, SMALL_BUTTON_HIGHT
 
-def draw_bord(screen, font, corent_page, cities, players, bord_state, my_buttons):
-   corent_button = my_buttons[corent_page]
+def draw_bord(screen, font, corent_page, cities, players, bord_state, my_bottons):
+   corent_botton = my_bottons[corent_page]
    if corent_page == 'map':
-      draw_map(screen, font, cities, players, bord_state, corent_button)
+      draw_map(screen, font, cities, players, bord_state, corent_botton)
 
    if corent_page == 'cards':
-      draw_cards(screen, font, cities, players, bord_state, corent_button)
+      draw_cards(screen, font, cities, players, bord_state, corent_botton)
 
 def draw_map(screen, font, cities, players, bord_state, my_botton):
    screen.fill(colors_palet['PURPLE'])
@@ -22,9 +23,7 @@ def draw_map(screen, font, cities, players, bord_state, my_botton):
    player.draw(cities, screen, players)
    for botton in my_botton:
       botton.draw(screen, font)
-      
-   # bottons.draw(screen, font, small_buttons_data, small=True)
-
+   
 def draw_cities(screen, font, cities):
     for city_data in cities.values():
         city.conect_routes(city_data, screen, cities, font)
@@ -35,7 +34,7 @@ def draw_cities(screen, font, cities):
 
 def draw_cards(screen, font, cities, players, bord_state, my_botton):
    screen.fill(colors_palet['PURPLE'])
-   card.dispaly_players_cards(screen, font, cities, players)
+   card.dispaly_players_cards(screen, font, players)
    for botton in my_botton:
       botton.draw(screen, font)
    

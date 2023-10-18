@@ -1,6 +1,4 @@
-from display import card, CITY_RADIUS
-from display import MAP_BUTTONS_POINTS,MAP_BUTTONS_TEXTS, BUTTON_WHIDTH, BUTTON_HIGHT
-from lib import treat_diseasse, builed_research_station
+from display import CITY_RADIUS
 
 def clicked_on_city(cities, corent_player, mouse_point, bord_state):
     min_radius = CITY_RADIUS
@@ -40,14 +38,3 @@ def move_player_to_city(corent_player, city):
     corent_player.corent_city = city
     corent_player.actions -= 1
 
-
-def click_on_botton(cities, corent_player, botton_clicked, bord_state):
-    print(botton_clicked)
-    if botton_clicked == 'display player cards': return 'cards'
-
-    elif botton_clicked == 'builed research station':
-        builed_research_station(bord_state, corent_player, cities)
-
-    elif botton_clicked in ['blue', 'yellow', 'black', 'red']:
-        color_name = botton_clicked.upper()
-        treat_diseasse(bord_state, corent_player, color_name)

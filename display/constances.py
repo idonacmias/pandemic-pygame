@@ -33,6 +33,10 @@ CARDS_BUTTONS_POINTS = [(250, 970), (250, 1020), (1250, 970), (1250, 1020)]
 CARDS_BUTTONS_TEXTS = ['back to map', 'direct flight', 'discover cure', 'share knowledge']
 CARDS_BUTTONS_CALLBACKS_NAME = ['switch_bord_to_map', 'direct_flight', 'discover_cure', 'share_knowledge']
 
+CARDS_SMALL_BUTTONS_POINTS = [(600, 1020), (700, 1020), (800, 1020), (900, 1020)]
+CARDS_SMALL_BUTTONS_TEXTS = ['player 1', 'player 2', 'player 3', 'player 4']
+CARDS_SMALL_CALLBACKS_NAME = ['player 1', 'player 2', 'player 3', 'player 4']
+
 
 BUTTON_HIGHT = 25
 BUTTON_WHIDTH = 225

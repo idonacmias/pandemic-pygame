@@ -1,9 +1,9 @@
 import pygame
 import sys
-from data import Player, cities, FIRST_CITY, EventCard, BordState, ACTION_PER_TURN, NUM_PLAYERS_CARDS
-from events import handel_event
-from display import colors_palet, bord_display, all_buttons
 from itertools import cycle
+from data import Player, cities, FIRST_CITY, BordState, ACTION_PER_TURN, NUM_PLAYERS_CARDS,  EpidemicCard
+from events import handel_event
+from display import bord_display, all_bottons
 from lib import first_infaction, infected_phase, draw_from_deck
 
 def main():
@@ -13,42 +13,36 @@ def main():
     screen = pygame.display.set_mode()
     font = pygame.font.Font(None, 28) 
     clock = pygame.time.Clock()
-    
     players, bord_state = set_bord(4)
-
     cycle_player = cycle(players)
     corent_player = next(cycle_player)
-    
-    corent_page = 'map'
-
-    piked_cards = []
-    piked_player = None
+    player_input = {'corent_page' : 'map',
+                    'picked_cards' : [],
+                    'chosen_card' : None,
+                    'picked_player' : None}
 
     while True:
-        # screen_info = pygame.display.Info()
-        # print(screen_info)
-
-        bord_display.draw_bord(screen, font, corent_page, cities, players, bord_state, all_buttons)
+        bord_display.draw_bord(screen, font, player_input['corent_page'], cities, players, bord_state, all_bottons)
         pygame.display.update()
         clock.tick(60)
         if corent_player.actions == 0: 
             print('END_TURN')
-            draw_from_deck(bord_state, corent_player)
+            draw_from_deck(bord_state, corent_player, EpidemicCard, cities)
             infected_phase(bord_state, cities)
             corent_player = next(cycle_player)
             corent_player.actions = ACTION_PER_TURN
 
         if is_lose(bord_state):
-            print('lose')
+            # print('lose')
+            pass
 
         elif is_won(bord_state):
-            print('win')
+            # print('win')
+            pass
 
         for event in pygame.event.get():
             if_quit(event)
-            temp_page, piked_cards, piked_player = handel_event(event, corent_page, cities, piked_player, corent_player, bord_state, piked_cards, players, all_buttons)
-            if temp_page:
-                corent_page = temp_page
+            player_input = handel_event(event, cities, corent_player, bord_state, players, all_bottons, player_input)
 
 
 def if_quit(event):
@@ -64,7 +58,7 @@ def set_bord(num_players=2):
     PLAYER_COLORS = ['GREEN', 'PURPLE', 'GRAY', 'PINK']
     players_cards = first_draw_player_cards(bord_state, num_players)
     players = [Player(PLAYER_COLORS[i], players_cards[i], first_city) for i in range(num_players)]
-    first_infaction(bord_state)
+    first_infaction(bord_state, cities)
     bord_state.insert_epidemic()
     return players, bord_state  
 

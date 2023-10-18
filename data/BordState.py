@@ -1,10 +1,10 @@
 import pygame
 from dataclasses import dataclass, field
-from .cities import cities
-from .constances import FIRST_CITY, MAX_RESEARCH_STATION, MAX_DISEASE_CUBE, INFACTION_SCALE_CUNTER, TOTAL_NUMBER_OF_EPIDEMIC_CARDS
 from random import shuffle, randrange
+from .cities import cities
+from .Card import CityCard, EpidemicCard, EventCard, InfactionCard
+from .constances import FIRST_CITY, MAX_RESEARCH_STATION, MAX_DISEASE_CUBE, INFACTION_SCALE_CUNTER, TOTAL_NUMBER_OF_EPIDEMIC_CARDS
 from display import Color
-
 
 @dataclass(init=True)
 class BordState:
@@ -22,13 +22,14 @@ class BordState:
         self.player_discard_cards = []
         self.infaction_discard_cards  = []
         self.players_deck = BordState.create_player_cards()
-        self.infaction_cards = [city for city in cities.values()]
+        self.infaction_cards = [InfactionCard(city, 200, 200) for city in cities.values()]
         
         shuffle(self.infaction_cards)
 
+
     @staticmethod
     def create_player_cards():
-        city_cards = [city for city in cities.values()]
+        city_cards = [CityCard(city, 200, 200) for city in cities.values()]
         events_cards = []
         players_deck = city_cards + events_cards
         shuffle(players_deck)
@@ -40,5 +41,5 @@ class BordState:
         split_deack = len(self.players_deck) // TOTAL_NUMBER_OF_EPIDEMIC_CARDS
         for i in range(TOTAL_NUMBER_OF_EPIDEMIC_CARDS):
             position = randrange(split_deack) + (i * split_deack)
-            self.players_deck.insert(position, "epidemic")
+            self.players_deck.insert(position, EpidemicCard(200,200))
 
