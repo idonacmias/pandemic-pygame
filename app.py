@@ -19,7 +19,8 @@ def main():
     player_input = {'corent_page' : 'map',
                     'picked_cards' : [],
                     'chosen_card' : None,
-                    'picked_player' : None}
+                    'picked_player' : None, 
+                    'chosen_city' : None}
 
     while True:
         bord_display.draw_bord(screen, font, player_input['corent_page'], cities, players, bord_state, all_bottons)
