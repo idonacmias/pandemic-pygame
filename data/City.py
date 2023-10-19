@@ -22,8 +22,7 @@ class City:
 
 
     def handle_event(self, event, chosen_city):
-        if event.type == pygame.MOUSEBUTTONDOWN:# and self.rect.collidepoint(event.pos):
-            print('handle_event')
+        if event.type == pygame.MOUSEBUTTONUP and self.rect.collidepoint(event.pos):
             pygame.event.post(pygame.event.Event(CLICK_ON_CITY))
             chosen_city = self
         

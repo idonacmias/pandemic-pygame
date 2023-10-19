@@ -43,7 +43,8 @@ bottons_events = {'switch_bord_to_map' : pygame.USEREVENT + 1,
 def handel_event(event, cities, corent_player, bord_state, players, all_bottons, player_input):
     my_bottons = all_bottons[player_input['corent_page']]
     if player_input['corent_page'] == 'map':
-        handel_map_events(event, cities, corent_player, bord_state, player_input['chosen_city']) #handel city movment
+        player_input['chosen_city'] = bord_map.clicked_on_city(cities, corent_player, bord_state, player_input['chosen_city'], event)
+
    
     if player_input['corent_page'] == 'cards':
         for player in players:
@@ -104,7 +105,9 @@ def handel_event(event, cities, corent_player, bord_state, players, all_bottons,
             player_input['picked_cards'].append(player_input['chosen_card'])
 
     elif event.type == CLICK_ON_CITY:
-        print('clicked_on_city')
+        corent_player.corent_city = player_input['chosen_city']
+        player_input['chosen_city'] = None
+        corent_player.actions -= 1
 
     elif event.type == player_1:
         player_input['picked_player'] = players[0]
@@ -120,12 +123,6 @@ def handel_event(event, cities, corent_player, bord_state, players, all_bottons,
 
     return player_input
 
-
-def handel_map_events(event, cities, corent_player, bord_state, chosen_city):
-    if event.type == pygame.MOUSEBUTTONUP:
-        mouse_point = pygame.mouse.get_pos()
-        bord_map.clicked_on_city(cities, corent_player, mouse_point, bord_state, chosen_city, event)
-   
 
 def reset_picked_cards(picked_cards):
     for card in picked_cards:
