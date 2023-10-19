@@ -15,15 +15,14 @@ class City:
         self.diseasse_cubes = {disease_color.name : 0 for disease_color in Color}
         self.research_station = False
         self.radius = CITY_RADIUS
-        rect = pygame.draw.circle(screen, color=color, center=point , radius=CITY_RADIUS)
+        self.rect = None
 
     def __str__(self):
         return f'{self.name} , {self.color} \n {self.diseasse_cubes}'
 
 
     def handle_event(self, event, chosen_city):
-        print(self.collidepoint(event.pos))
-        if event.type == pygame.MOUSEBUTTONDOWN and self.collidepoint(event.pos):
+        if event.type == pygame.MOUSEBUTTONDOWN:# and self.rect.collidepoint(event.pos):
             print('handle_event')
             pygame.event.post(pygame.event.Event(CLICK_ON_CITY))
             chosen_city = self

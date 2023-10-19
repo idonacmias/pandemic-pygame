@@ -8,9 +8,9 @@ from .Color import Color
 
 def draw(city, screen, font):
     color = colors_palet[city.color.name]
-    rect = pygame.draw.circle(surface=screen, color=color, center=city.point , radius=CITY_RADIUS)
+    city.rect = pygame.draw.circle(surface=screen, color=color, center=city.point , radius=CITY_RADIUS)
     if city.research_station:
-        pygame.draw.circle(surface=screen, color=colors_palet['WHITE'], center=rect.center , radius=RESEARCH_STATION_RADIUS)
+        pygame.draw.circle(surface=screen, color=colors_palet['WHITE'], center=city.rect.center , radius=RESEARCH_STATION_RADIUS)
 
     font_point = (city.point[0] - 5 * len(city.name), city.point[1] + 20)        
     text_surface = font.render(city.name, True, colors_palet['WHITE']) 
