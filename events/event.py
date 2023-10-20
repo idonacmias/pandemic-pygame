@@ -93,15 +93,7 @@ def handel_event(event, cities, corent_player, bord_state, players, all_bottons,
         player_input['picked_cards'] = reset_picked_cards(picked_cards)
     
     elif event.type == CLICK_ON_CARD:
-        for i, card in enumerate(player_input['picked_cards']):
-            if card == player_input['chosen_card']:
-                player_input['picked_cards'].pop(i)
-                player_input['chosen_card'].picked = False
-                break
-
-        else:
-            player_input['chosen_card'].picked = True
-            player_input['picked_cards'].append(player_input['chosen_card'])
+        player_input = pick_or_unpick_a_card(player_input)
 
     elif event.type == CLICK_ON_CITY:
         corent_player.corent_city = player_input['chosen_city']
@@ -130,3 +122,15 @@ def reset_picked_cards(picked_cards):
     
     return []
        
+def pick_or_unpick_a_card(player_input):
+    for i, card in enumerate(player_input['picked_cards']):
+        if card == player_input['chosen_card']:
+            player_input['picked_cards'].pop(i)
+            player_input['chosen_card'].picked = False
+            break
+
+    else:
+        player_input['chosen_card'].picked = True
+        player_input['picked_cards'].append(player_input['chosen_card'])
+
+    return player_input
