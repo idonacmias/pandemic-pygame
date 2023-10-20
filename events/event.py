@@ -1,6 +1,5 @@
 import pygame
 from events import bord_map
-from display import MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS, BUTTON_WHIDTH, BUTTON_HIGHT, CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS
 from lib import treat_diseasse, builed_research_station, share_knowledge, discover_cure, direct_flight
 
 
@@ -43,8 +42,8 @@ bottons_events = {'switch_bord_to_map' : pygame.USEREVENT + 1,
 def handel_event(event, cities, corent_player, bord_state, players, all_bottons, player_input):
     my_bottons = all_bottons[player_input['corent_page']]
     if player_input['corent_page'] == 'map':
-        player_input['chosen_city'] = bord_map.clicked_on_city(cities, corent_player, bord_state, player_input['chosen_city'], event)
-
+        player_input['chosen_city'] = bord_map.clicked_on_city(cities, corent_player, bord_state, player_input['chosen_city'], event, player_input['unlimited_movement'])
+        if player_input['chosen_city']: player_input['unlimited_movement'] = False
    
     if player_input['corent_page'] == 'cards':
         for player in players:
@@ -90,7 +89,7 @@ def handel_event(event, cities, corent_player, bord_state, players, all_bottons,
 
     elif event.type == DIRECT_FLIGHT:
         picked_cards = player_input['picked_cards']
-        direct_flight(bord_state, corent_player, picked_cards, cities)
+        player_input['unlimited_movement'] = direct_flight(bord_state, corent_player, picked_cards, cities)
         player_input['picked_cards'] = reset_picked_cards(picked_cards)
     
     elif event.type == CLICK_ON_CARD:
@@ -108,6 +107,7 @@ def handel_event(event, cities, corent_player, bord_state, players, all_bottons,
         corent_player.corent_city = player_input['chosen_city']
         player_input['chosen_city'] = None
         corent_player.actions -= 1
+        
 
     elif event.type == player_1:
         player_input['picked_player'] = players[0]
