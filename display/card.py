@@ -16,9 +16,13 @@ def dispaly_players_cards(screen, font, players):
 
 
 def display_infaction_discard_card(screen, font, bord_state):
-    infaction_card = bord_state.infaction_discard_cards[-1]
-    infaction_card.center = DISCARD_INFACTION_CARDS_POSITION
-    infaction_card.draw(screen, font)
+    if bord_state.infaction_discard_cards:
+        infaction_card = bord_state.infaction_discard_cards[-1]
+        infaction_card.center = DISCARD_INFACTION_CARDS_POSITION
+        infaction_card.draw(screen, font)
+
+    else:
+        display_empty_card(screen, DISCARD_INFACTION_CARDS_POSITION)
 
 
 def display_player_discard_card(screen, font, bord_state):
@@ -28,10 +32,12 @@ def display_player_discard_card(screen, font, bord_state):
       card.draw(screen, font)
 
     else:
-        card = pygame.Rect(0, 0, 180, 200)
-        card.center = DISCARD_PLAYERS_DECK_POSITION
-        pygame.draw.rect(screen, colors_palet['WHITE'], card)
+        display_empty_card(screen, DISCARD_PLAYERS_DECK_POSITION)
 
+def display_empty_card(screen, center):
+    card = pygame.Rect(0, 0, 180, 200)
+    card.center = center
+    pygame.draw.rect(screen, colors_palet['WHITE'], card)
 
 def display_back_infaction_card(screen):
     back_color = 'GREEN'

@@ -39,17 +39,6 @@ class Card(pygame.Rect):
         return chosen_card
 
 
-class InfactionCard(Card):
-    def __init__(self, city, x, y, width=180, height=200):
-        super().__init__(x, y, width, height)
-        self.color = city.color.name 
-        self.backruond_color = self.color
-        self.text_color = 'GRAY'
-        self.name = city.name 
-        self.population = city.population 
-        self.texts = ['city name:', self.name, 'city population:', str(self.population)]
-
-
 class EpidemicCard(Card):
     def __init__(self, x, y, width=180, height=200):
         super().__init__(x, y, width, height)
@@ -64,6 +53,12 @@ class PlayerCard(Card):
         super().__init__(x, y, width, height)
         self.picked = False
 
+
+    def __str__(self):
+        return f'{self.name}, {self.color}'
+
+    def __repr__(self):
+        return self.__str__()
 
     def draw(self, screen, font):
         if self.picked:
@@ -86,14 +81,10 @@ class CityCard(PlayerCard):
         self.texts = ['city name:', self.name, 'city population:', str(self.population)]
 
 
-    def __str__(self):
-        return f'{self.name}, {self.color}'
-
-
 class EventCard(PlayerCard):
 
     def __init__(self, x, y, callback, name, description):
-        super().__init__(x, y, width, height)
+        super().__init__(x, y, width=180, height=200)
         self.color = 'YELLOW'
         self.backruond_color = self.color
         self.text_color = 'BLACK'
@@ -101,4 +92,20 @@ class EventCard(PlayerCard):
         self.description = description
         self.callback = callback
         self.texts = ['Event:', self.name, 'description:', self.description]
+
+
+    def use_event_card(self):
+        pygame.event.post(pygame.event.Event(CLICK_ON_CARD))
+        pygame.event.post(pygame.event.Event(self.callback))
+        
+
+class InfactionCard(PlayerCard):
+    def __init__(self, city, x, y, width=180, height=200):
+        super().__init__(x, y, width, height)
+        self.color = city.color.name 
+        self.backruond_color = self.color
+        self.text_color = 'GRAY'
+        self.name = city.name 
+        self.population = city.population 
+        self.texts = ['city name:', self.name, 'city population:', str(self.population)]
 

@@ -1,12 +1,13 @@
 from .infaction import add_diseasse_to_city
 from random import shuffle
+import data
 
-
-def draw_from_deck(bord_state, corent_player, EpidemicCard, cities):
+def draw_from_deck(bord_state, corent_player, cities):
+    print('draw_from_deck')
     '''Epidemic Card is a class, cannot be imported due to circular import  '''
     for _ in range(2):
         card = bord_state.players_deck[0]
-        if type(card) ==  EpidemicCard:
+        if type(card) ==  data.EpidemicCard:
             bord_state.player_discard_cards.append(card)
             epidemic_effect(bord_state, cities)
 

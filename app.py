@@ -1,10 +1,10 @@
 import pygame
 import sys
 from itertools import cycle
-from data import Player, cities, FIRST_CITY, BordState, ACTION_PER_TURN, NUM_PLAYERS_CARDS,  EpidemicCard
-from events import handel_event
+from data import Player, cities, FIRST_CITY, BordState, NUM_PLAYERS_CARDS
+from events import handel_event, END_TURN
 from display import bord_display, all_bottons
-from lib import first_infaction, infected_phase, draw_from_deck
+from lib import first_infaction
 
 def main():
     pygame.init()
@@ -21,18 +21,19 @@ def main():
                     'chosen_card' : None,
                     'picked_player' : None, 
                     'chosen_city' : None,
-                    'unlimited_movement' : False}
+                    'unlimited_movement' : False,
+                    'airlift' : False,
+                    'government_grant' : False,
+                    'one_quiet_night' : False,
+                    }
+
     while True:
         bord_display.draw_bord(screen, font, player_input['corent_page'], cities, players, bord_state, all_bottons)
         pygame.display.update()
         clock.tick(60)
         if corent_player.actions == 0: 
-            print('END_TURN')
-            draw_from_deck(bord_state, corent_player, EpidemicCard, cities)
-            infected_phase(bord_state, cities)
-            corent_player = next(cycle_player)
-            corent_player.actions = ACTION_PER_TURN
-
+            pygame.event.post(pygame.event.Event(END_TURN))
+            
         if is_lose(bord_state):
             # print('lose')
             pass
@@ -43,7 +44,7 @@ def main():
 
         for event in pygame.event.get():
             if_quit(event)
-            player_input = handel_event(event, cities, corent_player, bord_state, players, all_bottons, player_input)
+            player_input, corent_player = handel_event(event, cities, cycle_player, corent_player, bord_state, players, all_bottons, player_input)
 
 
 def if_quit(event):

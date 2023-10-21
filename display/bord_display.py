@@ -7,8 +7,14 @@ def draw_bord(screen, font, corent_page, cities, players, bord_state, my_bottons
    if corent_page == 'map':
       draw_map(screen, font, cities, players, bord_state, corent_botton)
 
-   if corent_page == 'cards':
+   elif corent_page == 'cards':
       draw_cards(screen, font, cities, players, bord_state, corent_botton)
+
+   elif corent_page == 'forecast':
+      draw_forcast(screen, font, bord_state, corent_botton)
+
+   elif corent_page == 'resilient_population':
+      draw_resilient_population(screen, font, bord_state, corent_botton)
 
 def draw_map(screen, font, cities, players, bord_state, my_botton):
    screen.fill(colors_palet['PURPLE'])
@@ -39,3 +45,32 @@ def draw_cards(screen, font, cities, players, bord_state, my_botton):
       botton.draw(screen, font)
    
    tokens.draw_medicen_bar(screen, bord_state.cure)
+
+
+
+def draw_forcast(screen, font, bord_state, my_botton):
+   screen.fill(colors_palet['PURPLE'])
+   for botton in my_botton:
+      botton.draw(screen, font)
+   
+   cards = bord_state.infaction_cards[:6]
+   y = 500
+   for i, card in enumerate(cards):
+      x = 300 * (i + 1)
+      card.center = (x, y)
+      card.draw(screen, font)
+
+
+def draw_resilient_population(screen, font, bord_state, my_botton):
+   screen.fill(colors_palet['PURPLE'])
+   for botton in my_botton:
+      botton.draw(screen, font)
+   
+
+   
+   y = 500
+   for i, card in enumerate(bord_state.infaction_discard_cards):
+      x = 300 * (i + 1)
+      card.center = (x, y)
+      card.draw(screen, font)
+

@@ -5,6 +5,9 @@ from .cities import cities
 from .Card import CityCard, EpidemicCard, EventCard, InfactionCard
 from .constances import FIRST_CITY, MAX_RESEARCH_STATION, MAX_DISEASE_CUBE, INFACTION_SCALE_CUNTER, TOTAL_NUMBER_OF_EPIDEMIC_CARDS
 from display import Color
+from .event_card import EVENTS_CARDS_ZIP
+
+import pprint as p
 
 @dataclass(init=True)
 class BordState:
@@ -24,15 +27,17 @@ class BordState:
         self.players_deck = BordState.create_player_cards()
         self.infaction_cards = [InfactionCard(city, 200, 200) for city in cities.values()]
         
+        p.pprint(self.infaction_cards)
+
         shuffle(self.infaction_cards)
 
 
     @staticmethod
     def create_player_cards():
         city_cards = [CityCard(city, 200, 200) for city in cities.values()]
-        events_cards = []
-        players_deck = city_cards + events_cards
-        shuffle(players_deck)
+        events_cards = [EventCard(200, 200, callback, name, description) for callback, name, description in EVENTS_CARDS_ZIP]
+        players_deck = events_cards + city_cards
+        # shuffle(players_deck)
         
         return players_deck
 

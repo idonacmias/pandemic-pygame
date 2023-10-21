@@ -1,12 +1,14 @@
-def builed_research_station(bord_state, corent_player, cities, action=True):
-    corent_city = corent_player.corent_city
-    if (not corent_city.research_station and 
-        is_player_have_city_card(corent_player)):
-         
-        if action: corent_player.actions -= 1
-        add_city_research_station(bord_state, corent_city, cities)
-        card = remove_player_card(corent_player)
-        bord_state.player_discard_cards.append(card)
+def builed_research_station(bord_state, corent_player, cities, government_grant, city=None):
+    if not government_grant:
+        if is_player_have_city_card(corent_player):
+            city = corent_player.corent_city         
+            corent_player.actions -= 1
+            card = remove_player_card(corent_player)
+            card.picked = False
+            bord_state.player_discard_cards.append(card)
+
+    if city and not city.research_station:
+        add_city_research_station(bord_state, city, cities)
 
 
 def is_player_have_city_card(corent_player):

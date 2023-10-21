@@ -11,7 +11,16 @@ class Botton(pygame.Rect):
         self.text = text
         self.callback = callback
         self.color = colors_palet['GRAY']        
-  
+
+
+    def __str__(self):
+        return self.text
+
+
+    def __repr__(self):
+        return f'Botton: {self.__str__()}'
+
+
     def draw(self, screen, font):
         pygame.draw.rect(screen, self.color, self)
         text_surface = font.render(self.text, True, (0, 0, 0))

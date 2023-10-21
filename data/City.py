@@ -4,7 +4,6 @@ from events import CLICK_ON_CITY
 
 
 class City:
-# [{"name" : "San Francisco", "point" : [150, 290], "color" : "BLUE", "population" : 5864000, "routes" : ["Chicago", "Los Angeles", "Manila", "Tokyo"]},
     
     def __init__(self, name, point, color, population, routes):
         self.name = name 
