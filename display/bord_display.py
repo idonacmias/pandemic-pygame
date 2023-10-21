@@ -1,6 +1,5 @@
 from display import city, card, tokens, player
-from .color import colors_palet
-from .constances import MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS, CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS, MAP_SMALL_BUTTONS_POINTS, MAP_SMALL_BUTTONS_TEXTS, BUTTON_HIGHT, BUTTON_WHIDTH, SMALL_BUTTON_WHIDTH, SMALL_BUTTON_HIGHT
+from .color import colors_palette
 
 def draw_bord(screen, font, corent_page, cities, players, bord_state, my_bottons):
    corent_botton = my_bottons[corent_page]
@@ -16,8 +15,8 @@ def draw_bord(screen, font, corent_page, cities, players, bord_state, my_bottons
    elif corent_page == 'resilient_population':
       draw_resilient_population(screen, font, bord_state, corent_botton)
 
-def draw_map(screen, font, cities, players, bord_state, my_botton):
-   screen.fill(colors_palet['PURPLE'])
+def draw_map(screen, font, cities, players, bord_state, corent_botton):
+   screen.fill(colors_palette['PURPLE'])
    draw_cities(screen, font, cities)    
    card.display_back_infaction_card(screen)
    card.display_back_players_card(screen)
@@ -27,7 +26,7 @@ def draw_map(screen, font, cities, players, bord_state, my_botton):
    tokens.draw_outbreak_bar(screen, font, bord_state.outbreack)
    tokens.draw_medicen_bar(screen, bord_state.cure)
    player.draw(cities, screen, players)
-   for botton in my_botton:
+   for botton in corent_botton:
       botton.draw(screen, font)
    
 def draw_cities(screen, font, cities):
@@ -38,19 +37,19 @@ def draw_cities(screen, font, cities):
         city.draw(city_data, screen, font)
 
 
-def draw_cards(screen, font, cities, players, bord_state, my_botton):
-   screen.fill(colors_palet['PURPLE'])
+def draw_cards(screen, font, cities, players, bord_state, corent_botton):
+   screen.fill(colors_palette['PURPLE'])
    card.dispaly_players_cards(screen, font, players)
-   for botton in my_botton:
+   for botton in corent_botton:
       botton.draw(screen, font)
    
    tokens.draw_medicen_bar(screen, bord_state.cure)
 
 
 
-def draw_forcast(screen, font, bord_state, my_botton):
-   screen.fill(colors_palet['PURPLE'])
-   for botton in my_botton:
+def draw_forcast(screen, font, bord_state, corent_botton):
+   screen.fill(colors_palette['PURPLE'])
+   for botton in corent_botton:
       botton.draw(screen, font)
    
    cards = bord_state.infaction_cards[:6]
@@ -61,16 +60,20 @@ def draw_forcast(screen, font, bord_state, my_botton):
       card.draw(screen, font)
 
 
-def draw_resilient_population(screen, font, bord_state, my_botton):
-   screen.fill(colors_palet['PURPLE'])
-   for botton in my_botton:
+def draw_resilient_population(screen, font, bord_state, corent_botton):
+   screen.fill(colors_palette['PURPLE'])
+   for botton in corent_botton:
       botton.draw(screen, font)
-   
 
-   
-   y = 500
+   y = 100
+   row_cunter = 0
    for i, card in enumerate(bord_state.infaction_discard_cards):
-      x = 300 * (i + 1)
+      x = 300 * (i + 1) - (row_cunter * screen.get_width())
+      if x > screen.get_width():
+         x -= screen.get_width()
+         y += 300
+         row_cunter += 1
+  
       card.center = (x, y)
       card.draw(screen, font)
 

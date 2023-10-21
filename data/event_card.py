@@ -9,7 +9,7 @@ names = ['one quiet night',
 callback = [events_cards_events[key] for key in names]
 
 description = ['skip the next infaction phase',
-               'remove one card from infaction discard pile',
+               'remove a card from discard infaction ',
                'order the top 6 infaction cards',
                'move player freely on the map',
                'builed one free reserch station']

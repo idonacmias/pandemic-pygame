@@ -1,5 +1,4 @@
 from .constances import CITY_RADIUS
-from .color import colors_palet
 import pygame
 
 

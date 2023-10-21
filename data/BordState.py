@@ -26,9 +26,6 @@ class BordState:
         self.infaction_discard_cards  = []
         self.players_deck = BordState.create_player_cards()
         self.infaction_cards = [InfactionCard(city, 200, 200) for city in cities.values()]
-        
-        p.pprint(self.infaction_cards)
-
         shuffle(self.infaction_cards)
 
 

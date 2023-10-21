@@ -1,7 +1,7 @@
 import pygame
 import math
 
-from .color import colors_palet
+from .color import colors_palette
 from .constances import INFACTION_CARDS_POSITION, DISCARD_INFACTION_CARDS_POSITION, PLAYERS_DECK_POSITION, DISCARD_PLAYERS_DECK_POSITION
 
 
@@ -37,13 +37,13 @@ def display_player_discard_card(screen, font, bord_state):
 def display_empty_card(screen, center):
     card = pygame.Rect(0, 0, 180, 200)
     card.center = center
-    pygame.draw.rect(screen, colors_palet['WHITE'], card)
+    pygame.draw.rect(screen, colors_palette['WHITE'], card)
 
 def display_back_infaction_card(screen):
     back_color = 'GREEN'
     back_infaction_card = pygame.Rect(0, 0, 180, 200)
     back_infaction_card.center = INFACTION_CARDS_POSITION
-    pygame.draw.rect(screen, colors_palet[back_color], back_infaction_card)
+    pygame.draw.rect(screen, colors_palette[back_color], back_infaction_card)
     center_point = back_infaction_card.center
     draw_biohazerd(screen, center_point, back_color)
 
@@ -65,19 +65,19 @@ def draw_biohazerd(screen, center_point, back_color, radius=25, symbol_color='SI
     radius_mod += [0.8] * 3
 
     for horn_point in horn_circles_points:
-        pygame.draw.circle(surface=screen, color=colors_palet[symbol_color], center=horn_point , radius=1.2 * radius)
+        pygame.draw.circle(surface=screen, color=colors_palette[symbol_color], center=horn_point , radius=1.2 * radius)
 
     for horn_point in negative_horn_circles_points:
-        pygame.draw.circle(surface=screen, color=colors_palet[back_color], center=horn_point , radius=0.8 * radius)
+        pygame.draw.circle(surface=screen, color=colors_palette[back_color], center=horn_point , radius=0.8 * radius)
 
-    pygame.draw.circle(surface=screen, color=colors_palet[back_color], center=center_point , radius=(0.5 *radius))
+    pygame.draw.circle(surface=screen, color=colors_palette[back_color], center=center_point , radius=(0.5 *radius))
 
 
 def display_back_players_card(screen):
     back_color = 'DARK_BLUE'
     back_infaction_card = pygame.Rect(0, 0, 180, 200)
     back_infaction_card.center = PLAYERS_DECK_POSITION
-    pygame.draw.rect(screen, colors_palet[back_color], back_infaction_card)
+    pygame.draw.rect(screen, colors_palette[back_color], back_infaction_card)
     center_point = back_infaction_card.center
     draw_plas(screen, center_point)
 
@@ -91,6 +91,6 @@ def draw_plas(screen, point):
     horizontal_line.center = point
     Vertical_line.center = point
 
-    pygame.draw.rect(screen, colors_palet['LIGHT_BLUE'], horizontal_line)
-    pygame.draw.rect(screen, colors_palet['LIGHT_BLUE'], Vertical_line)
+    pygame.draw.rect(screen, colors_palette['LIGHT_BLUE'], horizontal_line)
+    pygame.draw.rect(screen, colors_palette['LIGHT_BLUE'], Vertical_line)
 

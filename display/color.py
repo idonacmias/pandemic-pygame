@@ -1,6 +1,5 @@
 import pygame
-# palette
-colors_palet = {
+colors_palette = {
 'RED' : pygame.Color(255,0,0),
 'GREEN' : pygame.Color(0,255,0),
 'YELLOW' : pygame.Color(255,255,0),
