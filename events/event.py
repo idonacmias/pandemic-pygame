@@ -159,7 +159,7 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         player_input['picked_player'] = players[3]
 
     elif event.type == USE_EVENT_CARD:
-        # distroyed if push for no reson!!!! (no picked card)
+        distroyed if push for no reson!!!! (no picked card)
         event_card = player_input['picked_cards'][0]
         event_card.use_event_card()            
         discard_card(players, event_card, bord_state)
