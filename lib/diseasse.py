@@ -7,7 +7,7 @@ def treat_diseasse(bord_state, corent_player, color_name, action=True):
     if is_diseasse_in_city(corent_city, color_name):
         if action: corent_player.actions -= 1
 
-        if bord_state.cure[color_name] == 1: #TODO: PLAYER ROLL MEDIC    
+        if bord_state.cure[color_name] == 1 or corent_player.role == 'Medic': #TODO: PLAYER ROLL MEDIC    
             new_cube_in_city = 0
 
         else:

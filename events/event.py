@@ -1,6 +1,6 @@
 import pygame
 from events import bord_map
-from lib import treat_diseasse, builed_research_station, share_knowledge, discover_cure, direct_flight, infected_phase, draw_from_deck
+from lib import treat_diseasse, builed_research_station, share_knowledge, discover_cure, direct_flight, infected_phase, draw_from_deck, move_to_city
 from data import ACTION_PER_TURN
 
 END_TURN = pygame.USEREVENT + 1
@@ -103,7 +103,9 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         player_input['corent_page'] = 'map'
 
     elif event.type == BUILED_RESEARCH_STATION:
-        builed_research_station(bord_state, corent_player, cities, player_input['government_grant'], player_input['chosen_city'])
+        government_grant = player_input['government_grant']
+        chosen_city = player_input['chosen_city'] 
+        builed_research_station(bord_state, corent_player, cities, government_grant, chosen_city)
         player_input['government_grant'] = False
         player_input['chosen_city'] = None
 
@@ -136,16 +138,13 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
             pygame.event.post(pygame.event.Event(MOVE_TO_CITY))
 
     elif event.type == MOVE_TO_CITY:
-        if player_input['airlift'] and player_input['picked_player']: 
-            player = player_input['picked_player'] 
-        
-        else:
-            player=corent_player
-        
-        player.corent_city = player_input['chosen_city']
-        if not player_input['airlift']:corent_player.actions -= 1
+        airlift = player_input['airlift']
+        picked_player = player_input['picked_player']
+        chosen_city = player_input['chosen_city']
+        move_to_city(bord_state, chosen_city, corent_player, airlift, picked_player)
         player_input['chosen_city'] = None
         player_input['airlift'] = False
+        player_input['picked_player'] = None
 
     elif event.type == PLAYER_1:
         player_input['picked_player'] = players[0]
@@ -160,6 +159,7 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         player_input['picked_player'] = players[3]
 
     elif event.type == USE_EVENT_CARD:
+        # distroyed if push for no reson!!!! (no picked card)
         event_card = player_input['picked_cards'][0]
         event_card.use_event_card()            
         discard_card(players, event_card, bord_state)

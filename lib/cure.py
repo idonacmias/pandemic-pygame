@@ -12,7 +12,7 @@ def discover_cure(bord_state, picked_cards, corent_player):
 
 def is_valid_cure(bord_state, picked_cards, corent_player):
     '''the order of the validation mater -> anti empty list'''
-    if (is_number_of_card_for_cure_valid(picked_cards) and 
+    if (is_number_of_card_for_cure_valid(picked_cards, corent_player) and 
         is_cure_not_discoverd(picked_cards, bord_state) and
         is_player_in_reserch_station(corent_player) and 
         is_picked_cards_same_color(picked_cards, corent_player) and 
@@ -21,8 +21,9 @@ def is_valid_cure(bord_state, picked_cards, corent_player):
         return True
     
 
-def is_number_of_card_for_cure_valid(picked_cards):
+def is_number_of_card_for_cure_valid(picked_cards, corent_player):
     number_cards_needed_to_cure = NUMBER_CARDS_NEEDED_TO_CURE
+    if corent_player.role == 'Scientist': number_cards_needed_to_cure -= 1
     if len(picked_cards) == number_cards_needed_to_cure:
         return True
 

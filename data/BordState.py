@@ -14,7 +14,7 @@ class BordState:
 
     def __init__(self):
         self.outbreack  = 0
-        self.cure = {disease_color.name : 0 for disease_color in Color}
+        self.cure = {disease_color.name : 1 for disease_color in Color}
 
         self.disease_cube = [MAX_DISEASE_CUBE] * 4
         self.infaction_rate = 0

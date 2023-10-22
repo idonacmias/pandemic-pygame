@@ -91,8 +91,7 @@ class EventCard(PlayerCard):
         self.backruond_color = self.color
         self.text_color = 'BLACK'
         self.name = name
-        self.description = list(EventCard.split_string_at_middle_space(description)) # need to split into two
-        print(self.description)
+        self.description = EventCard.split_string_at_middle_space(description)
         self.callback = callback
         self.texts = ['Event:', self.name, 'description:'] + self.description
  
@@ -102,14 +101,12 @@ class EventCard(PlayerCard):
         pygame.event.post(pygame.event.Event(self.callback))
         
 
-
-
     def split_string_at_middle_space(input_string):
         middle = len(input_string) // 2
         left_space = input_string.rfind(' ', 0, middle)
         right_space = input_string.find(' ', middle)
         split_point = left_space if middle - left_space <= right_space - middle else right_space
-        return input_string[:split_point], input_string[split_point + 1:]
+        return [input_string[:split_point], input_string[split_point + 1:]]
 
 
 class InfactionCard(PlayerCard):
