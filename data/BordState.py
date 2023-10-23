@@ -7,7 +7,6 @@ from .constances import FIRST_CITY, MAX_RESEARCH_STATION, MAX_DISEASE_CUBE, INFA
 from display import Color
 from .event_card import EVENTS_CARDS_ZIP
 
-import pprint as p
 
 @dataclass(init=True)
 class BordState:

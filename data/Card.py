@@ -97,7 +97,6 @@ class EventCard(PlayerCard):
  
 
     def use_event_card(self):
-        pygame.event.post(pygame.event.Event(CLICK_ON_CARD))
         pygame.event.post(pygame.event.Event(self.callback))
         
 

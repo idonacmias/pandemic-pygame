@@ -2,7 +2,10 @@ from .diseasse import treat_diseasse
 from display import Color 
 
 def move_to_city(bord_state, chosen_city, corent_player, airlift, picked_player):
-    if airlift and picked_player: 
+    if ((airlift or 
+        corent_player.role == 'Dispatcher')and
+        picked_player): 
+    
         player = picked_player 
 
     else:

@@ -6,7 +6,7 @@ from random import randrange
 class Player():
 
     players_roles = ['Quarantine_Specialist', #no desisses cube in the neer by cities
-                     'Dispatcher',            #can move other player in his turn
+                     'Dispatcher',          #V #can move other player in his turn
                      'Operations_Expert',     #can builed reserch station without card, can move anywere form reserch station by discarding card 
                      'Medic',               #V  #treat all diseasse cube in city of the same color, treat diseasse with no action if cure is discoverd 
                      'Researcher',          #V  #can give his card, even if city shared is not the card thet move
@@ -18,7 +18,7 @@ class Player():
         self.corent_city = starter_city
         self.actions = ACTION_PER_TURN
         self.hand = Player_cards
-        self.role = 'Medic'#players_roles[randrange(len(players_roles))]
+        self.role = 'Dispatcher'#players_roles[randrange(len(players_roles))]
 
 
 

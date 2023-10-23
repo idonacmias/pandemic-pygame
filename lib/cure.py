@@ -6,9 +6,7 @@ def discover_cure(bord_state, picked_cards, corent_player):
         corent_player.actions -= 1
         remove_cure_cards_from_palyer_haned(picked_cards, corent_player)
         bord_state.player_discard_cards += picked_cards
-
-    return picked_cards
-
+        
 
 def is_valid_cure(bord_state, picked_cards, corent_player):
     '''the order of the validation mater -> anti empty list'''

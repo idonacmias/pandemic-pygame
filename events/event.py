@@ -1,6 +1,6 @@
 import pygame
 from events import bord_map
-from lib import treat_diseasse, builed_research_station, share_knowledge, discover_cure, direct_flight, infected_phase, draw_from_deck, move_to_city
+from lib import treat_diseasse, builed_research_station, share_knowledge, discover_cure, direct_flight, infected_phase, draw_from_deck, move_to_city, clear_discovered_cure_diseasse
 from data import ACTION_PER_TURN
 
 END_TURN = pygame.USEREVENT + 1
@@ -57,7 +57,7 @@ events_cards_events = {'one quiet night' : ONE_QUIET_NIGHT,
 def handel_event(event, cities, cycle_player, corent_player, bord_state, players, all_bottons, player_input):
     my_bottons = all_bottons[player_input['corent_page']]
     if player_input['corent_page'] == 'map':
-        player_input['chosen_city'] = bord_map.clicked_on_city(cities, corent_player, bord_state, player_input['chosen_city'], event, player_input['unlimited_movement'])
+        player_input['chosen_city'] = bord_map.clicked_on_city(cities, corent_player, bord_state, player_input['chosen_city'], event, player_input['unlimited_movement'], player_input['picked_player'], players)
         if player_input['chosen_city']: player_input['unlimited_movement'] = False
    
     if player_input['corent_page'] == 'cards':
@@ -119,13 +119,19 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
     elif event.type == DISCOVER_CURE:
         picked_cards = player_input['picked_cards']
         discover_cure(bord_state, picked_cards, corent_player)
+        for player in players:
+            if player.role == 'Medic':
+                clear_discovered_cure_diseasse(bord_state, player)
+
         player_input['picked_cards'] = reset_picked_cards(picked_cards)
 
 
     elif event.type == DIRECT_FLIGHT:
         picked_cards = player_input['picked_cards']
-        player_input['unlimited_movement'] = direct_flight(bord_state, corent_player, picked_cards, cities)
+        picked_player = player_input['picked_player']
+        player_input['unlimited_movement'] = direct_flight(bord_state, corent_player, picked_cards, cities, picked_player)
         player_input['picked_cards'] = reset_picked_cards(picked_cards)
+        if not player_input['unlimited_movement']: player_input['picked_player'] = None
     
     elif event.type == CLICK_ON_CARD:
         player_input = pick_or_unpick_a_card(player_input)
@@ -159,10 +165,11 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         player_input['picked_player'] = players[3]
 
     elif event.type == USE_EVENT_CARD:
-        distroyed if push for no reson!!!! (no picked card)
-        event_card = player_input['picked_cards'][0]
-        event_card.use_event_card()            
-        discard_card(players, event_card, bord_state)
+        if len(player_input['picked_cards']) == 1:
+            event_card = player_input['picked_cards'][0]
+            discard_card(players, event_card, bord_state)
+            player_input['picked_cards'] = reset_picked_cards(player_input['picked_cards'])
+            event_card.use_event_card()            
 
     elif event.type == ONE_QUIET_NIGHT:
         player_input['one_quiet_night'] = True
@@ -171,13 +178,11 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         player_input['corent_page'] = 'resilient_population'
 
     elif event.type == APPLY_RESILIENT_POPULATION:
-        print('apply_resilient_population')
         if len(player_input['picked_cards']) == 1:
             for i, card in enumerate(bord_state.infaction_discard_cards):
                 if card == player_input['picked_cards'][0]:
                     bord_state.infaction_discard_cards.pop(i)
-
-            player_input['corent_page'] = 'map'
+                    player_input['corent_page'] = 'map'
 
     elif event.type == FORECAST:
         player_input['corent_page'] = 'forecast'

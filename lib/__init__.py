@@ -5,4 +5,4 @@ from .diseasse import treat_diseasse
 from .research_station import builed_research_station
 from .share_knowledge import share_knowledge
 from .direct_flight import direct_flight
-from .move_to_city import move_to_city
+from .move_to_city import move_to_city, clear_discovered_cure_diseasse
