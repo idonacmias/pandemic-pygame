@@ -36,11 +36,11 @@ CARDS_SMALL_BUTTONS_TEXTS = ['player 1', 'player 2', 'player 3', 'player 4']
 CARDS_SMALL_CALLBACKS_NAME = ['player 1', 'player 2', 'player 3', 'player 4']
 
 FORECAST_BUTTONS_POINTS = [(250, 970)]
-FORECAST_BUTTONS_TEXTS = ['apply']
+FORECAST_BUTTONS_TEXTS = ['return card in new order']
 FORECAST_BUTTONS_CALLBACKS_NAME = ['apply_forcast']
 
 RESILIENT_POPULATION_BUTTONS_POINTS = [(250, 970)] 
-RESILIENT_POPULATION_BUTTONS_TEXTS = ['apply'] 
+RESILIENT_POPULATION_BUTTONS_TEXTS = ['remove card'] 
 RESILIENT_POPULATION_BUTTONS_CALLBACKS_NAME = ['apply_resilient_population']
 
 BUTTON_HIGHT = 25

@@ -57,8 +57,6 @@ events_cards_events = {'one quiet night' : all_events['ONE_QUIET_NIGHT'],
                        'government grant' : all_events['GOVERNMENT_GRANT']}
 
 def handel_event(event, cities, cycle_player, corent_player, bord_state, players, all_bottons, player_input):
-
-
     my_bottons = all_bottons[player_input['corent_page']]
     if player_input['corent_page'] == 'map':
         player_input['chosen_city'] = bord_map.clicked_on_city(cities, corent_player, bord_state, player_input['chosen_city'], event, player_input['unlimited_movement'], player_input['picked_player'], players)
@@ -216,9 +214,10 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         player_input['corent_page'] = 'forecast'
 
     elif event.type == all_events['APPLY_FORECAST']:
-        bord_state.infaction_cards = player_input['picked_cards'] + bord_state.infaction_cards[6:]
-        player_input['picked_cards'] = reset_picked_cards(player_input['picked_cards'])
-        player_input['corent_page'] = 'map'
+        if len(player_input['picked_cards']) == 6:
+            bord_state.infaction_cards = player_input['picked_cards'] + bord_state.infaction_cards[6:]
+            player_input['picked_cards'] = reset_picked_cards(player_input['picked_cards'])
+            player_input['corent_page'] = 'map'
 
     elif event.type == all_events['AIRLIFT']:
         player_input['unlimited_movement'] = True
@@ -233,7 +232,6 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         player_input['unlimited_movement'] = True
         player_input['corent_page'] = 'map'
 
-    print(player_input['active_event'])
     return player_input, corent_player
 
 
