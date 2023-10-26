@@ -15,6 +15,7 @@ def draw_bord(screen, font, corent_page, cities, players, bord_state, my_bottons
    elif corent_page == 'resilient_population':
       draw_resilient_population(screen, font, bord_state, corent_botton)
 
+
 def draw_map(screen, font, cities, players, bord_state, corent_botton):
    screen.fill(colors_palette['PURPLE'])
    draw_cities(screen, font, cities)    

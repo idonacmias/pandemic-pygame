@@ -3,6 +3,8 @@ from events import bord_map
 from lib import treat_diseasse, builed_research_station, share_knowledge, discover_cure, direct_flight, infected_phase, draw_from_deck, move_to_city, clear_discovered_cure_diseasse
 from data import ACTION_PER_TURN
 
+
+
 END_TURN = pygame.USEREVENT + 1
 SWITCH_BORD_TO_MAP = pygame.USEREVENT + 2
 DIRECT_FLIGHT = pygame.USEREVENT + 3
@@ -55,6 +57,8 @@ events_cards_events = {'one quiet night' : ONE_QUIET_NIGHT,
                        'government grant' : GOVERNMENT_GRANT}
 
 def handel_event(event, cities, cycle_player, corent_player, bord_state, players, all_bottons, player_input):
+
+
     my_bottons = all_bottons[player_input['corent_page']]
     if player_input['corent_page'] == 'map':
         player_input['chosen_city'] = bord_map.clicked_on_city(cities, corent_player, bord_state, player_input['chosen_city'], event, player_input['unlimited_movement'], player_input['picked_player'], players)
@@ -77,9 +81,16 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         botton.handle_event(event)
 
     if event.type == END_TURN:
-        draw_from_deck(bord_state, corent_player, cities)
-        if not player_input['one_quiet_night']: infected_phase(bord_state, cities)
+        quarantined_cities = []
+        for player in players:
+            if player.role == 'Quarantine_Specialist':
+                quarantined_cities += player.corent_city.routes + [player.corent_city.name]
+        
+        quarantined_cities = set(quarantined_cities)
+        draw_from_deck(bord_state, corent_player, cities, quarantined_cities)
+        if not player_input['one_quiet_night']: infected_phase(bord_state, cities, quarantined_cities)
         corent_player = next(cycle_player)
+        corent_player.once_per_turn = True
         corent_player.actions = ACTION_PER_TURN
         player_input['one_quiet_night'] = False
 
@@ -104,10 +115,18 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
 
     elif event.type == BUILED_RESEARCH_STATION:
         government_grant = player_input['government_grant']
-        chosen_city = player_input['chosen_city'] 
-        builed_research_station(bord_state, corent_player, cities, government_grant, chosen_city)
+        chosen_city = player_input['chosen_city']
+        # print(chosen_city) 
+        if len(player_input['picked_cards']) == 1: 
+            picked_card = player_input['picked_cards'][0]
+        
+        else:
+            picked_card = None
+
+        builed_research_station(bord_state, corent_player, cities, government_grant, city_card=picked_card, builed_city=chosen_city)
         player_input['government_grant'] = False
         player_input['chosen_city'] = None
+        player_input['picked_cards'] = reset_picked_cards(player_input['picked_cards'])
 
     elif event.type == SHARE_KNOWLEDGE:
         picked_player = player_input['picked_player']
@@ -169,7 +188,7 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
             event_card = player_input['picked_cards'][0]
             discard_card(players, event_card, bord_state)
             player_input['picked_cards'] = reset_picked_cards(player_input['picked_cards'])
-            event_card.use_event_card()            
+            event_card.use_event_card() #need to make shure not to use airlift and government_grant at the same time            
 
     elif event.type == ONE_QUIET_NIGHT:
         player_input['one_quiet_night'] = True
@@ -210,6 +229,7 @@ def reset_picked_cards(picked_cards):
         card.picked = False
     
     return []
+    
        
 def pick_or_unpick_a_card(player_input):
     for i, card in enumerate(player_input['picked_cards']):
@@ -223,6 +243,7 @@ def pick_or_unpick_a_card(player_input):
         player_input['picked_cards'].append(player_input['chosen_card'])
 
     return player_input
+
 
 def discard_card(players, discard_card, bord_state):
     for player in players:
