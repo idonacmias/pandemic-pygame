@@ -94,3 +94,16 @@ def draw_plas(screen, point):
     pygame.draw.rect(screen, colors_palette['LIGHT_BLUE'], horizontal_line)
     pygame.draw.rect(screen, colors_palette['LIGHT_BLUE'], Vertical_line)
 
+
+
+def draw_list_of_cards(screen, font, cards):
+    y = 150
+    x = 0
+    for card in cards:
+       x += 250
+       if x > screen.get_width():
+            y += 300
+            x = 250
+
+       card.center = (x, y)
+       card.draw(screen, font)

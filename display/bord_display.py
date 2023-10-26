@@ -13,8 +13,13 @@ def draw_bord(screen, font, corent_page, cities, players, bord_state, my_bottons
       draw_forcast(screen, font, bord_state, corent_botton)
 
    elif corent_page == 'resilient_population':
-      draw_resilient_population(screen, font, bord_state, corent_botton)
+      draw_infaction_discard_cards(screen, font, bord_state, corent_botton)
 
+   elif corent_page == 'infaction_discard_cards':
+      draw_infaction_discard_cards(screen, font, bord_state, corent_botton)
+
+   elif corent_page == 'discard_player_cards':
+      draw_discard_player_cards(screen, font, bord_state, corent_botton)
 
 def draw_map(screen, font, cities, players, bord_state, corent_botton):
    screen.fill(colors_palette['PURPLE'])
@@ -29,6 +34,7 @@ def draw_map(screen, font, cities, players, bord_state, corent_botton):
    player.draw(cities, screen, players)
    for botton in corent_botton:
       botton.draw(screen, font)
+
    
 def draw_cities(screen, font, cities):
     for city_data in cities.values():
@@ -47,34 +53,25 @@ def draw_cards(screen, font, cities, players, bord_state, corent_botton):
    tokens.draw_medicen_bar(screen, bord_state.cure)
 
 
-
 def draw_forcast(screen, font, bord_state, corent_botton):
    screen.fill(colors_palette['PURPLE'])
    for botton in corent_botton:
       botton.draw(screen, font)
    
-   cards = bord_state.infaction_cards[:6]
-   y = 500
-   for i, card in enumerate(cards):
-      x = 300 * (i + 1)
-      card.center = (x, y)
-      card.draw(screen, font)
+   card.draw_list_of_cards(screen, font, bord_state.infaction_cards[:6])
 
 
-def draw_resilient_population(screen, font, bord_state, corent_botton):
+def draw_infaction_discard_cards(screen, font, bord_state, corent_botton):
    screen.fill(colors_palette['PURPLE'])
    for botton in corent_botton:
       botton.draw(screen, font)
+   
+   card.draw_list_of_cards(screen, font, bord_state.infaction_discard_cards)
 
-   y = 100
-   row_cunter = 0
-   for i, card in enumerate(bord_state.infaction_discard_cards):
-      x = 300 * (i + 1) - (row_cunter * screen.get_width())
-      if x > screen.get_width():
-         x -= screen.get_width()
-         y += 300
-         row_cunter += 1
-  
-      card.center = (x, y)
-      card.draw(screen, font)
 
+def draw_discard_player_cards(screen, font, bord_state, corent_botton):
+   screen.fill(colors_palette['PURPLE'])
+   for botton in corent_botton:
+      botton.draw(screen, font)
+   
+   card.draw_list_of_cards(screen, font, bord_state.player_discard_cards)

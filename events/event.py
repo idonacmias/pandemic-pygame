@@ -30,7 +30,9 @@ all_events = {'END_TURN' : pygame.USEREVENT + 1,
               'GOVERNMENT_GRANT' : pygame.USEREVENT + 23,
               'AIRLIFT' : pygame.USEREVENT + 24,
               'APPLY_FORECAST' : pygame.USEREVENT + 25,
-              'APPLY_RESILIENT_POPULATION' : pygame.USEREVENT + 26}
+              'APPLY_RESILIENT_POPULATION' : pygame.USEREVENT + 26,
+              'DISPLAY_INFACTION_DISCARD_CARD' : pygame.USEREVENT + 27,
+              'DISPLAY_PLAYER_DISCARD_CARD' : pygame.USEREVENT + 28}
 
 bottons_events = {'switch_bord_to_map' : all_events['SWITCH_BORD_TO_MAP'],
                   'direct_flight' : all_events['DIRECT_FLIGHT'],
@@ -63,20 +65,24 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         if player_input['chosen_city']: player_input['unlimited_movement'] = False
         if player_input['chosen_city']: player_input['active_event'] = False
 
-        bord_state.infaction_discard_cards[-1].handle_event(event, None)
+        bord_state.infaction_discard_cards[-1].handle_discard_event(event)
+        if bord_state.player_discard_cards: bord_state.player_discard_cards[-1].handle_discard_event(event)
 
-    if player_input['corent_page'] == 'cards':
+    elif player_input['corent_page'] == 'cards':
         for player in players:
             for card in player.hand:
                 player_input['chosen_card'] = card.handle_event(event, player_input['chosen_card'])
 
-    if player_input['corent_page'] == 'forecast':
+    elif player_input['corent_page'] == 'forecast':
         for card in bord_state.infaction_cards[:6]:
             player_input['chosen_card'] = card.handle_event(event, player_input['chosen_card'])
 
-    if player_input['corent_page'] == 'resilient_population':
+    elif player_input['corent_page'] == 'resilient_population':
         for card in bord_state.infaction_discard_cards:
             player_input['chosen_card'] = card.handle_event(event, player_input['chosen_card'])
+       
+    # elif player_input['corent_page'] == 'discard_player_cards':
+        # pass
 
     for botton in my_bottons:
         botton.handle_event(event)
@@ -113,6 +119,12 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
 
     elif event.type == all_events['SWITCH_BORD_TO_MAP']:
         player_input['corent_page'] = 'map'
+
+    elif event.type == all_events['DISPLAY_INFACTION_DISCARD_CARD']:
+        player_input['corent_page'] = 'infaction_discard_cards'
+
+    elif event.type == all_events['DISPLAY_PLAYER_DISCARD_CARD']:
+        player_input['corent_page'] = 'discard_player_cards'
 
     elif event.type == all_events['BUILED_RESEARCH_STATION']:
         government_grant = player_input['government_grant']

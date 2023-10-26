@@ -39,6 +39,11 @@ class Card(pygame.Rect):
         return chosen_card
 
 
+    def handle_discard_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN and self.collidepoint(event.pos):
+            pygame.event.post(pygame.event.Event(all_events['DISPLAY_PLAYER_DISCARD_CARD']))
+
+
 class EpidemicCard(Card):
     def __init__(self, x, y, width=180, height=200):
         super().__init__(x, y, width, height)
@@ -117,4 +122,12 @@ class InfactionCard(PlayerCard):
         self.name = city.name 
         self.population = city.population 
         self.texts = ['city name:', self.name, 'city population:', str(self.population)]
+
+
+    def handle_discard_event(self, event):
+        '''override base func to call a diffrent event'''
+        if event.type == pygame.MOUSEBUTTONDOWN and self.collidepoint(event.pos):
+            pygame.event.post(pygame.event.Event(all_events['DISPLAY_INFACTION_DISCARD_CARD']))
+
+
 
