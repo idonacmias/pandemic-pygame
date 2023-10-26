@@ -1,4 +1,4 @@
-from events.event import handel_event, bottons_events, CLICK_ON_CARD, CLICK_ON_CITY, events_cards_events, END_TURN
+from events.event import handel_event, bottons_events, all_events, events_cards_events
 import events.bord_map
 
 

@@ -1,6 +1,6 @@
 import pygame
 from display import Color, CITY_RADIUS
-from events import CLICK_ON_CITY
+from events import all_events
 
 
 class City:
@@ -22,7 +22,7 @@ class City:
 
     def handle_event(self, event, chosen_city):
         if event.type == pygame.MOUSEBUTTONUP and self.rect.collidepoint(event.pos):
-            pygame.event.post(pygame.event.Event(CLICK_ON_CITY))
+            pygame.event.post(pygame.event.Event(all_events['CLICK_ON_CITY']))
             chosen_city = self
         
         return chosen_city

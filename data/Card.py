@@ -1,6 +1,6 @@
 import pygame
 from display import colors_palette
-from events import CLICK_ON_CARD
+from events import all_events
 
 class Card(pygame.Rect):
     
@@ -33,7 +33,7 @@ class Card(pygame.Rect):
             self.backruond_color = self.color     
 
         if event.type == pygame.MOUSEBUTTONDOWN and self.collidepoint(event.pos):
-            pygame.event.post(pygame.event.Event(CLICK_ON_CARD))
+            pygame.event.post(pygame.event.Event(all_events['CLICK_ON_CARD']))
             chosen_card = self
         
         return chosen_card

@@ -2,7 +2,7 @@ import pygame
 import sys
 from itertools import cycle
 from data import Player, cities, FIRST_CITY, BordState, NUM_PLAYERS_CARDS
-from events import handel_event, END_TURN
+from events import handel_event, all_events
 from display import bord_display, all_bottons
 from lib import first_infaction
 
@@ -32,7 +32,7 @@ def main():
         pygame.display.update()
         clock.tick(60)
         if corent_player.actions == 0: 
-            pygame.event.post(pygame.event.Event(END_TURN))
+            pygame.event.post(pygame.event.Event(all_events['END_TURN']))
             
         if is_lose(bord_state):
             # print('lose')
