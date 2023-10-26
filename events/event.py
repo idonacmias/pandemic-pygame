@@ -2,7 +2,7 @@ import pygame
 from events import bord_map
 from lib import treat_diseasse, builed_research_station, share_knowledge, discover_cure, direct_flight, infected_phase, draw_from_deck, move_to_city, clear_discovered_cure_diseasse
 from data import ACTION_PER_TURN
-
+import data
 
 
 END_TURN = pygame.USEREVENT + 1
@@ -63,6 +63,8 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
     if player_input['corent_page'] == 'map':
         player_input['chosen_city'] = bord_map.clicked_on_city(cities, corent_player, bord_state, player_input['chosen_city'], event, player_input['unlimited_movement'], player_input['picked_player'], players)
         if player_input['chosen_city']: player_input['unlimited_movement'] = False
+        if player_input['chosen_city']: player_input['active_event'] = False
+
    
     if player_input['corent_page'] == 'cards':
         for player in players:
@@ -116,7 +118,6 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
     elif event.type == BUILED_RESEARCH_STATION:
         government_grant = player_input['government_grant']
         chosen_city = player_input['chosen_city']
-        # print(chosen_city) 
         if len(player_input['picked_cards']) == 1: 
             picked_card = player_input['picked_cards'][0]
         
@@ -129,36 +130,39 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         player_input['picked_cards'] = reset_picked_cards(player_input['picked_cards'])
 
     elif event.type == SHARE_KNOWLEDGE:
-        picked_player = player_input['picked_player']
-        picked_cards = player_input['picked_cards']
-        share_knowledge(corent_player, picked_player, picked_cards)
-        player_input['picked_cards'] = reset_picked_cards(picked_cards)
-        player_input['picked_player'] = None
+        if not player_input['active_event']:    
+            picked_player = player_input['picked_player']
+            picked_cards = player_input['picked_cards']
+            share_knowledge(corent_player, picked_player, picked_cards)
+            player_input['picked_cards'] = reset_picked_cards(picked_cards)
+            player_input['picked_player'] = None
 
     elif event.type == DISCOVER_CURE:
-        picked_cards = player_input['picked_cards']
-        discover_cure(bord_state, picked_cards, corent_player)
-        for player in players:
-            if player.role == 'Medic':
-                clear_discovered_cure_diseasse(bord_state, player)
+        if not player_input['active_event']:    
+            picked_cards = player_input['picked_cards']
+            discover_cure(bord_state, picked_cards, corent_player)
+            for player in players:
+                if player.role == 'Medic':
+                    clear_discovered_cure_diseasse(bord_state, player)
 
-        player_input['picked_cards'] = reset_picked_cards(picked_cards)
+            player_input['picked_cards'] = reset_picked_cards(picked_cards)
 
 
     elif event.type == DIRECT_FLIGHT:
-        picked_cards = player_input['picked_cards']
-        picked_player = player_input['picked_player']
-        player_input['unlimited_movement'] = direct_flight(bord_state, corent_player, picked_cards, cities, picked_player)
-        player_input['picked_cards'] = reset_picked_cards(picked_cards)
-        if not player_input['unlimited_movement']: player_input['picked_player'] = None
-    
+        if not player_input['active_event']:
+            picked_cards = player_input['picked_cards']
+            picked_player = player_input['picked_player']
+            player_input['unlimited_movement'] = direct_flight(bord_state, corent_player, picked_cards, cities, picked_player)
+            player_input['picked_cards'] = reset_picked_cards(picked_cards)
+            if not player_input['unlimited_movement']: player_input['picked_player'] = None
+        
     elif event.type == CLICK_ON_CARD:
         player_input = pick_or_unpick_a_card(player_input)
 
     elif event.type == CLICK_ON_CITY:
         if player_input['government_grant']:
             pygame.event.post(pygame.event.Event(BUILED_RESEARCH_STATION))
-                    
+            
         else:
             pygame.event.post(pygame.event.Event(MOVE_TO_CITY))
 
@@ -184,17 +188,21 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         player_input['picked_player'] = players[3]
 
     elif event.type == USE_EVENT_CARD:
-        if len(player_input['picked_cards']) == 1:
+        if not player_input['active_event'] and len(player_input['picked_cards']) == 1:
             event_card = player_input['picked_cards'][0]
-            discard_card(players, event_card, bord_state)
-            player_input['picked_cards'] = reset_picked_cards(player_input['picked_cards'])
-            event_card.use_event_card() #need to make shure not to use airlift and government_grant at the same time            
+            if type(event_card) == data.EventCard:
+                discard_card(players, event_card, bord_state)
+                event_card.use_event_card() #need to make shure not to use airlift and government_grant at the same time            
+
+        player_input['picked_cards'] = reset_picked_cards(player_input['picked_cards'])
+
 
     elif event.type == ONE_QUIET_NIGHT:
         player_input['one_quiet_night'] = True
 
     elif event.type == RESILIENT_POPULATION:
         player_input['corent_page'] = 'resilient_population'
+        player_input['active_event'] = True
 
     elif event.type == APPLY_RESILIENT_POPULATION:
         if len(player_input['picked_cards']) == 1:
@@ -202,6 +210,7 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
                 if card == player_input['picked_cards'][0]:
                     bord_state.infaction_discard_cards.pop(i)
                     player_input['corent_page'] = 'map'
+                    player_input['active_event'] = False
 
     elif event.type == FORECAST:
         player_input['corent_page'] = 'forecast'
@@ -215,12 +224,16 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         player_input['unlimited_movement'] = True
         player_input['airlift'] = True
         player_input['corent_page'] = 'map'
+        player_input['active_event'] = True
+
 
     elif event.type == GOVERNMENT_GRANT:
+        player_input['active_event'] = True
         player_input['government_grant'] = True
         player_input['unlimited_movement'] = True
         player_input['corent_page'] = 'map'
 
+    print(player_input['active_event'])
     return player_input, corent_player
 
 
@@ -229,7 +242,7 @@ def reset_picked_cards(picked_cards):
         card.picked = False
     
     return []
-    
+
        
 def pick_or_unpick_a_card(player_input):
     for i, card in enumerate(player_input['picked_cards']):

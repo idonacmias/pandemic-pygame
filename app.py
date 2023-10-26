@@ -25,7 +25,7 @@ def main():
                     'airlift' : False,
                     'government_grant' : False,
                     'one_quiet_night' : False,
-                    }
+                    'active_event' : False}
 
     while True:
         bord_display.draw_bord(screen, font, player_input['corent_page'], cities, players, bord_state, all_bottons)
