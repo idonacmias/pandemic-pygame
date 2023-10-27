@@ -18,7 +18,7 @@ class Player():
         self.corent_city = starter_city
         self.actions = ACTION_PER_TURN
         self.hand = Player_cards
-        self.role = 'Operations_Expert'#players_roles[randrange(len(players_roles))]
+        self.role = 'Contingency_Planner' #players_roles[randrange(len(players_roles))]
         self.once_per_turn = True
-
+        self.contingency_planner_event_card = None
 

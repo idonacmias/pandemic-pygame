@@ -8,7 +8,7 @@ from .constances import RESILIENT_POPULATION_BUTTONS_POINTS, RESILIENT_POPULATIO
 from .constances import BUTTON_WHIDTH, BUTTON_HIGHT, SMALL_BUTTON_WHIDTH, SMALL_BUTTON_HIGHT
 from .constances import INFACTION_DISCARD_CARDS_BUTTONS_POINTS, INFACTION_DISCARD_CARDS_BUTTONS_TEXTS, INFACTION_DISCARD_CARDS_BUTTONS_CALLBACKS_NAME
 from .constances import DISPLAY_PLAYER_DISCARD_CARD_BUTTONS_POINTS, DISPLAY_PLAYER_DISCARD_CARD_BUTTONS_TEXTS, DISPLAY_PLAYER_DISCARD_CARD_BUTTONS_CALLBACKS_NAME
-
+from .constances import EVENTS_CARDS_DISCARD_BUTTONS_POINTS, EVENT_CARDS_DISCARD_BUTTONS_TEXTS, EVENT_CARDS_DISCARD_BUTTONS_CALLBACKS_NAME
 from events import bottons_events
 
 def create_bottons_list(points, texts, callbacks, whidth, hight):
@@ -50,11 +50,14 @@ def discard_player_cards_bottons():
    bottons = create_bottons_list(INFACTION_DISCARD_CARDS_BUTTONS_POINTS, INFACTION_DISCARD_CARDS_BUTTONS_TEXTS, INFACTION_DISCARD_CARDS_BUTTONS_CALLBACKS_NAME, BUTTON_WHIDTH, BUTTON_HIGHT)   
    return bottons
    
-
+def operation_expert_discard_events_cards_bottons():
+   bottons = create_bottons_list(EVENTS_CARDS_DISCARD_BUTTONS_POINTS, EVENT_CARDS_DISCARD_BUTTONS_TEXTS, EVENT_CARDS_DISCARD_BUTTONS_CALLBACKS_NAME, BUTTON_WHIDTH, BUTTON_HIGHT)   
+   return bottons
 
 all_bottons ={'map' : create_map_bottons(),
               'cards' : create_cards_bottons(),
               'forecast' : create_forecast_bottons(),
               'resilient_population' : create_resilient_population_bottons(),
               'infaction_discard_cards' : create_infaction_discard_cards_bottons(),
-              'discard_player_cards' : discard_player_cards_bottons()}
+              'discard_player_cards' : discard_player_cards_bottons(),
+              'operation_expert_discard_events_cards' : operation_expert_discard_events_cards_bottons()}

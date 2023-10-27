@@ -39,9 +39,13 @@ class Card(pygame.Rect):
         return chosen_card
 
 
-    def handle_discard_event(self, event):
+    def handle_discard_event(self, event, corent_player):
         if event.type == pygame.MOUSEBUTTONDOWN and self.collidepoint(event.pos):
-            pygame.event.post(pygame.event.Event(all_events['DISPLAY_PLAYER_DISCARD_CARD']))
+            if corent_player.role == 'Contingency_Planner':
+                pygame.event.post(pygame.event.Event(all_events['DISPLAY_CONTINGENCY_PLANNER_DISCARD_CARD']))
+
+            else:
+                pygame.event.post(pygame.event.Event(all_events['DISPLAY_PLAYER_DISCARD_CARD']))
 
 
 class EpidemicCard(Card):

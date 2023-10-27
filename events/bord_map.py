@@ -1,9 +1,7 @@
 def clicked_on_city(cities, corent_player, bord_state, chosen_city, event, unlimited_movement, picked_player, players):
     routes = []
-    moving_player = dispacher_choose_player_to_move(corent_player, picked_player)
-    routes += [player.corent_city.name for player in players if player.corent_city != moving_player.corent_city] 
-        
-
+    moving_player, extra_routes = dispatcher_movment(corent_player, picked_player, players)
+    routes += extra_routes
     routes += get_routes(cities, moving_player, bord_state, unlimited_movement)
     for city_name in set(routes):
         city = cities[city_name]
@@ -33,6 +31,15 @@ def get_reserch_station_cities(bord_state, corent_city):
     return research_stations_cities 
 
 
+def dispatcher_movment(corent_player, picked_player, players):
+    moving_player = dispacher_choose_player_to_move(corent_player, picked_player)
+    if corent_player.role == 'Dispatcher':
+        extra_routes = [player.corent_city.name for player in players if player.corent_city != moving_player.corent_city] 
+    
+    else:
+        extra_routes = []
+
+    return moving_player, extra_routes        
 
 def dispacher_choose_player_to_move(corent_player, picked_player):
     if corent_player.role == 'Dispatcher' and picked_player:

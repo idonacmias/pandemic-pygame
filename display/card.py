@@ -9,11 +9,18 @@ from .constances import INFACTION_CARDS_POSITION, DISCARD_INFACTION_CARDS_POSITI
 def dispaly_players_cards(screen, font, players):
     for i, player in enumerate(players):
         y = i * 250 + 100
-        for j, card in enumerate(player.hand):
+        cards = player.hand
+        for j, card in enumerate(cards):
             x = (j + 1) * 250
             card.center = (x, y)
             card.draw(screen, font)
 
+        else:
+            if player.contingency_planner_event_card:
+                j+= 1
+                x = (j + 1) * 250
+                player.contingency_planner_event_card.center = (x, y)
+                player.contingency_planner_event_card.draw(screen, font) 
 
 def display_infaction_discard_card(screen, font, bord_state):
     if bord_state.infaction_discard_cards:

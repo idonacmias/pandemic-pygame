@@ -6,3 +6,4 @@ from .research_station import builed_research_station
 from .share_knowledge import share_knowledge
 from .direct_flight import direct_flight
 from .move_to_city import move_to_city, clear_discovered_cure_diseasse
+from .contingency_planner import contingency_planner_take_event_card

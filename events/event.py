@@ -1,38 +1,43 @@
 import pygame
 from events import bord_map
-from lib import treat_diseasse, builed_research_station, share_knowledge, discover_cure, direct_flight, infected_phase, draw_from_deck, move_to_city, clear_discovered_cure_diseasse
+from lib import treat_diseasse, builed_research_station, share_knowledge, discover_cure, direct_flight, infected_phase, draw_from_deck, move_to_city, clear_discovered_cure_diseasse, contingency_planner_take_event_card
 from data import ACTION_PER_TURN
 import data
 
 
-all_events = {'END_TURN' : pygame.USEREVENT + 1,
-              'SWITCH_BORD_TO_MAP' : pygame.USEREVENT + 2,
-              'DIRECT_FLIGHT' : pygame.USEREVENT + 3,
-              'DISCOVER_CURE' : pygame.USEREVENT + 4,
-              'SHARE_KNOWLEDGE' : pygame.USEREVENT + 5,
-              'CURE_BLUE' : pygame.USEREVENT + 6,
-              'CURE_YELLOW' : pygame.USEREVENT + 7,
-              'CURE_BLACK' : pygame.USEREVENT + 8,
-              'CURE_RED' : pygame.USEREVENT + 9,
-              'BUILED_RESEARCH_STATION' : pygame.USEREVENT + 10,
-              'SWITCH_BORD_TO_CARDS' : pygame.USEREVENT + 11,
-              'CLICK_ON_CARD' : pygame.USEREVENT + 12,
-              'CLICK_ON_CITY' : pygame.USEREVENT + 13,
-              'MOVE_TO_CITY' : pygame.USEREVENT + 14,
-              'PLAYER_1' : pygame.USEREVENT + 15,
-              'PLAYER_2' : pygame.USEREVENT + 16,
-              'PLAYER_3' : pygame.USEREVENT + 17,
-              'PLAYER_4' : pygame.USEREVENT + 18,
-              'USE_EVENT_CARD' : pygame.USEREVENT + 19,
-              'ONE_QUIET_NIGHT' : pygame.USEREVENT + 20,
-              'RESILIENT_POPULATION' : pygame.USEREVENT + 21,
-              'FORECAST' : pygame.USEREVENT + 22,
-              'GOVERNMENT_GRANT' : pygame.USEREVENT + 23,
-              'AIRLIFT' : pygame.USEREVENT + 24,
-              'APPLY_FORECAST' : pygame.USEREVENT + 25,
-              'APPLY_RESILIENT_POPULATION' : pygame.USEREVENT + 26,
-              'DISPLAY_INFACTION_DISCARD_CARD' : pygame.USEREVENT + 27,
-              'DISPLAY_PLAYER_DISCARD_CARD' : pygame.USEREVENT + 28}
+all_events_list = ['END_TURN',
+                  'SWITCH_BORD_TO_MAP',
+                  'DIRECT_FLIGHT',
+                  'DISCOVER_CURE',
+                  'SHARE_KNOWLEDGE',
+                  'CURE_BLUE',
+                  'CURE_YELLOW',
+                  'CURE_BLACK',
+                  'CURE_RED',
+                  'BUILED_RESEARCH_STATION',
+                  'SWITCH_BORD_TO_CARDS',
+                  'CLICK_ON_CARD',
+                  'CLICK_ON_CITY',
+                  'MOVE_TO_CITY',
+                  'PLAYER_1',
+                  'PLAYER_2',
+                  'PLAYER_3',
+                  'PLAYER_4',
+                  'USE_EVENT_CARD',
+                  'ONE_QUIET_NIGHT',
+                  'RESILIENT_POPULATION',
+                  'FORECAST',
+                  'GOVERNMENT_GRANT',
+                  'AIRLIFT',
+                  'APPLY_FORECAST',
+                  'APPLY_RESILIENT_POPULATION',
+                  'DISPLAY_INFACTION_DISCARD_CARD',
+                  'DISPLAY_PLAYER_DISCARD_CARD',
+                  'DISPLAY_CONTINGENCY_PLANNER_DISCARD_CARD',
+                  'CONTINGENCY_PLANNER_TAKE_DISCARD_CARD']
+
+all_events = {event_name : pygame.USEREVENT + i for i, event_name in enumerate(all_events_list)}
+
 
 bottons_events = {'switch_bord_to_map' : all_events['SWITCH_BORD_TO_MAP'],
                   'direct_flight' : all_events['DIRECT_FLIGHT'],
@@ -50,7 +55,8 @@ bottons_events = {'switch_bord_to_map' : all_events['SWITCH_BORD_TO_MAP'],
                   'player 4' : all_events['PLAYER_4'],
                   'use_event_card' : all_events['USE_EVENT_CARD'],
                   'apply_forcast' : all_events['APPLY_FORECAST'],
-                  'apply_resilient_population' : all_events['APPLY_RESILIENT_POPULATION']}
+                  'apply_resilient_population' : all_events['APPLY_RESILIENT_POPULATION'],
+                  'contingency_planner_take_discard_card' : all_events['CONTINGENCY_PLANNER_TAKE_DISCARD_CARD']}
 
 events_cards_events = {'one quiet night' : all_events['ONE_QUIET_NIGHT'],
                        'resilient population' : all_events['RESILIENT_POPULATION'],
@@ -66,10 +72,15 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         if player_input['chosen_city']: player_input['active_event'] = False
 
         bord_state.infaction_discard_cards[-1].handle_discard_event(event)
-        if bord_state.player_discard_cards: bord_state.player_discard_cards[-1].handle_discard_event(event)
+        if bord_state.player_discard_cards: bord_state.player_discard_cards[-1].handle_discard_event(event, corent_player)
 
     elif player_input['corent_page'] == 'cards':
         for player in players:
+            
+            if player.role == 'Contingency_Planner':
+                if player.contingency_planner_event_card: 
+                    player_input['chosen_card'] = player.contingency_planner_event_card.handle_event(event, player_input['chosen_card']) 
+
             for card in player.hand:
                 player_input['chosen_card'] = card.handle_event(event, player_input['chosen_card'])
 
@@ -81,11 +92,15 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         for card in bord_state.infaction_discard_cards:
             player_input['chosen_card'] = card.handle_event(event, player_input['chosen_card'])
        
-    # elif player_input['corent_page'] == 'discard_player_cards':
-        # pass
+    elif player_input['corent_page'] == 'operation_expert_discard_events_cards':
+        discard_event_cards = [card for card in bord_state.player_discard_cards if type(card) == data.EventCard]
+        for card in discard_event_cards:
+            player_input['chosen_card'] = card.handle_event(event, player_input['chosen_card'])
+
 
     for botton in my_bottons:
         botton.handle_event(event)
+
 
     if event.type == all_events['END_TURN']:
         quarantined_cities = []
@@ -105,26 +120,41 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
     elif event.type == all_events['CURE_BLUE']:
         treat_diseasse(bord_state, corent_player, 'BLUE')
    
+
     elif event.type == all_events['CURE_YELLOW']:
         treat_diseasse(bord_state, corent_player, 'YELLOW')
+
 
     elif event.type == all_events['CURE_BLACK']:
         treat_diseasse(bord_state, corent_player, 'BLACK')
 
+
     elif event.type == all_events['CURE_RED']:
         treat_diseasse(bord_state, corent_player, 'RED')
+
 
     elif event.type == all_events['SWITCH_BORD_TO_CARDS']:
         player_input['corent_page'] = 'cards'
 
+
     elif event.type == all_events['SWITCH_BORD_TO_MAP']:
+        if player_input['corent_page'] == 'operation_expert_discard_events_cards': 
+            player_input['picked_cards'] = reset_picked_cards(player_input['picked_cards'])
+        
         player_input['corent_page'] = 'map'
+
 
     elif event.type == all_events['DISPLAY_INFACTION_DISCARD_CARD']:
         player_input['corent_page'] = 'infaction_discard_cards'
 
+
     elif event.type == all_events['DISPLAY_PLAYER_DISCARD_CARD']:
         player_input['corent_page'] = 'discard_player_cards'
+
+
+    elif event.type == all_events['DISPLAY_CONTINGENCY_PLANNER_DISCARD_CARD']:
+        player_input['corent_page'] = 'operation_expert_discard_events_cards'
+
 
     elif event.type == all_events['BUILED_RESEARCH_STATION']:
         government_grant = player_input['government_grant']
@@ -140,6 +170,7 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         player_input['chosen_city'] = None
         player_input['picked_cards'] = reset_picked_cards(player_input['picked_cards'])
 
+
     elif event.type == all_events['SHARE_KNOWLEDGE']:
         if not player_input['active_event']:    
             picked_player = player_input['picked_player']
@@ -147,6 +178,7 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
             share_knowledge(corent_player, picked_player, picked_cards)
             player_input['picked_cards'] = reset_picked_cards(picked_cards)
             player_input['picked_player'] = None
+
 
     elif event.type == all_events['DISCOVER_CURE']:
         if not player_input['active_event']:    
@@ -167,8 +199,10 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
             player_input['picked_cards'] = reset_picked_cards(picked_cards)
             if not player_input['unlimited_movement']: player_input['picked_player'] = None
         
+
     elif event.type == all_events['CLICK_ON_CARD']:
         player_input = pick_or_unpick_a_card(player_input)
+
 
     elif event.type == all_events['CLICK_ON_CITY']:
         if player_input['government_grant']:
@@ -176,6 +210,7 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
             
         else:
             pygame.event.post(pygame.event.Event(all_events['MOVE_TO_CITY']))
+
 
     elif event.type == all_events['MOVE_TO_CITY']:
         airlift = player_input['airlift']
@@ -186,24 +221,35 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         player_input['airlift'] = False
         player_input['picked_player'] = None
 
+
     elif event.type == all_events['PLAYER_1']:
         player_input['picked_player'] = players[0]
     
+
     elif event.type == all_events['PLAYER_2']:
         player_input['picked_player'] = players[1]
     
+
     elif event.type == all_events['PLAYER_3']:
         player_input['picked_player'] = players[2]
     
+
     elif event.type == all_events['PLAYER_4']:
         player_input['picked_player'] = players[3]
+
 
     elif event.type == all_events['USE_EVENT_CARD']:
         if not player_input['active_event'] and len(player_input['picked_cards']) == 1:
             event_card = player_input['picked_cards'][0]
             if type(event_card) == data.EventCard:
-                discard_card(players, event_card, bord_state)
-                event_card.use_event_card() #need to make shure not to use airlift and government_grant at the same time            
+                for player in players:
+                    if event_card == player.contingency_planner_event_card:
+                        player.contingency_planner_event_card = None
+                
+                else:    
+                    discard_card(players, event_card, bord_state)
+                
+                event_card.use_event_card() 
 
         player_input['picked_cards'] = reset_picked_cards(player_input['picked_cards'])
 
@@ -211,9 +257,11 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
     elif event.type == all_events['ONE_QUIET_NIGHT']:
         player_input['one_quiet_night'] = True
 
+
     elif event.type == all_events['RESILIENT_POPULATION']:
         player_input['corent_page'] = 'resilient_population'
         player_input['active_event'] = True
+
 
     elif event.type == all_events['APPLY_RESILIENT_POPULATION']:
         if len(player_input['picked_cards']) == 1:
@@ -223,14 +271,17 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
                     player_input['corent_page'] = 'map'
                     player_input['active_event'] = False
 
+
     elif event.type == all_events['FORECAST']:
         player_input['corent_page'] = 'forecast'
+
 
     elif event.type == all_events['APPLY_FORECAST']:
         if len(player_input['picked_cards']) == 6:
             bord_state.infaction_cards = player_input['picked_cards'] + bord_state.infaction_cards[6:]
             player_input['picked_cards'] = reset_picked_cards(player_input['picked_cards'])
             player_input['corent_page'] = 'map'
+
 
     elif event.type == all_events['AIRLIFT']:
         player_input['unlimited_movement'] = True
@@ -245,7 +296,21 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         player_input['unlimited_movement'] = True
         player_input['corent_page'] = 'map'
 
+
+    elif event.type == all_events['CONTINGENCY_PLANNER_TAKE_DISCARD_CARD']:    
+        if (len(player_input['picked_cards']) == 1 and
+            corent_player.role == 'Contingency_Planner'):
+
+            contingency_planner_take_event_card(corent_player, player_input['picked_cards'], bord_state)
+            player_input['corent_page'] = 'map'
+
+        player_input['picked_cards'] = reset_picked_cards(player_input['picked_cards'])
+
+ 
+
     return player_input, corent_player
+
+
 
 
 def reset_picked_cards(picked_cards):
