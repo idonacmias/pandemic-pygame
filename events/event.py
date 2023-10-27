@@ -71,7 +71,7 @@ def handel_event(event, cities, cycle_player, corent_player, bord_state, players
         if player_input['chosen_city']: player_input['unlimited_movement'] = False
         if player_input['chosen_city']: player_input['active_event'] = False
 
-        bord_state.infaction_discard_cards[-1].handle_discard_event(event)
+        if bord_state.infaction_discard_cards: bord_state.infaction_discard_cards[-1].handle_discard_event(event)
         if bord_state.player_discard_cards: bord_state.player_discard_cards[-1].handle_discard_event(event, corent_player)
 
     elif player_input['corent_page'] == 'cards':
