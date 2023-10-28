@@ -38,4 +38,3 @@ def intensify(bord_state):
     shuffle(bord_state.infaction_discard_cards)
     bord_state.infaction_cards = bord_state.infaction_discard_cards + bord_state.infaction_cards
     bord_state.infaction_discard_cards = []
- 

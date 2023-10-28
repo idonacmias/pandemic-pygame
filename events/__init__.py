@@ -1,5 +1,5 @@
-from events.event import handel_event, bottons_events, all_events, events_cards_events
-import events.bord_map
+from events.event import bottons_events, all_events, events_cards_events
+from events.event_handler import handel_event
 
 
 
