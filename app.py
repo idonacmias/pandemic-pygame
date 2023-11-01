@@ -10,7 +10,8 @@ def main():
     screen = pygame.display.set_mode()
     font = pygame.font.Font(None, 28) 
     clock = pygame.time.Clock()
-    players, bord_state = set_bord(4)
+   
+    players, bord_state = set_bord()
     cycle_player = cycle(players)
     player_input = {'corent_page' : 'map',
                     'corent_player' : next(cycle_player),

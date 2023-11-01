@@ -13,7 +13,9 @@ colors_palette = {
 'DARK_BLUE' : pygame.Color(3, 83, 115),
 'SICK_GREEN' : pygame.Color(19, 74, 2),
 'GRAY' : pygame.Color(132, 140, 139),
-}
+'ORENGE' : pygame.Color(255, 165, 0),
+'BRAUN' : pygame.Color(125, 249, 255),
+'TEAL' : pygame.Color(0, 128, 128)}
 
 
 

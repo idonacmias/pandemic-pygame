@@ -1,25 +1,27 @@
 from .constances import ACTION_PER_TURN
-from random import randrange
+from random import choice
 import pygame
 from events import all_events
 
 
 class Player():
 
-    players_roles = ['Quarantine_Specialist', #V  #no desisses cube in the neer by cities
-                     'Dispatcher',            #V  #can move other player in his turn
-                     'Operations_Expert',     #V  #can builed reserch station without card, can move anywere form reserch station by discarding card 
-                     'Medic',                 #V  #treat all diseasse cube in city of the same color, treat diseasse with no action if cure is discoverd 
-                     'Researcher',            #V  #can give his card, even if city shared is not the card thet move
-                     'Scientist',             #V  #can discover cure with 4 card insted of 5
-                     'Contingency_Planner']   #as an action can store on discard event card from discard player cards, and use it as evet
+    players_roles = {'Quarantine_Specialist' : 'DARK_GREEN', #V  #no desisses cube in the neer by cities
+                     'Dispatcher' : 'PURPLE',            #V  #can move other player in his turn
+                     'Operations_Expert' : 'GREEN',     #V  #can builed reserch station without card, can move anywere form reserch station by discarding card 
+                     'Medic' : 'ORENGE',                 #V  #treat all diseasse cube in city of the same color, treat diseasse with no action if cure is discoverd 
+                     'Researcher' : 'BRAUN',            #V  #can give his card, even if city shared is not the card thet move
+                     'Scientist' : 'WHITE',             #V  #can discover cure with 4 card insted of 5
+                     'Contingency_Planner' : 'TEAL'}   #as an action can store on discard event card from discard player cards, and use it as evet
 
     def __init__(self, color, Player_cards, starter_city):
-        self.color = color
+        self.role = choice(list(self.players_roles.items()))[0]
+        print(self.role)
+        print(self.players_roles[self.role])
+        self.color = self.players_roles[self.role]
         self.corent_city = starter_city
         self.actions = ACTION_PER_TURN
         self.hand = Player_cards
-        self.role = players_roles[randrange(len(players_roles))]
         self.once_per_turn = True
         self.contingency_planner_event_card = None
 
