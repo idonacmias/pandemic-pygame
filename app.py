@@ -49,9 +49,8 @@ def set_bord(num_players=2):
     bord_state = BordState()
     first_city = cities[FIRST_CITY]
     first_city.research_station = True
-    PLAYER_COLORS = ['GREEN', 'PURPLE', 'GRAY', 'PINK']
     players_cards = first_draw_player_cards(bord_state, num_players)
-    players = [Player(PLAYER_COLORS[i], players_cards[i], first_city) for i in range(num_players)]
+    players = [Player(players_cards[i], first_city, role='Medic') for i in range(num_players)]
     first_infaction(bord_state, cities)
     bord_state.insert_epidemic()
     return players, bord_state  

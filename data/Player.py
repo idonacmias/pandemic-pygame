@@ -14,11 +14,14 @@ class Player():
                      'Scientist' : 'WHITE',             #V  #can discover cure with 4 card insted of 5
                      'Contingency_Planner' : 'TEAL'}   #as an action can store on discard event card from discard player cards, and use it as evet
 
-    def __init__(self, color, Player_cards, starter_city):
-        self.role = choice(list(self.players_roles.items()))[0]
-        print(self.role)
-        print(self.players_roles[self.role])
-        self.color = self.players_roles[self.role]
+    def __init__(self, Player_cards, starter_city, role=False):
+        if role:
+            self.role = role
+            self.color = self.players_roles[role]
+
+        else:
+            self.role, self.color = choice(list(self.players_roles.items()))
+
         self.corent_city = starter_city
         self.actions = ACTION_PER_TURN
         self.hand = Player_cards

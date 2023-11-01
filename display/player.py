@@ -1,5 +1,6 @@
 from .constances import CITY_RADIUS
 import pygame
+from .color import colors_palette
 
 
 def convert_player_to_cities_dict(players):
@@ -17,8 +18,8 @@ def draw(cities, screen, players):
     player_cities = convert_player_to_cities_dict(players)
     for city_name in player_cities.keys():
         for i, player_color in enumerate(player_cities[city_name]):
-            player_point = (positions(cities[city_name].point, i))  
-            pygame.draw.circle(surface=screen, color=player_color, center=player_point , radius=CITY_RADIUS * 0.25)
+            player_point = (positions(cities[city_name].point, i))
+            pygame.draw.circle(surface=screen, color=colors_palette[player_color], center=player_point , radius=CITY_RADIUS * 0.25)
 
 def positions(point, player_num):
     positions = [(point[0], point[1] - 0.5 * CITY_RADIUS),(point[0] + 0.5 * CITY_RADIUS, point[1]) ,(point[0], point[1] + 0.5 * CITY_RADIUS), (point[0] - 0.5 * CITY_RADIUS, point[1])]
