@@ -30,10 +30,17 @@ all_events_list = ['END_TURN',
                   'DISPLAY_INFACTION_DISCARD_CARD',
                   'DISPLAY_PLAYER_DISCARD_CARD',
                   'DISPLAY_CONTINGENCY_PLANNER_DISCARD_CARD',
-                  'CONTINGENCY_PLANNER_TAKE_DISCARD_CARD']
+                  'CONTINGENCY_PLANNER_TAKE_DISCARD_CARD',
+                  'END_GAME_HAND_LIMIT',
+                  'APPLY_HAND_LIMIT',
+                  'APPLY_END_GAME_HAND_LIMIT',
+                  'INFACTION_PHASE',
+                  'ONE_EPIDEMIC',
+                  'EPIDEMIC',
+                  'PLAYERS_MAY_PLAY_EVENT',
+                  'NEXT_PLAYER']
 
 all_events = {event_name : pygame.USEREVENT + i for i, event_name in enumerate(all_events_list)}
-
 
 bottons_events = {'switch_bord_to_map' : all_events['SWITCH_BORD_TO_MAP'],
                   'direct_flight' : all_events['DIRECT_FLIGHT'],
@@ -52,7 +59,10 @@ bottons_events = {'switch_bord_to_map' : all_events['SWITCH_BORD_TO_MAP'],
                   'use_event_card' : all_events['USE_EVENT_CARD'],
                   'apply_forcast' : all_events['APPLY_FORECAST'],
                   'apply_resilient_population' : all_events['APPLY_RESILIENT_POPULATION'],
-                  'contingency_planner_take_discard_card' : all_events['CONTINGENCY_PLANNER_TAKE_DISCARD_CARD']}
+                  'contingency_planner_take_discard_card' : all_events['CONTINGENCY_PLANNER_TAKE_DISCARD_CARD'],
+                  'apply_hand_limit' : all_events['APPLY_HAND_LIMIT'],
+                  'apply_end_game_hand_limit' : all_events['APPLY_END_GAME_HAND_LIMIT'],
+                  'epidemic' : all_events['EPIDEMIC']}
 
 events_cards_events = {'one quiet night' : all_events['ONE_QUIET_NIGHT'],
                        'resilient population' : all_events['RESILIENT_POPULATION'],

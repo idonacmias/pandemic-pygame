@@ -129,7 +129,7 @@ class InfactionCard(PlayerCard):
 
 
     def handle_discard_event(self, event):
-        '''override base func to call a diffrent event'''
+        '''override PlayerCard func to call a diffrent event'''
         if event.type == pygame.MOUSEBUTTONDOWN and self.collidepoint(event.pos):
             pygame.event.post(pygame.event.Event(all_events['DISPLAY_INFACTION_DISCARD_CARD']))
 

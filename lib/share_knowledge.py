@@ -7,7 +7,7 @@ def share_knowledge(corent_player, other_player, picked_cards):
 
             card_location = serch_card_in_list(corent_player.hand, serched_card)
             move_cards(corent_player, other_player, card_location)
-            corent_player.actions -= 1
+            corent_player.use_action()
 
         elif (serched_card in other_player.hand and 
             (other_player.corent_city.name == picked_cards[0].name or
@@ -15,7 +15,8 @@ def share_knowledge(corent_player, other_player, picked_cards):
 
             card_location = serch_card_in_list(other_player.hand, serched_card)
             move_cards(other_player, corent_player, card_location)
-            corent_player.actions -= 1
+            corent_player.use_action()
+            
 
 
 def is_valid_sharing(corent_player, other_player, picked_cards):

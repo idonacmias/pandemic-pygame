@@ -1,13 +1,19 @@
 from display import city, card, tokens, player
 import data
 from .color import colors_palette
+import pygame
 
-def draw_bord(screen, font, corent_page, cities, players, bord_state, my_bottons):
+
+def draw_bord(screen, font, corent_page, cities, players, bord_state, my_bottons, corent_player, picked_player):
    corent_botton = my_bottons[corent_page]
-   if corent_page == 'map':
+   if (corent_page == 'map' or
+      corent_page == 'map_dubel_epidemic'):
+
       draw_map(screen, font, cities, players, bord_state, corent_botton)
 
-   elif corent_page == 'cards':
+   elif (corent_page == 'cards' or
+         corent_page == 'play_event_during_epidemic'):
+
       draw_players_cards_display(screen, font, cities, players, bord_state, corent_botton)
 
    elif corent_page == 'forecast':
@@ -26,11 +32,20 @@ def draw_bord(screen, font, corent_page, cities, players, bord_state, my_bottons
       cards = bord_state.player_discard_cards
       draw_cards(screen, font, cards, corent_botton)
 
-
    elif corent_page == 'operation_expert_discard_events_cards':
       discard_event_cards = [card for card in bord_state.player_discard_cards if type(card) == data.EventCard]
       draw_cards(screen, font, discard_event_cards, corent_botton)
 
+   elif corent_page == 'hand_limit_end_turn':
+      cards = corent_player.hand
+      draw_cards(screen, font, cards, corent_botton)
+   
+   elif corent_page == 'hand_limit':
+      cards = picked_player.hand
+      draw_cards(screen, font, cards, corent_botton)
+      
+
+   pygame.display.update()
 
 def draw_map(screen, font, cities, players, bord_state, corent_botton):
    screen.fill(colors_palette['PURPLE'])

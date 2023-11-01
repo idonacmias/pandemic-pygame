@@ -13,7 +13,7 @@ class BordState:
 
     def __init__(self):
         self.outbreack  = 0
-        self.cure = {disease_color.name : 1 for disease_color in Color}
+        self.cure = {disease_color.name : 0 for disease_color in Color}
 
         self.disease_cube = [MAX_DISEASE_CUBE] * 4
         self.infaction_rate = 0
@@ -34,7 +34,6 @@ class BordState:
         events_cards = [EventCard(200, 200, callback, name, description) for callback, name, description in EVENTS_CARDS_ZIP]
         players_deck = events_cards + city_cards
         # shuffle(players_deck)
-        
         return players_deck
 
 

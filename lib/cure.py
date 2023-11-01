@@ -3,9 +3,9 @@ from data import NUMBER_CARDS_NEEDED_TO_CURE
 def discover_cure(bord_state, picked_cards, corent_player):
     if is_valid_cure(bord_state, picked_cards, corent_player):
         bord_state.cure[picked_cards[0].color] = 1
-        corent_player.actions -= 1
         remove_cure_cards_from_palyer_haned(picked_cards, corent_player)
         bord_state.player_discard_cards += picked_cards
+        corent_player.use_action()
         
 
 def is_valid_cure(bord_state, picked_cards, corent_player):

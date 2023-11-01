@@ -15,7 +15,7 @@ def move_to_city(bord_state, chosen_city, corent_player, airlift, picked_player)
     if player.role == 'Medic': 
         clear_discovered_cure_diseasse(bord_state, player)
         
-    if not airlift: corent_player.actions -= 1
+    if not airlift: corent_player.use_action()
 
 
 def clear_discovered_cure_diseasse(bord_state, player):

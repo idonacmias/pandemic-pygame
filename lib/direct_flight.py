@@ -16,7 +16,7 @@ def direct_flight(bord_state, corent_player, picked_cards, cities, picked_player
             moving_player.corent_city = cities[chosen_card.name]
 
         discard_card(corent_player, chosen_card, bord_state)
-        if not unlimited_movement: corent_player.actions -= 1
+        if not unlimited_movement: corent_player.use_action()
         return unlimited_movement
 
 def discard_card(corent_player, chosen_card, bord_state):

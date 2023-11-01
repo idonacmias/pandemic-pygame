@@ -1,5 +1,4 @@
 import pygame
-import sys
 from itertools import cycle
 from data import Player, cities, FIRST_CITY, BordState, NUM_PLAYERS_CARDS
 from events import handel_event, all_events
@@ -8,15 +7,13 @@ from lib import first_infaction
 
 def main():
     pygame.init()
-    # screen_info = pygame.display.Info()
-    # print(screen_info)
     screen = pygame.display.set_mode()
     font = pygame.font.Font(None, 28) 
     clock = pygame.time.Clock()
     players, bord_state = set_bord(4)
     cycle_player = cycle(players)
-    corent_player = next(cycle_player)
     player_input = {'corent_page' : 'map',
+                    'corent_player' : next(cycle_player),
                     'picked_cards' : [],
                     'chosen_card' : None,
                     'picked_player' : None, 
@@ -25,15 +22,14 @@ def main():
                     'airlift' : False,
                     'government_grant' : False,
                     'one_quiet_night' : False,
-                    'active_event' : False}
+                    'active_event' : False,
+                    'quarantined_cities' : [],
+                    'end_turn_sequence' : None,
+                    'dubel_epidemic' : False}
 
     while True:
-        bord_display.draw_bord(screen, font, player_input['corent_page'], cities, players, bord_state, all_bottons)
-        pygame.display.update()
+        bord_display.draw_bord(screen, font, player_input['corent_page'], cities, players, bord_state, all_bottons, player_input['corent_player'], player_input['picked_player'])
         clock.tick(60)
-        if corent_player.actions == 0: 
-            pygame.event.post(pygame.event.Event(all_events['END_TURN']))
-            
         if is_lose(bord_state):
             # print('lose')
             pass
@@ -43,14 +39,9 @@ def main():
             pass
 
         for event in pygame.event.get():
-            if_quit(event)
-            player_input, corent_player = handel_event(event, cities, cycle_player, corent_player, bord_state, players, all_bottons, player_input)
+            player_input = handel_event(event, cities, cycle_player, bord_state, players, all_bottons, player_input)
 
 
-def if_quit(event):
-    if event.type == pygame.QUIT:
-        pygame.quit()
-        sys.exit()
 
 
 def set_bord(num_players=2):

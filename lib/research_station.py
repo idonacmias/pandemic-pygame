@@ -15,15 +15,15 @@ def builed_research_station(bord_state, corent_player, cities, government_grant,
 
         corent_player.once_per_turn = False
         discard_card(city_card, corent_player)
-        reduse_action(corent_player)
         add_city_research_station(bord_state, corent_player.corent_city, cities)
+        corent_player.use_action()
 
     elif (not corent_player.corent_city.research_station and
           corent_city_in_player_hand(corent_player)):
         
         remove_corent_city_player_card(corent_player)
-        reduse_action(corent_player)
         add_city_research_station(bord_state, corent_player.corent_city, cities)
+        corent_player.use_action()
 
 
 def is_city_card_in_corent_player_hand(city_card, corent_player):
@@ -55,10 +55,6 @@ def remove_city_research_station(bord_state, cities, research_station_cuonter=0)
     research_station_name = bord_state.research_stations.pop(research_station_cuonter)
     cities[research_station_name].research_station = False
     bord_state.num_research_station += 1
-
-
-def reduse_action(corent_player):
-    corent_player.actions -= 1
 
 
 def remove_corent_city_player_card(corent_player):
