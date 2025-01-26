@@ -38,7 +38,16 @@ all_events_list = ['END_TURN',
                   'ONE_EPIDEMIC',
                   'EPIDEMIC',
                   'PLAYERS_MAY_PLAY_EVENT',
-                  'NEXT_PLAYER']
+                  'NEXT_PLAYER',
+                  'NEW_GAME',
+                  'SWITCH_BORD_TO_COSTUM_GAME',
+                  'SWITCH_BORD_TO_SETTING',
+                  'SWITCH_BORD_TO_MAIN_MANUE',
+                  'ADD_EPIDEMIC_CARD',
+                  'SUBTRACT_EPIDEMIC_CARD',
+                  'SUBTRACT_PLAYER', 
+                  'ADD_PLAYER',
+                  'SWITCH_BORD_TO_COLOR_SETTING']
 
 all_events = {event_name : pygame.USEREVENT + i for i, event_name in enumerate(all_events_list)}
 
@@ -62,7 +71,21 @@ bottons_events = {'switch_bord_to_map' : all_events['SWITCH_BORD_TO_MAP'],
                   'contingency_planner_take_discard_card' : all_events['CONTINGENCY_PLANNER_TAKE_DISCARD_CARD'],
                   'apply_hand_limit' : all_events['APPLY_HAND_LIMIT'],
                   'apply_end_game_hand_limit' : all_events['APPLY_END_GAME_HAND_LIMIT'],
-                  'epidemic' : all_events['EPIDEMIC']}
+                  'epidemic' : all_events['EPIDEMIC'],
+                  'new_game' :all_events['NEW_GAME'],
+                  'switch_bord_to_costum_game' : all_events['SWITCH_BORD_TO_COSTUM_GAME'],
+                  'switch_bord_to_setting': all_events['SWITCH_BORD_TO_SETTING'],
+                  'switch_bord_to_main_manue' : all_events['SWITCH_BORD_TO_MAIN_MANUE'],
+                  'quiet' : pygame.QUIT,
+                  'add_epidemic_card' : all_events['ADD_EPIDEMIC_CARD'], 
+                  'subtract_epidemic_card' : all_events['SUBTRACT_EPIDEMIC_CARD'],
+                   'subtract_player' : all_events[ 'SUBTRACT_PLAYER'], 
+                   'add_player' : all_events['ADD_PLAYER'],
+                   'switch_bord_to_color_setting' : all_events['SWITCH_BORD_TO_COLOR_SETTING']}
+
+
+
+
 
 events_cards_events = {'one quiet night' : all_events['ONE_QUIET_NIGHT'],
                        'resilient population' : all_events['RESILIENT_POPULATION'],

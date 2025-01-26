@@ -1,6 +1,6 @@
 CITY_RADIUS = 25
-EDGE_CITIES = ['San Francisco', 'Los Angeles', 'Sydney', 'Manila', 'Tokyo']
 RESEARCH_STATION_RADIUS = 10
+EDGE_CITIES = ['San Francisco', 'Los Angeles', 'Sydney', 'Manila', 'Tokyo']
 
 
 INFACTION_CARDS_POSITION = (1400, 150)
@@ -17,6 +17,19 @@ BAR_CIRCLE_RADIUS = 20
 
 CURE_BAR_POINT = [(i, 950) for i in range(600, 1000, 100)]
 OUTBREAK_BAR_POINTS = [(100, 600), (200, 650), (100, 700), (200, 750), (100, 800), (200, 850), (100, 900), (200, 950), (100, 1000)]
+
+
+
+
+#############BUTTONS#######################
+
+
+BUTTON_HIGHT = 25
+BUTTON_WHIDTH = 225
+
+SMALL_BUTTON_HIGHT = 25
+SMALL_BUTTON_WHIDTH = 70
+
 
 MAP_BUTTONS_POINTS = [(250, 920), (250, 970)]
 MAP_BUTTONS_TEXTS = ['builed research station', 'display player cards']
@@ -71,8 +84,74 @@ MAP_DUBEL_EPIDEMIC_SMALL_BUTTONS_POINTS = [(600, 1020), (700, 1020), (800, 1020)
 MAP_DUBEL_EPIDEMIC_SMALL_BUTTONS_TEXTS = ['player 1', 'player 2', 'player 3', 'player 4']
 MAP_DUBEL_EPIDEMIC_SMALL_BUTTONS_CALLBACKS_NAME = ['player 1', 'player 2', 'player 3', 'player 4'] 
 
-BUTTON_HIGHT = 25
-BUTTON_WHIDTH = 225
 
-SMALL_BUTTON_HIGHT = 25
-SMALL_BUTTON_WHIDTH = 70
+MAIN_MANUE_BUTTONS_POINTS = [(900, 100), (900, 200), (900, 300), (900, 400)]
+MAIN_MANUE_BUTTONS_TEXTS = ['new game', 'costum game', 'setting', 'quiet']
+MAIN_MANUE_BUTTONS_CALLBACKS_NAME =['new_game', 'switch_bord_to_costum_game', 'switch_bord_to_setting', 'quiet']
+
+COSTUM_GAME_BUTTONS_POINTS = [(900, 400)]
+COSTUM_GAME_BUTTONS_TEXTS = ['back']
+COSTUM_GAME_BUTTONS_CALLBACKS_NAME = ['switch_bord_to_main_manue']
+
+COSTUM_GAME_BUTTONS_POINTS = [(900, 600)]
+COSTUM_GAME_BUTTONS_TEXTS = ['back']
+COSTUM_GAME_BUTTONS_CALLBACKS_NAME = ['switch_bord_to_main_manue']
+
+SMALL_COSTUM_GAME_BUTTONS_POINTS = [(1060, 100), (1200, 100), (1060, 500), (1200, 500)]
+SMALL_COSTUM_GAME_BUTTONS_TEXTS = ['-', '+', '-', '+']
+SMALL_COSTUM_GAME_BUTTONS_CALLBACKS_NAME = ['subtract_epidemic_card', 'add_epidemic_card', 'subtract_player', 'add_player']
+
+SETTING_BUTTONS_POINTS = [(900, 400), (900, 300)]
+SETTING_BUTTONS_TEXTS = ['back', 'color setting']
+SETTING_BUTTONS_CALLBACKS_NAME= ['switch_bord_to_main_manue', 'switch_bord_to_color_setting']
+
+COLOR_SETTING_BUTTONS_POINTS = [(900, 400)]
+COLOR_SETTING_BUTTONS_TEXTS = ['back']
+COLOR_SETTING_BUTTONS_CALLBACKS_NAME= ['switch_bord_to_setting']
+
+WIN_BUTTONS_POINTS = [(900, 400)] 
+WIN_BUTTONS_TEXTS  = ['back to manue'] 
+WIN_BUTTONS_CALLBACKS_NAME = ['switch_bord_to_main_manue']
+
+
+
+
+############################LABELS########################
+
+LABEL_HIGHT = 50
+LABEL_WHIDTH = 200
+
+SMALL_LABEL_HIGHT = 50
+SMALL_LABEL_WHIDTH = 50
+
+WIN_LABEL_POINTS = [(900, 100)] 
+WIN_LABEL_TEXTS = ['victory!!']
+WIN_TEXT_COLOR = ['BLUE']
+WIN_BACKRAOND_COLOR = ['PINK']
+
+
+LOSE_LABEL_POINTS = [(900, 100)] 
+LOSE_LABEL_TEXTS = ['YOU LOST']
+LOSE_TEXT_COLOR = ['BLUE']
+LOSE_BACKRAOND_COLOR = ['PINK']
+
+
+MAP_LABEL_POINTS = [(100, 100)] 
+MAP_LABEL_TEXTS = ['actions left: 4'] #first label is change in bord display: map
+MAP_TEXT_COLOR = ['BLUE']
+MAP_BACKRAOND_COLOR = ['PINK']
+
+CREATE_COSTUM_LABEL_POINTS = [(800, 100)] 
+CREATE_COSTUM_LABEL_TEXTS = [('epidemic cards:')]
+CREATE_COSTUM_TEXT_COLOR = ['BLACK']
+CREATE_COSTUM_BACKRAOND_COLOR = ['GREEN']
+
+SMALL_CREATE_COSTUM_LABEL_POINTS = [(1140, 100)] 
+SMALL_CREATE_COSTUM_LABEL_TEXTS = [('')]
+SMALL_CREATE_COSTUM_TEXT_COLOR = ['BLACK']
+SMALL_CREATE_COSTUM_BACKRAOND_COLOR = ['GREEN']
+
+
+
+
+

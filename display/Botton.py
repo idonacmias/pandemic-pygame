@@ -25,7 +25,7 @@ class Botton(pygame.Rect):
         text_rect = text_surface.get_rect(center=self.center)
         screen.blit(text_surface, text_rect)
 
-    def handle_event(self, event):
+    def handel_event(self, event):
         if event.type == pygame.MOUSEMOTION and self.collidepoint(event.pos):
             self.color = colors_palette['PINK']
 
@@ -36,3 +36,6 @@ class Botton(pygame.Rect):
             pygame.event.post(pygame.event.Event(self.callback))
 
 
+
+
+                

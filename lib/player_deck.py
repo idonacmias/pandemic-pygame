@@ -10,15 +10,15 @@ def draw_from_deck(bord_state, corent_player, cities):
     for card in cards:
         if type(card) == data.EpidemicCard:
             number_of_epidemics += 1
-
+            bord_state.player_discard_cards.append(card)
         else:
             corent_player.hand.append(card)
 
     return number_of_epidemics
 
-def epidemic_effect(bord_state, cities, quarantined_cities):
+def epidemic_effect(bord_state, cities, quarantined_cities, players):
     incrise_infaction(bord_state)
-    infect_city(bord_state, cities, quarantined_cities)
+    infect_city(bord_state, cities, quarantined_cities, players)
     intensify(bord_state)
         
 
@@ -26,23 +26,17 @@ def incrise_infaction(bord_state):
     bord_state.infaction_rate += 1
 
 
-def infect_city(bord_state, cities, quarantined_cities):
+def infect_city(bord_state, cities, quarantined_cities, players):
     card = bord_state.infaction_cards.pop(-1)
     city = cities[card.name]
     bord_state.infaction_discard_cards.append(card)
     outbreack_cities = []
     diseasse_color = card.color
-    add_diseasse_to_city(city, diseasse_color, bord_state, cities, quarantined_cities, 3, outbreack_cities)
+    add_diseasse_to_city(city, diseasse_color, bord_state, cities, players, quarantined_cities, 3, outbreack_cities)
     
 
 def intensify(bord_state):
     shuffle(bord_state.infaction_discard_cards)
     bord_state.infaction_cards = bord_state.infaction_discard_cards + bord_state.infaction_cards
     bord_state.infaction_discard_cards = []
-
-
-def epidemic_temp():
-    if type(card) ==  data.EpidemicCard:
-        bord_state.player_discard_cards.append(card)
-        epidemic_effect(bord_state, cities, quarantined_cities)
 

@@ -4,12 +4,14 @@ from .color import colors_palette
 import pygame
 
 
-def draw_bord(screen, font, corent_page, cities, players, bord_state, my_bottons, corent_player, picked_player):
-   corent_botton = my_bottons[corent_page]
+def draw_bord(screen, font, corent_page, cities, players, bord_state, all_bottons, corent_player, picked_player, all_labels):
+   corent_botton = all_bottons[corent_page]
+   corent_labels = all_labels[corent_page] if corent_page in all_labels.keys() else []
+
    if (corent_page == 'map' or
       corent_page == 'map_dubel_epidemic'):
-
-      draw_map(screen, font, cities, players, bord_state, corent_botton)
+      corent_labels[0].text = f'actions left: {corent_player.actions}'
+      draw_map(screen, font, cities, players, bord_state, corent_botton, corent_labels)
 
    elif (corent_page == 'cards' or
          corent_page == 'play_event_during_epidemic'):
@@ -43,11 +45,11 @@ def draw_bord(screen, font, corent_page, cities, players, bord_state, my_bottons
    elif corent_page == 'hand_limit':
       cards = picked_player.hand
       draw_cards(screen, font, cards, corent_botton)
-      
-
+   
    pygame.display.update()
 
-def draw_map(screen, font, cities, players, bord_state, corent_botton):
+
+def draw_map(screen, font, cities, players, bord_state, corent_botton, corent_labels):
    screen.fill(colors_palette['PURPLE'])
    draw_cities(screen, font, cities)    
    card.display_back_infaction_card(screen)
@@ -60,6 +62,9 @@ def draw_map(screen, font, cities, players, bord_state, corent_botton):
    player.draw(cities, screen, players)
    for botton in corent_botton:
       botton.draw(screen, font)
+   
+   for label in corent_labels:
+      label.draw(screen, font)
 
    
 def draw_cities(screen, font, cities):
@@ -101,3 +106,5 @@ def draw_discard_player_cards(screen, font, bord_state, corent_botton):
       botton.draw(screen, font)
    
    card.draw_list_of_cards(screen, font, bord_state.player_discard_cards)
+
+

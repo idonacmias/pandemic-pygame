@@ -1,5 +1,3 @@
-from .player_deck import draw_from_deck
-from .infaction import infected_phase
 from data import ACTION_PER_TURN
 
 

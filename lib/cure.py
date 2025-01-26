@@ -1,12 +1,16 @@
 from data import NUMBER_CARDS_NEEDED_TO_CURE
+from .diseasse import try_eradication
 
-def discover_cure(bord_state, picked_cards, corent_player):
+
+def discover_cure(bord_state, picked_cards, corent_player, cities):
     if is_valid_cure(bord_state, picked_cards, corent_player):
-        bord_state.cure[picked_cards[0].color] = 1
+        color_name = picked_cards[0].color
+        bord_state.cure[color_name] = 1
         remove_cure_cards_from_palyer_haned(picked_cards, corent_player)
         bord_state.player_discard_cards += picked_cards
         corent_player.use_action()
-        
+        try_eradication(cities, color_name, bord_state)
+                
 
 def is_valid_cure(bord_state, picked_cards, corent_player):
     '''the order of the validation mater -> anti empty list'''

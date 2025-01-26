@@ -46,16 +46,16 @@ def handel_event(event, cities, cycle_player, bord_state, players, all_bottons, 
         player_input = end_turn(player_input, bord_state, cities, players)
 
     elif event.type == all_events['CURE_BLUE']:
-        lib.treat_diseasse(bord_state, player_input['corent_player'], 'BLUE')
+        lib.treat_diseasse(bord_state, player_input['corent_player'], 'BLUE', cities)
 
     elif event.type == all_events['CURE_YELLOW']:
-        lib.treat_diseasse(bord_state, player_input['corent_player'], 'YELLOW')
+        lib.treat_diseasse(bord_state, player_input['corent_player'], 'YELLOW', cities)
 
     elif event.type == all_events['CURE_BLACK']:
-        lib.treat_diseasse(bord_state, player_input['corent_player'], 'BLACK')
+        lib.treat_diseasse(bord_state, player_input['corent_player'], 'BLACK', cities)
 
     elif event.type == all_events['CURE_RED']:
-        lib.treat_diseasse(bord_state, player_input['corent_player'], 'RED')
+        lib.treat_diseasse(bord_state, player_input['corent_player'], 'RED', cities)
 
     elif event.type == all_events['SWITCH_BORD_TO_CARDS']:
         player_input['corent_page'] = 'cards'
@@ -73,13 +73,13 @@ def handel_event(event, cities, cycle_player, bord_state, players, all_bottons, 
         player_input['corent_page'] = 'operation_expert_discard_events_cards'
 
     elif event.type == all_events['BUILED_RESEARCH_STATION']:
-        builed_research_station(bord_state, cities, player_input)
+        player_input = builed_research_station(bord_state, cities, player_input)
 
     elif event.type == all_events['SHARE_KNOWLEDGE']:
         player_input = share_knowledge(player_input)
 
     elif event.type == all_events['DISCOVER_CURE']:
-        player_input = discover_cure(player_input, bord_state, players)
+        player_input = discover_cure(player_input, bord_state, players, cities)
         
     elif event.type == all_events['DIRECT_FLIGHT']:
         player_input = direct_flight(player_input, bord_state, cities)
@@ -97,7 +97,7 @@ def handel_event(event, cities, cycle_player, bord_state, players, all_bottons, 
 
 
     elif event.type == all_events['MOVE_TO_CITY']:
-        player_input = move_to_city(player_input, bord_state)
+        player_input = move_to_city(player_input, bord_state, cities)
 
 
     elif event.type == all_events['PLAYER_1']:
@@ -158,10 +158,10 @@ def handel_event(event, cities, cycle_player, bord_state, players, all_bottons, 
         player_input = aplly_end_game_hand_limit(player_input, bord_state)
 
     elif event.type == all_events ['INFACTION_PHASE']:
-        player_input = infaction_phase(player_input, bord_state, cities)
+        player_input = infaction_phase(player_input, bord_state, cities, players)
 
     elif event.type == all_events ['EPIDEMIC']:
-        player_input = epidemic(player_input, bord_state, cities)
+        player_input = epidemic(player_input, bord_state, cities, players)
 
     elif event.type == all_events['NEXT_PLAYER']:
         player_input = next_player(player_input, cycle_player)
@@ -169,13 +169,14 @@ def handel_event(event, cities, cycle_player, bord_state, players, all_bottons, 
     elif event.type == all_events ['PLAYERS_MAY_PLAY_EVENT']:
         player_input = players_may_play_event(player_input, bord_state, cities, players)
 
+   
     return player_input
 
 
 def handel_bottons_events(event, all_bottons, corent_page):
     my_bottons = all_bottons[corent_page]    
     for botton in my_bottons:
-        botton.handle_event(event)
+        botton.handel_event(event)
 
 
 def handel_map_events(event, cities, bord_state, player_input, players):
@@ -350,7 +351,8 @@ def direct_flight(player_input, bord_state, cities):
     return player_input         
 
 def share_knowledge(player_input):
-    if not player_input['active_event']:
+    if (not player_input['active_event']
+        and player_input['picked_player']):
         corent_player = player_input['corent_player']    
         picked_player = player_input['picked_player']
         picked_cards = player_input['picked_cards']
@@ -368,14 +370,14 @@ def share_knowledge(player_input):
     return player_input 
 
 
-def discover_cure(player_input, bord_state, players):
+def discover_cure(player_input, bord_state, players, cities):
     if not player_input['active_event']:    
         picked_cards = player_input['picked_cards']
         corent_player = player_input['corent_player']
-        lib.discover_cure(bord_state, picked_cards, corent_player)
+        lib.discover_cure(bord_state, picked_cards, corent_player, cities)
         for player in players:
             if player.role == 'Medic':
-                lib.clear_discovered_cure_diseasse(bord_state, player)
+                lib.clear_discovered_cure_diseasse(bord_state, player, cities)
 
         player_input['picked_cards'] = reset_picked_cards(picked_cards)
 
@@ -386,9 +388,8 @@ def use_event_card(player_input, players, bord_state):
     if (not player_input['active_event'] and 
         len(player_input['picked_cards']) == 1 and
         type(player_input['picked_cards'][0]) == data.EventCard and
-        (player_input['dubel_epidemic'] and player_input['picked_cards'][0].name != 'resilient population')):
+        (not player_input['dubel_epidemic'] or player_input['picked_cards'][0].name != 'resilient population')):
         event_card = player_input['picked_cards'][0]
-
         for player in players:
             if event_card == player.contingency_planner_event_card:
                 player.contingency_planner_event_card = None
@@ -424,7 +425,7 @@ def government_grant(player_input):
 def resilient_population(player_input):
     player_input['corent_page'] = 'resilient_population'
     player_input['active_event'] = True
-
+    return player_input
 
 def apply_resilient_population(player_input, bord_state):
     if len(player_input['picked_cards']) == 1:
@@ -464,12 +465,12 @@ def contingency_planner_take_event_card(player_input, bord_state):
     return  player_input
 
 
-def move_to_city(player_input, bord_state):
+def move_to_city(player_input, bord_state, cities):
     airlift = player_input['airlift']
     picked_player = player_input['picked_player']
     chosen_city = player_input['chosen_city']
     corent_player = player_input['corent_player']
-    lib.move_to_city(bord_state, chosen_city, corent_player, airlift, picked_player)
+    lib.move_to_city(bord_state, chosen_city, corent_player, airlift, picked_player, cities)
     player_input['chosen_city'] = None
     player_input['airlift'] = False
     player_input['picked_player'] = None
@@ -488,7 +489,7 @@ def end_turn(player_input, bord_state, cities, players):
          end_turn_sequence = ['EPIDEMIC','PLAYERS_MAY_PLAY_EVENT', 'EPIDEMIC', 'INFACTION_PHASE', 'NEXT_PLAYER']
          player_input['dubel_epidemic'] = True
 
-    if number_of_epidemics == 1:
+    elif number_of_epidemics == 1:
         #hand limit chack -> epidemic -> infaction -> next_player
          end_turn_sequence = ['EPIDEMIC', 'INFACTION_PHASE', 'NEXT_PLAYER']
 
@@ -514,8 +515,8 @@ def end_game_hand_limit(player_input, bord_state):
     return player_input 
 
 
-def infaction_phase(player_input, bord_state, cities):
-    if not player_input['one_quiet_night']: lib.infected_phase(bord_state, cities, player_input['quarantined_cities'])
+def infaction_phase(player_input, bord_state, cities, players):
+    if not player_input['one_quiet_night']: lib.infected_phase(bord_state, cities, player_input['quarantined_cities'], players)
 
     player_input['one_quiet_night'] = False
     next_end_game_phase = next(player_input['end_turn_sequence'])
@@ -549,12 +550,13 @@ def aplly_end_game_hand_limit(player_input, bord_state):
     player_input = pick_or_unpick_a_card(player_input)
     discard_one_card(corent_player, discard_card, bord_state)
     pygame.event.post(pygame.event.Event(all_events['END_GAME_HAND_LIMIT']))
+    player_input['picked_cards'] = reset_picked_cards(player_input['picked_cards'])
     return player_input
 
 
-def epidemic(player_input, bord_state, cities):
+def epidemic(player_input, bord_state, cities, players):
     quarantined_cities = player_input['quarantined_cities']
-    lib.epidemic_effect(bord_state, cities, quarantined_cities)
+    lib.epidemic_effect(bord_state, cities, quarantined_cities, players)
     next_end_game_phase = next(player_input['end_turn_sequence'])
     pygame.event.post(pygame.event.Event(all_events[next_end_game_phase]))
     return player_input 

@@ -1,3 +1,6 @@
+from .move_to_city import clear_discovered_cure_diseasse
+
+
 def direct_flight(bord_state, corent_player, picked_cards, cities, picked_player):
     unlimited_movement = False
     if (len(picked_cards) == 1 and
@@ -14,6 +17,9 @@ def direct_flight(bord_state, corent_player, picked_cards, cities, picked_player
 
         else: 
             moving_player.corent_city = cities[chosen_card.name]
+            if moving_player.role == 'Medic': 
+                clear_discovered_cure_diseasse(bord_state, moving_player, cities)
+        
 
         discard_card(corent_player, chosen_card, bord_state)
         if not unlimited_movement: corent_player.use_action()

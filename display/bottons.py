@@ -1,18 +1,24 @@
 from .Botton import Botton
+from .constances import BUTTON_WHIDTH, BUTTON_HIGHT, SMALL_BUTTON_WHIDTH, SMALL_BUTTON_HIGHT
 from .constances import MAP_BUTTONS_POINTS, MAP_BUTTONS_TEXTS, MAP_BUTTONS_CALLBACKS_NAME
-from .constances import CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS, CARDS_BUTTONS_CALLBACKS_NAME
 from .constances import MAP_SMALL_BUTTONS_POINTS, MAP_SMALL_BUTTONS_TEXTS,  MAP_SMALL_CALLBACKS_NAME
+from .constances import CARDS_BUTTONS_POINTS, CARDS_BUTTONS_TEXTS, CARDS_BUTTONS_CALLBACKS_NAME
 from .constances import CARDS_SMALL_BUTTONS_POINTS, CARDS_SMALL_BUTTONS_TEXTS, CARDS_SMALL_CALLBACKS_NAME
 from .constances import FORECAST_BUTTONS_POINTS, FORECAST_BUTTONS_TEXTS, FORECAST_BUTTONS_CALLBACKS_NAME
 from .constances import RESILIENT_POPULATION_BUTTONS_POINTS, RESILIENT_POPULATION_BUTTONS_TEXTS, RESILIENT_POPULATION_BUTTONS_CALLBACKS_NAME
-from .constances import BUTTON_WHIDTH, BUTTON_HIGHT, SMALL_BUTTON_WHIDTH, SMALL_BUTTON_HIGHT
 from .constances import INFACTION_DISCARD_CARDS_BUTTONS_POINTS, INFACTION_DISCARD_CARDS_BUTTONS_TEXTS, INFACTION_DISCARD_CARDS_BUTTONS_CALLBACKS_NAME
 from .constances import DISPLAY_PLAYER_DISCARD_CARD_BUTTONS_POINTS, DISPLAY_PLAYER_DISCARD_CARD_BUTTONS_TEXTS, DISPLAY_PLAYER_DISCARD_CARD_BUTTONS_CALLBACKS_NAME
 from .constances import EVENTS_CARDS_DISCARD_BUTTONS_POINTS, EVENT_CARDS_DISCARD_BUTTONS_TEXTS, EVENT_CARDS_DISCARD_BUTTONS_CALLBACKS_NAME
-from.constances import HAND_LIMIT_END_TURN_BUTTONS_POINTS, HAND_LIMIT_END_TURN_BUTTONS_TEXTS, HAND_LIMIT_END_TURN_BUTTONS_CALLBACKS_NAME
+from .constances import HAND_LIMIT_END_TURN_BUTTONS_POINTS, HAND_LIMIT_END_TURN_BUTTONS_TEXTS, HAND_LIMIT_END_TURN_BUTTONS_CALLBACKS_NAME
 from .constances import PLAY_EVENT_DURING_EPIDEMIC_BUTTONS_POINTS, PLAY_EVENT_DURING_EPIDEMIC_BUTTONS_TEXTS, PLAY_EVENT_DURING_EPIDEMIC_BUTTONS_CALLBACKS_NAME
 from .constances import MAP_DUBEL_EPIDEMIC_SMALL_BUTTONS_POINTS, MAP_DUBEL_EPIDEMIC_SMALL_BUTTONS_TEXTS, MAP_DUBEL_EPIDEMIC_SMALL_BUTTONS_CALLBACKS_NAME
 from .constances import HAND_LIMIT_BUTTONS_POINTS, HAND_LIMIT_BUTTONS_TEXTS, HAND_LIMIT_BUTTONS_CALLBACKS_NAME
+from .constances import MAIN_MANUE_BUTTONS_POINTS, MAIN_MANUE_BUTTONS_TEXTS, MAIN_MANUE_BUTTONS_CALLBACKS_NAME
+from .constances import COSTUM_GAME_BUTTONS_POINTS, COSTUM_GAME_BUTTONS_TEXTS, COSTUM_GAME_BUTTONS_CALLBACKS_NAME
+from .constances import SMALL_COSTUM_GAME_BUTTONS_POINTS, SMALL_COSTUM_GAME_BUTTONS_TEXTS, SMALL_COSTUM_GAME_BUTTONS_CALLBACKS_NAME
+from .constances import SETTING_BUTTONS_POINTS, SETTING_BUTTONS_TEXTS, SETTING_BUTTONS_CALLBACKS_NAME
+from .constances import COLOR_SETTING_BUTTONS_POINTS, COLOR_SETTING_BUTTONS_TEXTS, COLOR_SETTING_BUTTONS_CALLBACKS_NAME
+from .constances import WIN_BUTTONS_POINTS, WIN_BUTTONS_TEXTS, WIN_BUTTONS_CALLBACKS_NAME
 from events import bottons_events
 
 def create_bottons_list(points, texts, callbacks, whidth, hight):
@@ -79,6 +85,33 @@ def map_dubel_epidemic_bottons():
    return small_bottons
 
 
+def main_manue_bottons():
+   bottons = create_bottons_list(MAIN_MANUE_BUTTONS_POINTS, MAIN_MANUE_BUTTONS_TEXTS, MAIN_MANUE_BUTTONS_CALLBACKS_NAME, BUTTON_WHIDTH, BUTTON_HIGHT)   
+   return bottons
+
+
+def costum_game_bottons():
+   big_bottons = create_bottons_list(COSTUM_GAME_BUTTONS_POINTS, COSTUM_GAME_BUTTONS_TEXTS, COSTUM_GAME_BUTTONS_CALLBACKS_NAME, BUTTON_WHIDTH, BUTTON_HIGHT)
+   small_bottons = create_bottons_list(SMALL_COSTUM_GAME_BUTTONS_POINTS, SMALL_COSTUM_GAME_BUTTONS_TEXTS, SMALL_COSTUM_GAME_BUTTONS_CALLBACKS_NAME, SMALL_BUTTON_WHIDTH, SMALL_BUTTON_HIGHT)
+   bottons = small_bottons + big_bottons
+   return bottons 
+
+
+def setting_bottons():
+   bottons = create_bottons_list(SETTING_BUTTONS_POINTS, SETTING_BUTTONS_TEXTS, SETTING_BUTTONS_CALLBACKS_NAME, BUTTON_WHIDTH, BUTTON_HIGHT)
+   return bottons
+
+
+def color_setting_bottons():
+   bottons = create_bottons_list(COLOR_SETTING_BUTTONS_POINTS, COLOR_SETTING_BUTTONS_TEXTS, COLOR_SETTING_BUTTONS_CALLBACKS_NAME, BUTTON_WHIDTH, BUTTON_HIGHT)
+   return bottons
+
+
+
+def win_lose_botons():
+   bottons = create_bottons_list(WIN_BUTTONS_POINTS, WIN_BUTTONS_TEXTS, WIN_BUTTONS_CALLBACKS_NAME, BUTTON_WHIDTH, BUTTON_HIGHT)
+   return bottons
+
 
 all_bottons ={'map' : create_map_bottons(),
               'cards' : create_cards_bottons(),
@@ -90,4 +123,10 @@ all_bottons ={'map' : create_map_bottons(),
               'hand_limit_end_turn' : hand_limit_end_turn_bottons(),
               'play_event_during_epidemic' : play_event_during_epidemic_bottons(),
               'map_dubel_epidemic' : map_dubel_epidemic_bottons(),
-              'hand_limit' : hand_limit_bottons()}
+              'hand_limit' : hand_limit_bottons(),
+              'main_manue' : main_manue_bottons(),
+              'costum_game': costum_game_bottons(),
+              'setting' : setting_bottons(),
+              'color_setting' : color_setting_bottons(),
+              'win' : win_lose_botons(),
+              'lose' : win_lose_botons()}
